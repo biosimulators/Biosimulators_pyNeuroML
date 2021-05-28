@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sedML xmlns="http://sed-ml.org/" level="1" version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sed-ml.org/   http://sourceforge.net/apps/trac/neuroml/export/1021/NeuroML2/Schemas/SED-ML/sed-ml-L1-V1.xsd">
+    <notes>
+        <p xmlns="http://www.w3.org/1999/xhtml">
+
+SED-ML export for:
+Components:
+    passiveChan (Type: ionChannelHH:  conductance=1.0E-11 (SI conductance))
+    naChan (Type: ionChannelHH:  conductance=1.0E-11 (SI conductance))
+    kChan (Type: ionChannelHH:  conductance=1.0E-11 (SI conductance))
+    hhcell (Type: cell)
+    pulseGen1 (Type: pulseGenerator:  delay=0.1 (SI time) duration=0.1 (SI time) amplitude=8.000000000000001E-11 (SI current))
+    net1 (Type: network)
+    sim1 (Type: Simulation:  length=0.3 (SI time) step=1.0E-5 (SI time))
+
+        </p>
+    </notes>
+
+    <!--Adding simulation Component(id=sim1 type=Simulation) of network: net1 (Type: network)-->
+
+    <listOfSimulations>
+
+        <uniformTimeCourse id="sim1" initialTime="0" outputStartTime="0" outputEndTime="0.3" numberOfPoints="30000">
+            <algorithm kisaoID="KISAO:0000030"/>
+        </uniformTimeCourse>
+
+    </listOfSimulations>
+
+    <listOfModels>
+        <model id="net1" language="urn:sedml:language:neuroml2" source="LEMS_NML2_Ex5_DetCell.xml"/>
+    </listOfModels>
+
+    <listOfTasks>
+        <task id="sim1_net1" simulationReference="sim1" modelReference="net1"/>
+    </listOfTasks>
+
+    <listOfDataGenerators>
+        <dataGenerator id="time" name="time">
+            <listOfVariables>
+                <variable id="var_time_0" taskReference="sim1_net1" symbol="urn:sedml:symbol:time"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> var_time_0 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="d1_v" name="d1_v">
+            <listOfVariables>
+                <variable id="hhpop_0_v" taskReference="sim1_net1" target="hhpop[0]/v"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci>hhpop_0_v</ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="d1_spiking" name="d1_spiking">
+            <listOfVariables>
+                <variable id="hhpop_0_spiking" taskReference="sim1_net1" target="hhpop[0]/spiking"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci>hhpop_0_spiking</ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="d2_m" name="d2_m">
+            <listOfVariables>
+                <variable id="hhpop_0_bioPhys1_membraneProperties_naChans_naChan_m_q" taskReference="sim1_net1" target="hhpop[0]/bioPhys1/membraneProperties/naChans/naChan/m/q"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci>hhpop_0_bioPhys1_membraneProperties_naChans_naChan_m_q</ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="d2_h" name="d2_h">
+            <listOfVariables>
+                <variable id="hhpop_0_bioPhys1_membraneProperties_naChans_naChan_h_q" taskReference="sim1_net1" target="hhpop[0]/bioPhys1/membraneProperties/naChans/naChan/h/q"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci>hhpop_0_bioPhys1_membraneProperties_naChans_naChan_h_q</ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="d2_n" name="d2_n">
+            <listOfVariables>
+                <variable id="hhpop_0_bioPhys1_membraneProperties_kChans_kChan_n_q" taskReference="sim1_net1" target="hhpop[0]/bioPhys1/membraneProperties/kChans/kChan/n/q"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci>hhpop_0_bioPhys1_membraneProperties_kChans_kChan_n_q</ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="d3_ina" name="d3_ina">
+            <listOfVariables>
+                <variable id="hhpop_0_bioPhys1_membraneProperties_naChans_iDensity" taskReference="sim1_net1" target="hhpop[0]/bioPhys1/membraneProperties/naChans/iDensity"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci>hhpop_0_bioPhys1_membraneProperties_naChans_iDensity</ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="d3_ik" name="d3_ik">
+            <listOfVariables>
+                <variable id="hhpop_0_bioPhys1_membraneProperties_kChans_iDensity" taskReference="sim1_net1" target="hhpop[0]/bioPhys1/membraneProperties/kChans/iDensity"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci>hhpop_0_bioPhys1_membraneProperties_kChans_iDensity</ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="d4_gna" name="d4_gna">
+            <listOfVariables>
+                <variable id="hhpop_0_bioPhys1_membraneProperties_naChans_gDensity" taskReference="sim1_net1" target="hhpop[0]/bioPhys1/membraneProperties/naChans/gDensity"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci>hhpop_0_bioPhys1_membraneProperties_naChans_gDensity</ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="d4_gk" name="d4_gk">
+            <listOfVariables>
+                <variable id="hhpop_0_bioPhys1_membraneProperties_kChans_gDensity" taskReference="sim1_net1" target="hhpop[0]/bioPhys1/membraneProperties/kChans/gDensity"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci>hhpop_0_bioPhys1_membraneProperties_kChans_gDensity</ci>
+            </math>
+        </dataGenerator>
+    </listOfDataGenerators>
+
+    <listOfOutputs>
+        <plot2D id="d1">
+            <listOfCurves>
+                <curve id="curve_v" logX="false" logY="false" xDataReference="time" yDataReference="d1_v"/>
+                <curve id="curve_spiking" logX="false" logY="false" xDataReference="time" yDataReference="d1_spiking"/>
+            </listOfCurves>
+        </plot2D>
+        <plot2D id="d2">
+            <listOfCurves>
+                <curve id="curve_m" logX="false" logY="false" xDataReference="time" yDataReference="d2_m"/>
+                <curve id="curve_h" logX="false" logY="false" xDataReference="time" yDataReference="d2_h"/>
+                <curve id="curve_n" logX="false" logY="false" xDataReference="time" yDataReference="d2_n"/>
+            </listOfCurves>
+        </plot2D>
+        <plot2D id="d3">
+            <listOfCurves>
+                <curve id="curve_ina" logX="false" logY="false" xDataReference="time" yDataReference="d3_ina"/>
+                <curve id="curve_ik" logX="false" logY="false" xDataReference="time" yDataReference="d3_ik"/>
+            </listOfCurves>
+        </plot2D>
+        <plot2D id="d4">
+            <listOfCurves>
+                <curve id="curve_gna" logX="false" logY="false" xDataReference="time" yDataReference="d4_gna"/>
+                <curve id="curve_gk" logX="false" logY="false" xDataReference="time" yDataReference="d4_gk"/>
+            </listOfCurves>
+        </plot2D>
+    </listOfOutputs>
+
+</sedML>

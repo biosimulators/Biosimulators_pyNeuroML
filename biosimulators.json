@@ -103,11 +103,11 @@
   },
   "algorithms": [
     {
-      "id": "cvode",
-      "name": "C-language Variable-coefficient Ordinary Differential Equation solver",
+      "id": "EULER",
+      "name": "Euler forward method",
       "kisaoId": {
         "namespace": "KISAO",
-        "id": "KISAO_0000019"
+        "id": "KISAO_0000030"
       },
       "modelingFrameworks": [
         {
@@ -139,25 +139,8 @@
           "supportedFeatures": []
         }
       ],
-      "citations": [
-        {
-          "title": "CVODE, a stiff/nonstiff ODE solver in C",
-          "authors": "Scott D. Cohen, Alan C. Hindmarsh & Paul F. Dubois",
-          "journal": "Computers in Physics",
-          "volume": 10,
-          "issue": 2,
-          "pages": "138-143",
-          "year": 1996,
-          "identifiers": [
-            {
-              "namespace": "doi",
-              "id": "10.1063/1.4822377",
-              "url": "https://doi.org/10.1063/1.4822377"
-            }
-          ]
-        }
-      ],
-      "parameters": null,
+      "citations": [],
+      "parameters": [],
       "dependentDimensions": [
         {
           "namespace": "SIO",
@@ -166,7 +149,72 @@
       ],
       "dependentVariableTargetPatterns": [],
       "availableSoftwareInterfaceTypes": [
-        "library"
+        "library",
+        "command-line application",
+        "desktop application",
+        "BioSimulators Docker image"
+      ],
+      "dependencies": [
+        {
+          "name": "jNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/jNeuroML"
+        }
+      ]
+    },
+    {
+      "id": "RK4",
+      "name": "4th order Runge-kutta method",
+      "kisaoId": {
+        "namespace": "KISAO",
+        "id": "KISAO_0000032"
+      },
+      "modelingFrameworks": [
+        {
+          "namespace": "SBO",
+          "id": "SBO_0000293"
+        }
+      ],
+      "modelFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "simulationFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3685",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "archiveFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3686",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "citations": [],
+      "parameters": [],
+      "dependentDimensions": [
+        {
+          "namespace": "SIO",
+          "id": "SIO_000418"
+        }
+      ],
+      "dependentVariableTargetPatterns": [],
+      "availableSoftwareInterfaceTypes": [
+        "library",
+        "command-line application",
+        "desktop application",
+        "BioSimulators Docker image"
       ],
       "dependencies": [
         {
@@ -180,7 +228,10 @@
     }
   ],
   "interfaceTypes": [
-    "library"
+    "library",
+    "command-line application",
+    "desktop application",
+    "BioSimulators Docker image"
   ],
   "supportedOperatingSystemTypes": [
     "platform-independent"

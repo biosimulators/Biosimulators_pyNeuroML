@@ -1,0 +1,4 @@
+# Report of running simulation with jLEMS v0.9.9.1
+RealSimulationTime=0.927
+SimulationSaveTime=0.007
+SimulatorVersion=0.9.9.1
