@@ -1,0 +1,201 @@
+{
+  "id": "pyneuroml",
+  "name": "pyNeuroML",
+  "version": "0.5.11",
+  "description": "Python package for reading, writing, simulating and analysing NeuroML2/LEMS models.",
+  "urls": [
+    {
+      "type": "Home page",
+      "url": "https://github.com/NeuroML/pyNeuroML"
+    }
+  ],
+  "image": {
+    "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:0.5.11",
+    "format": {
+      "namespace": "EDAM",
+      "id": "format_3973",
+      "version": null,
+      "supportedFeatures": []
+    },
+    "operatingSystemType": "Linux"
+  },
+  "authors": [
+    {
+      "firstName": "Padraig",
+      "lastName": "Gleeson",
+      "identifiers": [
+        {
+          "namespace": "orcid",
+          "id": "0000-0001-5963-8576",
+          "url": "https://orcid.org/0000-0001-5963-8576"
+        }
+      ]
+    },
+    {
+      "firstName": "Richard",
+      "middleName": "C.",
+      "lastName": "Gerkin",
+      "identifiers": [
+        {
+          "namespace": "orcid",
+          "id": "0000-0002-2940-3378",
+          "url": "https://orcid.org/0000-0002-2940-3378"
+        }
+      ]
+    },
+    {
+      "firstName": "Ankur",
+      "middleName": null,
+      "lastName": "Sinha",
+      "identifiers": [
+        {
+          "namespace": "orcid",
+          "id": "0000-0001-7568-7167",
+          "url": "https://orcid.org/0000-0001-7568-7167"
+        }
+      ]
+    }
+  ],
+  "references": {
+    "identifiers": [
+      {
+        "namespace": "pypi",
+        "id": "pyNeuroML",
+        "url": "https://pypi.org/project/pyNeuroML"
+      }
+    ],
+    "citations": [
+      {
+        "title": "LEMS: a language for expressing complex biological models in concise and hierarchical form and its use in underpinning NeuroML 2",
+        "authors": "Robert C. Cannon, Padraig Gleeson, Sharon Crook, Gautham Ganapathy, Boris Marin, Eugenio Piasini & R. Angus Silver",
+        "journal": "Frontiers in Neuroinformatics",
+        "volume": 8,
+        "pages": "79",
+        "year": 2014,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.3389/fninf.2014.00079",
+            "url": "https://doi.org/10.3389/fninf.2014.00079"
+          }
+        ]
+      },
+      {
+        "title": "NeuroML: a language for describing data driven models of neurons and networks with a high degree of biological detail",
+        "authors": "Padraig Gleeson, Sharon Crook, Robert C. Cannon, Michael L. Hines, Guy O. Billings, Matteo Farinella, Thomas M. Morse, Andrew P. Davison, Subhasis Ray, Upinder S. Bhalla, Simon R. Barnes, Yoana D. Dimitrova & R. Angus Silver",
+        "journal": "PLoS Computational Biology",
+        "volume": 6,
+        "pages": "e1000815",
+        "year": 2010,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.1371/journal.pcbi.1000815",
+            "url": "https://doi.org/10.1371/journal.pcbi.1000815"
+          }
+        ]
+      }
+    ]
+  },
+  "license": {
+    "namespace": "SPDX",
+    "id": "LGPL-3.0"
+  },
+  "algorithms": [
+    {
+      "id": "cvode",
+      "name": "C-language Variable-coefficient Ordinary Differential Equation solver",
+      "kisaoId": {
+        "namespace": "KISAO",
+        "id": "KISAO_0000019"
+      },
+      "modelingFrameworks": [
+        {
+          "namespace": "SBO",
+          "id": "SBO_0000293"
+        }
+      ],
+      "modelFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "simulationFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3685",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "archiveFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3686",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "citations": [
+        {
+          "title": "CVODE, a stiff/nonstiff ODE solver in C",
+          "authors": "Scott D. Cohen, Alan C. Hindmarsh & Paul F. Dubois",
+          "journal": "Computers in Physics",
+          "volume": 10,
+          "issue": 2,
+          "pages": "138-143",
+          "year": 1996,
+          "identifiers": [
+            {
+              "namespace": "doi",
+              "id": "10.1063/1.4822377",
+              "url": "https://doi.org/10.1063/1.4822377"
+            }
+          ]
+        }
+      ],
+      "parameters": null,
+      "dependentDimensions": [
+        {
+          "namespace": "SIO",
+          "id": "SIO_000418"
+        }
+      ],
+      "dependentVariableTargetPatterns": [],
+      "availableSoftwareInterfaceTypes": [
+        "library"
+      ],
+      "dependencies": [
+        {
+          "name": "jNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/jNeuroML"
+        }
+      ]
+    }
+  ],
+  "interfaceTypes": [
+    "library"
+  ],
+  "supportedOperatingSystemTypes": [
+    "platform-independent"
+  ],
+  "supportedProgrammingLanguages": [
+    {
+      "namespace": "Linguist",
+      "id": "Python"
+    }
+  ],
+  "funding": [],
+  "biosimulators": {
+    "specificationVersion": "1.0.0",
+    "imageVersion": "1.0.0",
+    "validated": false,
+    "validationTests": null
+  }
+}
