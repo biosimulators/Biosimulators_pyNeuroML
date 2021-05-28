@@ -1,4 +1,4 @@
-""" BioSimulators-compliant command-line interface to the `PyNeuroML <https://github.com/NeuroML/pyNeuroML>`_ simulation program.
+""" BioSimulators-compliant command-line interface to the `pyNeuroML <https://github.com/NeuroML/pyNeuroML>`_ simulation program.
 
 :Author: Jonathan Karr <karr@mssm.edu>
 :Date: 2021-05-28
@@ -12,7 +12,7 @@ from biosimulators_utils.simulator.cli import build_cli
 import pyneuroml
 
 App = build_cli('pyneuroml', __version__,
-                'PyNeuroML', pyneuroml.__version__, 'https://github.com/NeuroML/pyNeuroML',
+                'pyNeuroML', pyneuroml.__version__, 'https://github.com/NeuroML/pyNeuroML',
                 exec_sedml_docs_in_combine_archive)
 
 

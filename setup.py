@@ -26,10 +26,10 @@ setuptools.setup(
     name=name,
     version=md.version,
     description=("BioSimulators-compliant command-line interface to "
-                 "the PyNeuroML simulation program."),
+                 "the pyNeuroML simulation program."),
     long_description=md.long_description,
-    url="https://github.com/biosimulators/Biosimulators_PyNeuroML",
-    download_url="https://github.com/biosimulators/Biosimulators_PyNeuroML",
+    url="https://github.com/biosimulators/Biosimulators_pyNeuroML",
+    download_url="https://github.com/biosimulators/Biosimulators_pyNeuroML",
     author='BioSimulators Team',
     author_email="info@biosimulators.org",
     license="MIT",

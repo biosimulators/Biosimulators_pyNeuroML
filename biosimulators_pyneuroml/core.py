@@ -1,4 +1,4 @@
-""" Methods for using PyNeuroML to execute SED tasks in COMBINE archives and save their outputs
+""" Methods for using pyNeuroML to execute SED tasks in COMBINE archives and save their outputs
 
 :Author: Jonathan Karr <karr@mssm.edu>
 :Date: 2021-05-28
@@ -157,7 +157,7 @@ def exec_sed_task(task, variables, log=None):
                     ])
                     warn(msg, BioSimulatorsWarning)
 
-    # Validate that start time is 0 because this is the only option that PyNeuroML supports
+    # Validate that start time is 0 because this is the only option that pyNeuroML supports
     if simulation.initial_time != 0:
         raise NotImplementedError('Initial simulation time {} is not supported. Initial time must be 0.'.format(simulation.initial_time))
 

@@ -1,6 +1,6 @@
-# Contributing to `BioSimulators-PyNeuroML`
+# Contributing to `BioSimulators-pyNeuroML`
 
-We enthusiastically welcome contributions to BioSimulators-PyNeuroML!
+We enthusiastically welcome contributions to BioSimulators-pyNeuroML!
 
 ## Coordinating contributions
 
@@ -11,7 +11,7 @@ Before getting started, please contact the lead developers at [info@biosimulator
 The repository follows standard Python conventions:
 
 * `README.md`: Overview of the repository
-* `biosimulators_pyneuroml/`: Python code for a BioSimulators-compliant command-line interface to PyNeuroML
+* `biosimulators_pyneuroml/`: Python code for a BioSimulators-compliant command-line interface to pyNeuroML
 * `tests/`: unit tests for the command-line interface
 * `setup.py`: installation script for the command-line interface
 * `setup.cfg`: configuration for the installation of the command-line interface
@@ -19,12 +19,12 @@ The repository follows standard Python conventions:
 * `requirements.optional.txt`: optional dependencies for the command-line interface
 * `MANIFEST.in`: a list of files to include in the package for the command-line interface
 * `LICENSE`: License
-* `CONTRIBUTING.md`: Guide to contributing to BioSimulators-PyNeuroML (this document)
-* `CODE_OF_CONDUCT.md`: Code of conduct for developers of BioSimulators-PyNeuroML
+* `CONTRIBUTING.md`: Guide to contributing to BioSimulators-pyNeuroML (this document)
+* `CODE_OF_CONDUCT.md`: Code of conduct for developers of BioSimulators-pyNeuroML
 
 ## Coding convention
 
-BioSimulators-PyNeuroML follows standard Python style conventions:
+BioSimulators-pyNeuroML follows standard Python style conventions:
 
 * Class names: `UpperCamelCase`
 * Function names: `lower_snake_case`
@@ -32,9 +32,9 @@ BioSimulators-PyNeuroML follows standard Python style conventions:
 
 ## Testing and continuous integration
 
-We strive to have complete test coverage for BioSimulators-PyNeuroML.
+We strive to have complete test coverage for BioSimulators-pyNeuroML.
 
-The unit tests for BioSimulators-PyNeuroML are located in the `tests`  directory. The tests can be executed by running the following command:
+The unit tests for BioSimulators-pyNeuroML are located in the `tests`  directory. The tests can be executed by running the following command:
 ```
 pip install pytest
 python -m pytest tests
@@ -51,7 +51,7 @@ coverage html
 
 ## Documentation convention
 
-BioSimulators-PyNeuroML is documented using [reStructuredText](https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html) and the [napoleon Sphinx plugin](https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html). The documentation can be compiled by running the following commands:
+BioSimulators-pyNeuroML is documented using [reStructuredText](https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html) and the [napoleon Sphinx plugin](https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html). The documentation can be compiled by running the following commands:
 
 ```
 python -m pip install -r docs-src/requirements.txt
@@ -87,8 +87,8 @@ Below are instructions for releasing a new version:
 
 ## Reporting issues
 
-Please use [GitHub issues](https://github.com/biosimulators/Biosimulators_PyNeuroML/issues) to report any issues to the development community.
+Please use [GitHub issues](https://github.com/biosimulators/Biosimulators_pyNeuroML/issues) to report any issues to the development community.
 
 ## Getting help
 
-Please use [GitHub issues](https://github.com/biosimulators/Biosimulators_PyNeuroML/issues) to post questions or contact the lead developers at [info@biosimulators.org](mailto:info@biosimulators.org).
+Please use [GitHub issues](https://github.com/biosimulators/Biosimulators_pyNeuroML/issues) to post questions or contact the lead developers at [info@biosimulators.org](mailto:info@biosimulators.org).

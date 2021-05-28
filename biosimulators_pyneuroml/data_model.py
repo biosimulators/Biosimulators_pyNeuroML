@@ -1,4 +1,4 @@
-""" Data model for PyNeuroML algorithms and their parameters
+""" Data model for pyNeuroML algorithms and their parameters
 
 :Author: Jonathan Karr <karr@mssm.edu>
 :Date: 2021-05-28

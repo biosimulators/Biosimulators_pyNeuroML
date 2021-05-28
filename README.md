@@ -1,16 +1,16 @@
-[![Latest release](https://img.shields.io/github/v/tag/biosimulators/Biosimulators_PyNeuroML)](https://github.com/biosimulations/Biosimulators_PyNeuroML/releases)
+[![Latest release](https://img.shields.io/github/v/tag/biosimulators/Biosimulators_pyNeuroML)](https://github.com/biosimulations/Biosimulators_pyNeuroML/releases)
 [![PyPI](https://img.shields.io/pypi/v/biosimulators_pyneuroml)](https://pypi.org/project/biosimulators_pyneuroml/)
-[![CI status](https://github.com/biosimulators/Biosimulators_PyNeuroML/workflows/Continuous%20integration/badge.svg)](https://github.com/biosimulators/Biosimulators_PyNeuroML/actions?query=workflow%3A%22Continuous+integration%22)
-[![Test coverage](https://codecov.io/gh/biosimulators/Biosimulators_PyNeuroML/branch/dev/graph/badge.svg)](https://codecov.io/gh/biosimulators/Biosimulators_PyNeuroML)
+[![CI status](https://github.com/biosimulators/Biosimulators_pyNeuroML/workflows/Continuous%20integration/badge.svg)](https://github.com/biosimulators/Biosimulators_pyNeuroML/actions?query=workflow%3A%22Continuous+integration%22)
+[![Test coverage](https://codecov.io/gh/biosimulators/Biosimulators_pyNeuroML/branch/dev/graph/badge.svg)](https://codecov.io/gh/biosimulators/Biosimulators_pyNeuroML)
 
-# BioSimulators-PyNeuroML
-BioSimulators-compliant command-line interface and Docker image for the [PyNeuroML](https://github.com/NeuroML/pyNeuroML) simulation program.
+# BioSimulators-pyNeuroML
+BioSimulators-compliant command-line interface and Docker image for the [pyNeuroML](https://github.com/NeuroML/pyNeuroML) simulation program.
 
-This command-line interface and Docker image enable users to use PyNeuroML to execute [COMBINE/OMEX archives](https://combinearchive.org/) that describe one or more simulation experiments (in [SED-ML format](https://sed-ml.org)) of one or more models (in [NeuroML format](https://neuroml.org/])).
+This command-line interface and Docker image enable users to use pyNeuroML to execute [COMBINE/OMEX archives](https://combinearchive.org/) that describe one or more simulation experiments (in [SED-ML format](https://sed-ml.org)) of one or more models (in [NeuroML format](https://neuroml.org/])).
 
-A list of the algorithms and algorithm parameters supported by PyNeuroML is available at [BioSimulators](https://biosimulators.org/simulators/pyneuroml).
+A list of the algorithms and algorithm parameters supported by pyNeuroML is available at [BioSimulators](https://biosimulators.org/simulators/pyneuroml).
 
-A simple web application and web service for using PyNeuroML to execute COMBINE/OMEX archives is also available at [runBioSimulations](https://run.biosimulations.org).
+A simple web application and web service for using pyNeuroML to execute COMBINE/OMEX archives is also available at [runBioSimulations](https://run.biosimulations.org).
 
 ## Installation
 
@@ -33,7 +33,7 @@ docker pull ghcr.io/biosimulators/pyneuroml
 ```
 usage: pyneuroml [-h] [-d] [-q] -i ARCHIVE [-o OUT_DIR] [-v]
 
-BioSimulators-compliant command-line interface to the PyNeuroML <https://github.com/NeuroML/pyNeuroML> simulation program.
+BioSimulators-compliant command-line interface to the pyNeuroML <https://github.com/NeuroML/pyNeuroML> simulation program.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -64,7 +64,7 @@ docker run \
 ```
 
 ## Documentation
-Documentation is available at https://biosimulators.github.io/Biosimulators_PyNeuroML/.
+Documentation is available at https://biosimulators.github.io/Biosimulators_pyNeuroML/.
 
 ## License
 This package is released under the [MIT](LICENSE).
