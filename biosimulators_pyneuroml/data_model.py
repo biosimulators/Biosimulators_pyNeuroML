@@ -1,140 +1,197 @@
 """ Data model for pyNeuroML algorithms and their parameters
 
 :Author: Jonathan Karr <karr@mssm.edu>
-:Date: 2021-05-28
+:Date: 2021-06-02
 :Copyright: 2021, Center for Reproducible Biomedical Modeling
 :License: MIT
 """
 
 import collections
 import enum
-import pyneuroml
 
 __all__ = [
-    'Algorithm',
-    'AlgorithmParameter',
+    'Simulator',
+    'SIMULATOR_ENABLED',
     'KISAO_ALGORITHM_MAP',
+    'RunLemsOptions',
+    'SEDML_TIME_OUTPUT_COLUMN_ID',
+    'SEDML_OUTPUT_FILE_ID',
 ]
 
 
-class Algorithm(object):
-    """ Simulation algorithm
-
-    Attributes:
-        name (:obj:`str`): name
-        solver (:obj:`type`): solver
-        solver_args (:obj:`dict`): solver arguments
-        parameters (:obj:`dict`): dictionary that maps KiSAO ids to :obj:`AlgorithmParameter`\\ s
-    """
-
-    def __init__(self, name, solver, parameters=None, **solver_args):
-        """
-        Args:
-            name (:obj:`str`): name
-            solver (:obj:`type`): solver
-            **solver_args (:obj:`dict`): solver arguments
-            parameters (:obj:`dict`, optional): dictionary that maps KiSAO ids to :obj:`AlgorithmParameter`\\ s
-        """
-        self.name = name
-        self.solver = solver
-        self.solver_args = solver_args
-        self.parameters = parameters or {}
+class Simulator(str, enum.Enum):
+    """ A LEMS simulator """
+    brian2 = 'Brian2'
+    neuron = 'NEURON'
+    netpyne = 'NetPyNe'
+    pyneuroml = 'pyNeuroML'
 
 
-class AlgorithmParameter(object):
-    """ Simulation algorithm parameter
-
-    Attributes:
-        name (:obj:`str`): name
-        key (:obj:`str`): key
-        data_type (:obj:`type`): data type
-        default (:obj:`object`): defualt value
-    """
-
-    def __init__(self, name, key, data_type, default):
-        """
-        Args:
-            name (:obj:`str`): name
-            key (:obj:`str`): key
-            data_type (:obj:`type`): data type
-            default (:obj:`float`): defualt value
-        """
-        self.name = name
-        self.key = key
-        self.data_type = data_type
-        self.default = default
-
-    def set_value(self, solver_args, str_value):
-        """ Apply the value of a parameter to a data structure of solver arguments
-
-        Args:
-            solver_args (:obj:`dict`): solver arguments
-            str_value (:obj:`string`): string representation of parameter value
-
-        Raises:
-            :obj:`ValueError`: if :obj:`str_value` is not a valid string representation
-                of the data type of the parameter
-            :obj:`NotImplementedError`: if :obj:`str_value` is not a valid value of an
-                enumerated parameter
-        """
-        keys = self.key.split('.')
-        for key in keys[0:-1]:
-            if key in solver_args:
-                nested_solver_args = solver_args[key]
-            else:
-                nested_solver_args = {}
-                solver_args[key] = nested_solver_args
-            solver_args = nested_solver_args
-
-        if not str_value:
-            value = None
-
-        elif self.data_type == bool:
-            if str_value.lower() == 'false' or str_value == '0':
-                value = False
-            elif str_value.lower() == 'true' or str_value == '1':
-                value = True
-            else:
-                raise ValueError("Value '{}' is not a valid Boolean".format(str_value))
-
-        elif self.data_type == int:
-            try:
-                value = int(str_value)
-            except ValueError:
-                raise ValueError("Value '{}' is not a valid integer".format(str_value))
-
-        elif self.data_type == float:
-            try:
-                value = float(str_value)
-            except ValueError:
-                raise ValueError("Value '{}' is not a valid float".format(str_value))
-
-        elif issubclass(self.data_type, enum.Enum):
-            try:
-                value = self.data_type(str_value).name
-            except ValueError:
-                raise NotImplementedError(
-                    '{} is not a supported value of {}. The value of {} must be one of the following:\n  - {}'.format(
-                        str_value, self.name, self.name,
-                        '\n  - '.join('{}: {}'.format(value, name) for name, value in self.data_type.__members__.items())))
-
-        else:
-            raise NotImplementedError('Data type {} is not supported'.format(self.data_type.__name__))
-
-        solver_args[keys[-1]] = value
+SIMULATOR_ENABLED = {
+    Simulator.brian2: False,
+    Simulator.neuron: True,
+    Simulator.netpyne: True,
+    Simulator.pyneuroml: True,
+}
 
 
 KISAO_ALGORITHM_MAP = collections.OrderedDict([
-    ('KISAO_0000088', Algorithm("LSODA", pyneuroml.ODESolver, integrator="lsoda", parameters={
-        'KISAO_0000211': AlgorithmParameter("absolute tolerance", 'integrator_options.atol', float, 1e-12),
-        'KISAO_0000209': AlgorithmParameter("relative tolerance", 'integrator_options.rtol', float, 1e-6),
-        'KISAO_0000480': AlgorithmParameter("lower half bandwith", 'integrator_options.lband', int, None),
-        'KISAO_0000479': AlgorithmParameter("upper half bandwith", 'integrator_options.uband', int, None),
-        'KISAO_0000415': AlgorithmParameter("maximum number of steps", 'integrator_options.nsteps', int, 500),
-        'KISAO_0000559': AlgorithmParameter("initial step size", 'integrator_options.first_step', float, 0.0),
-        'KISAO_0000485': AlgorithmParameter("minimum step size", 'integrator_options.min_step', float, 0.0),
-        'KISAO_0000467': AlgorithmParameter("maximum step size", 'integrator_options.max_step', float, float("inf")),
-        'KISAO_0000219': AlgorithmParameter("maximum non-stiff order (Adams order)", 'integrator_options.max_order_ns', int, 12),
-        'KISAO_0000220': AlgorithmParameter("maximum stiff order (BDF order)", 'integrator_options.max_order_s', int, 5),
-    })),
+    ('KISAO_0000019', {
+        'kisao_id': 'KISAO_0000019',
+        'id': 'cvode',
+        'name': 'CVODE',
+        'parameters': {
+        },
+        'simulators': [
+            Simulator.neuron,
+            Simulator.netpyne,
+        ],
+    }),
+    ('KISAO_0000030', {
+        'kisao_id': 'KISAO_0000030',
+        'id': 'eulerTree',
+        'name': 'Euler forward method',
+        'parameters': {
+        },
+        'simulators': [
+            Simulator.brian2,
+            Simulator.pyneuroml,
+        ],
+    }),
+    ('KISAO_0000032', {
+        'kisao_id': 'KISAO_0000032',
+        'id': 'rk4',
+        'name': '4th order Runge-kutta method',
+        'parameters': {
+        },
+        'simulators': [
+            Simulator.brian2,
+            Simulator.pyneuroml,
+        ],
+    }),
+    ('KISAO_0000381', {
+        'kisao_id': 'KISAO_0000381',
+        'id': 'rk2',
+        'name': '2nd order Runge-kutta method',
+        'parameters': {
+        },
+        'simulators': [
+            Simulator.brian2,
+        ],
+    }),
 ])
+
+
+class RunLemsOptions(object):
+    """ Options for running a LEMS file
+
+    Attributes:
+        paths_to_include (:obj:`list` of :obj:`str`)
+        num_processors (:obj:`int`)
+        max_memory (:obj:`int`): maximum memory in bytes
+        skip_run (:obj:`bool`)
+        no_gui (:obj:`bool`)
+        load_saved_data (:obj:`bool`)
+        reload_events (:obj:`bool`)
+        plot (:obj:`bool`)
+        show_plot_already (:obj:`bool`)
+        exec_in_dir (:obj:`str`)
+        verbose (:obj:`bool`)
+        exit_on_fail (:obj:`bool`)
+        cleanup (:obj:`bool`)
+        only_generate_scripts (:obj:`bool`)
+        compile_mods (:obj:`bool`)
+        realtime_output (:obj:`bool`)
+    """
+
+    def __init__(self,
+                 paths_to_include=None,
+                 num_processors=None,
+                 max_memory=None,
+                 skip_run=False,
+                 no_gui=True,
+                 load_saved_data=False,
+                 reload_events=False,
+                 plot=False,
+                 show_plot_already=False,
+                 exec_in_dir='.',
+                 verbose=False,
+                 exit_on_fail=False,
+                 cleanup=True,
+                 only_generate_scripts=False,
+                 compile_mods=True,
+                 realtime_output=False,
+                 ):
+        """
+        Args:
+            paths_to_include (:obj:`list` of :obj:`str`, optional)
+            num_processors (:obj:`int`, optional)
+            max_memory (:obj:`int`, optional): maximum memory in bytes
+            skip_run (:obj:`bool`, optional)
+            no_gui (:obj:`bool`, optional)
+            load_saved_data (:obj:`bool`, optional)
+            reload_events (:obj:`bool`, optional)
+            plot (:obj:`bool`, optional)
+            show_plot_already (:obj:`bool`, optional)
+            exec_in_dir (:obj:`str`, optional)
+            verbose (:obj:`bool`, optional)
+            exit_on_fail (:obj:`bool`, optional)
+            cleanup (:obj:`bool`, optional)
+            only_generate_scripts (:obj:`bool`, optional)
+            compile_mods (:obj:`bool`, optional)
+            realtime_output (:obj:`bool`, optional)
+        """
+        self.paths_to_include = paths_to_include or []
+        self.num_processors = num_processors
+        self.max_memory = max_memory
+        self.skip_run = skip_run
+        self.no_gui = no_gui
+        self.load_saved_data = load_saved_data
+        self.reload_events = reload_events
+        self.plot = plot
+        self.show_plot_already = show_plot_already
+        self.exec_in_dir = exec_in_dir
+        self.verbose = verbose
+        self.exit_on_fail = exit_on_fail
+        self.cleanup = cleanup
+        self.only_generate_scripts = only_generate_scripts
+        self.compile_mods = compile_mods
+        self.realtime_output = realtime_output
+
+    def to_kw_args(self, simulator):
+        """ Format options as keyword arguments for a LEMS run method
+
+        Args:
+            simulator (:obj:`Simulator`): simulator
+
+        Returns:
+            :obj:`dict`: keyword arguments for a LEMS run method
+        """
+        options = {
+            'paths_to_include': self.paths_to_include,
+            'max_memory': str(int(self.max_memory / 1e6)) + 'M',
+            'skip_run': self.skip_run,
+            'nogui': self.no_gui,
+            'reload_events': self.reload_events,
+            'plot': self.plot,
+            'show_plot_already': self.show_plot_already,
+            'exec_in_dir': self.exec_in_dir,
+            'verbose': self.verbose,
+            'exit_on_fail': self.exit_on_fail,
+            'cleanup': self.cleanup,
+        }
+
+        if simulator == Simulator.netpyne:
+            options['num_processors'] = self.num_processors
+            options['only_generate_scripts'] = self.only_generate_scripts
+
+        elif simulator == Simulator.neuron:
+            options['only_generate_scripts'] = self.only_generate_scripts
+            options['compile_mods'] = self.compile_mods
+            options['realtime_output'] = self.realtime_output
+
+        return options
+
+
+SEDML_TIME_OUTPUT_COLUMN_ID = '__time__'
+SEDML_OUTPUT_FILE_ID = '__output_file__'

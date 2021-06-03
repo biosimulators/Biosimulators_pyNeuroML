@@ -118,6 +118,12 @@
       "modelFormats": [
         {
           "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
           "id": "format_3971",
           "version": null,
           "supportedFeatures": []
@@ -156,11 +162,25 @@
       ],
       "dependencies": [
         {
+          "name": "libNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuralEnsemble/libNeuroML"
+        },
+        {
           "name": "jNeuroML",
           "version": null,
           "required": true,
           "freeNonCommercialLicense": true,
           "url": "https://github.com/NeuroML/jNeuroML"
+        },
+        {
+          "name": "pyLEMS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/LEMS/pylems"
         }
       ]
     },
@@ -180,6 +200,12 @@
       "modelFormats": [
         {
           "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
           "id": "format_3971",
           "version": null,
           "supportedFeatures": []
@@ -218,11 +244,25 @@
       ],
       "dependencies": [
         {
+          "name": "libNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuralEnsemble/libNeuroML"
+        },
+        {
           "name": "jNeuroML",
           "version": null,
           "required": true,
           "freeNonCommercialLicense": true,
           "url": "https://github.com/NeuroML/jNeuroML"
+        },
+        {
+          "name": "pyLEMS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/LEMS/pylems"
         }
       ]
     }

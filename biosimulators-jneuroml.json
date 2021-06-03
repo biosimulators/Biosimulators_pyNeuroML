@@ -1,0 +1,194 @@
+{
+  "id": "jneuroml",
+  "name": "jNeuroML",
+  "version": "0.8.5",
+  "description": "Java package for reading, writing, simulating and analysing NeuroML2/LEMS models.",
+  "urls": [
+    {
+      "type": "Home page",
+      "url": "https://github.com/NeuroML/jNeuroML"
+    }
+  ],
+  "image": null,
+  "authors": [
+    {
+      "firstName": "Padraig",
+      "lastName": "Gleeson",
+      "identifiers": [
+        {
+          "namespace": "orcid",
+          "id": "0000-0001-5963-8576",
+          "url": "https://orcid.org/0000-0001-5963-8576"
+        }
+      ]
+    }
+  ],
+  "references": {
+    "identifiers": [],
+    "citations": [
+      {
+        "title": "LEMS: a language for expressing complex biological models in concise and hierarchical form and its use in underpinning NeuroML 2",
+        "authors": "Robert C. Cannon, Padraig Gleeson, Sharon Crook, Gautham Ganapathy, Boris Marin, Eugenio Piasini & R. Angus Silver",
+        "journal": "Frontiers in Neuroinformatics",
+        "volume": 8,
+        "pages": "79",
+        "year": 2014,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.3389/fninf.2014.00079",
+            "url": "https://doi.org/10.3389/fninf.2014.00079"
+          }
+        ]
+      },
+      {
+        "title": "NeuroML: a language for describing data driven models of neurons and networks with a high degree of biological detail",
+        "authors": "Padraig Gleeson, Sharon Crook, Robert C. Cannon, Michael L. Hines, Guy O. Billings, Matteo Farinella, Thomas M. Morse, Andrew P. Davison, Subhasis Ray, Upinder S. Bhalla, Simon R. Barnes, Yoana D. Dimitrova & R. Angus Silver",
+        "journal": "PLoS Computational Biology",
+        "volume": 6,
+        "pages": "e1000815",
+        "year": 2010,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.1371/journal.pcbi.1000815",
+            "url": "https://doi.org/10.1371/journal.pcbi.1000815"
+          }
+        ]
+      }
+    ]
+  },
+  "license": {
+    "namespace": "SPDX",
+    "id": "LGPL-3.0"
+  },
+  "algorithms": [
+    {
+      "id": "EULER",
+      "name": "Euler forward method",
+      "kisaoId": {
+        "namespace": "KISAO",
+        "id": "KISAO_0000030"
+      },
+      "modelingFrameworks": [
+        {
+          "namespace": "SBO",
+          "id": "SBO_0000293"
+        }
+      ],
+      "modelFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "simulationFormats": [],
+      "archiveFormats": [],
+      "citations": [],
+      "parameters": [],
+      "dependentDimensions": [
+        {
+          "namespace": "SIO",
+          "id": "SIO_000418"
+        }
+      ],
+      "dependentVariableTargetPatterns": [],
+      "availableSoftwareInterfaceTypes": [
+        "library",
+        "command-line application",
+        "desktop application"
+      ],
+      "dependencies": [
+        {
+          "name": "jLEMS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/LEMS/jLEMS"
+        }
+      ]
+    },
+    {
+      "id": "RK4",
+      "name": "4th order Runge-kutta method",
+      "kisaoId": {
+        "namespace": "KISAO",
+        "id": "KISAO_0000032"
+      },
+      "modelingFrameworks": [
+        {
+          "namespace": "SBO",
+          "id": "SBO_0000293"
+        }
+      ],
+      "modelFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "simulationFormats": [],
+      "archiveFormats": [],
+      "citations": [],
+      "parameters": [],
+      "dependentDimensions": [
+        {
+          "namespace": "SIO",
+          "id": "SIO_000418"
+        }
+      ],
+      "dependentVariableTargetPatterns": [],
+      "availableSoftwareInterfaceTypes": [
+        "library",
+        "command-line application",
+        "desktop application"
+      ],
+      "dependencies": [
+        {
+          "name": "jLEMS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/LEMS/jLEMS"
+        }
+      ]
+    }
+  ],
+  "interfaceTypes": [
+    "library",
+    "command-line application",
+    "desktop application"
+  ],
+  "supportedOperatingSystemTypes": [
+    "platform-independent"
+  ],
+  "supportedProgrammingLanguages": [
+    {
+      "namespace": "Linguist",
+      "id": "Java"
+    }
+  ],
+  "funding": [],
+  "biosimulators": {
+    "specificationVersion": "1.0.0",
+    "imageVersion": "1.0.0",
+    "validated": false,
+    "validationTests": null
+  }
+}

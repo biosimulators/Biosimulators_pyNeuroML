@@ -1,0 +1,273 @@
+{
+  "id": "netpyne",
+  "name": "NetPyNe",
+  "version": "1.0.0.2",
+  "description": "Python package to facilitate the development, simulation, parallelization, analysis, and optimization of biological neuronal networks using the NEURON simulator.",
+  "urls": [
+    {
+      "type": "Home page",
+      "url": "http://www.netpyne.org/"
+    }
+  ],
+  "image": {
+    "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:1.0.0.2",
+    "format": {
+      "namespace": "EDAM",
+      "id": "format_3973",
+      "version": null,
+      "supportedFeatures": []
+    },
+    "operatingSystemType": "Linux"
+  },
+  "authors": [
+    {
+      "firstName": "Salvador",
+      "lastName": "Dura-Bernal",
+      "identifiers": []
+    },
+    {
+      "firstName": "Benjamin",
+      "middleName": "A",
+      "lastName": "Suter",
+      "identifiers": []
+    },
+    {
+      "firstName": "Padraig",
+      "lastName": "Gleeson",
+      "identifiers": []
+    },
+    {
+      "firstName": "Matteo",
+      "lastName": "Cantarelli",
+      "identifiers": []
+    },
+    {
+      "firstName": "Adrian",
+      "lastName": "Quintana",
+      "identifiers": []
+    },
+    {
+      "firstName": "Facundo",
+      "lastName": "Rodriguez",
+      "identifiers": []
+    },
+    {
+      "firstName": "David",
+      "middleName": "J",
+      "lastName": "Kedziora",
+      "identifiers": []
+    },
+    {
+      "firstName": "George",
+      "middleName": "L",
+      "lastName": "Chadderdon",
+      "identifiers": []
+    },
+    {
+      "firstName": "Cliff",
+      "middleName": "C",
+      "lastName": "Kerr",
+      "identifiers": []
+    },
+    {
+      "firstName": "Samuel",
+      "middleName": "A",
+      "lastName": "Neymotin",
+      "identifiers": []
+    },
+    {
+      "firstName": "Robert",
+      "middleName": "A",
+      "lastName": "McDougal",
+      "identifiers": []
+    },
+    {
+      "firstName": "Michael",
+      "lastName": "Hines",
+      "identifiers": []
+    },
+    {
+      "firstName": "Gordon",
+      "middleName": "MG",
+      "lastName": "Shepherd",
+      "identifiers": []
+    },
+    {
+      "firstName": "William",
+      "middleName": "W",
+      "lastName": "Lytton",
+      "identifiers": []
+    }
+  ],
+  "references": {
+    "identifiers": [
+      {
+        "namespace": "pypi",
+        "id": "netpyne",
+        "url": "https://pypi.org/project/netpyne"
+      }
+    ],
+    "citations": [
+      {
+        "title": "NetPyNE, a tool for data-driven multiscale modeling of brain circuits",
+        "authors": "Salvador Dura-Bernal, Benjamin A Suter, Padraig Gleeson, Matteo Cantarelli, Adrian Quintana, Facundo Rodriguez, David J Kedziora, George L Chadderdon, Cliff C Kerr, Samuel A Neymotin, Robert A McDougal, Michael Hines, Gordon MG Shepherd & William W Lytton",
+        "journal": "eLife",
+        "volume": 8,
+        "pages": "e44494",
+        "year": 2019,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.7554/eLife.44494.001",
+            "url": "https://doi.org/10.7554/eLife.44494.001"
+          }
+        ]
+      }
+    ]
+  },
+  "license": {
+    "namespace": "SPDX",
+    "id": "MIT"
+  },
+  "algorithms": [
+    {
+      "id": "cvode",
+      "name": "C-language Variable-coefficient Ordinary Differential Equation solver",
+      "kisaoId": {
+        "namespace": "KISAO",
+        "id": "KISAO_0000019"
+      },
+      "modelingFrameworks": [
+        {
+          "namespace": "SBO",
+          "id": "SBO_0000293"
+        }
+      ],
+      "modelFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
+          "id": "format_9005",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "simulationFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3685",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "archiveFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3686",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "citations": [
+        {
+          "title": "CVODE, a stiff/nonstiff ODE solver in C",
+          "authors": "Scott D. Cohen, Alan C. Hindmarsh & Paul F. Dubois",
+          "journal": "Computers in Physics",
+          "volume": 10,
+          "issue": 2,
+          "pages": "138-143",
+          "year": 1996,
+          "identifiers": [
+            {
+              "namespace": "doi",
+              "id": "10.1063/1.4822377",
+              "url": "https://doi.org/10.1063/1.4822377"
+            }
+          ]
+        }
+      ],
+      "parameters": [],
+      "dependentDimensions": [
+        {
+          "namespace": "SIO",
+          "id": "SIO_000418"
+        }
+      ],
+      "dependentVariableTargetPatterns": [],
+      "availableSoftwareInterfaceTypes": [
+        "library",
+        "web application",
+        "BioSimulators Docker image"
+      ],
+      "dependencies": [
+        {
+          "name": "SUNDIALS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://computing.llnl.gov/projects/sundials"
+        },
+        {
+          "name": "libNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuralEnsemble/libNeuroML"
+        },
+        {
+          "name": "jNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/jNeuroML"
+        },
+        {
+          "name": "pyLEMS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/LEMS/pylems"
+        },
+        {
+          "name": "pyNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/pyNeuroML"
+        }
+      ]
+    }
+  ],
+  "interfaceTypes": [
+    "library",
+    "web application",
+    "BioSimulators Docker image"
+  ],
+  "supportedOperatingSystemTypes": [
+    "platform-independent"
+  ],
+  "supportedProgrammingLanguages": [
+    {
+      "namespace": "Linguist",
+      "id": "Python"
+    }
+  ],
+  "funding": [],
+  "biosimulators": {
+    "specificationVersion": "1.0.0",
+    "imageVersion": "1.0.0",
+    "validated": false,
+    "validationTests": null
+  }
+}

@@ -1,4 +1,4 @@
-""" Tests of the command-line interface
+""" Tests of the data model
 
 :Author: Jonathan Karr <karr@mssm.edu>
 :Date: 2021-05-28
@@ -7,110 +7,46 @@
 """
 
 from biosimulators_pyneuroml import data_model
-import enum
-import pyneuroml
 import json
 import os
 import unittest
 
 
 class DataModelTestCase(unittest.TestCase):
-    def test_algorithm(self):
-        alg = data_model.Algorithm("LSODA", pyneuroml.ODESolver, integrator="lsoda", parameters=None)
-        self.assertEqual(alg.name, "LSODA")
-        self.assertEqual(alg.solver, pyneuroml.ODESolver)
-        self.assertEqual(alg.solver_args, {'integrator': 'lsoda'})
-        self.assertEqual(alg.parameters, {})
+    def test_KISAO_ALGORITHM_MAP(self):
+        self.assertEqual(data_model.KISAO_ALGORITHM_MAP['KISAO_0000030']['id'], 'eulerTree')
 
-        alg = data_model.Algorithm("LSODA", pyneuroml.ODESolver, integrator="lsoda", parameters={'param_1': 'value'})
-        self.assertEqual(alg.name, "LSODA")
-        self.assertEqual(alg.solver, pyneuroml.ODESolver)
-        self.assertEqual(alg.solver_args, {'integrator': 'lsoda'})
-        self.assertEqual(alg.parameters, {'param_1': 'value'})
+    def test_KISAO_ALGORITHM_MAP_consistent_with_specs(self):
+        for simulator in data_model.Simulator.__members__.values():
+            with open(os.path.join(os.path.dirname(__file__), '..', 'biosimulators-{}.json'.format(simulator.name)), 'r') as file:
+                specs = json.load(file)
 
-    def test_algorithm_parameter(self):
-        param = data_model.AlgorithmParameter("absolute tolerance", 'integrator_options.atol', float, 1e-12)
-        self.assertEqual(param.name, "absolute tolerance")
-        self.assertEqual(param.key, "integrator_options.atol")
-        self.assertEqual(param.data_type, float)
-        self.assertEqual(param.default, 1e-12)
+            self.assertEqual(set(alg['kisao_id']
+                                 for alg in data_model.KISAO_ALGORITHM_MAP.values()
+                                 if simulator in alg['simulators']),
+                             set(alg_specs['kisaoId']['id'] for alg_specs in specs['algorithms']))
 
-    def test_algorithm_parameter_boolean(self):
-        param = data_model.AlgorithmParameter('name', 'integrator_options', bool, True)
+            for alg_specs in specs['algorithms']:
+                alg_props = data_model.KISAO_ALGORITHM_MAP[alg_specs['kisaoId']['id']]
 
-        solver_args = {}
-        param.set_value(solver_args, 'false')
-        self.assertEqual(solver_args['integrator_options'], False)
+                self.assertEqual(set(alg_props['parameters'].keys()),
+                                 set(param_specs['kisaoId']['id'] for param_specs in alg_specs['parameters']))
+                self.assertEqual(alg_props['parameters'], {})
 
-        solver_args = {}
-        param.set_value(solver_args, '1')
-        self.assertEqual(solver_args['integrator_options'], True)
+    def test_Simulator(self):
+        self.assertEqual(data_model.Simulator.neuron.value, 'NEURON')
 
-        with self.assertRaises(ValueError):
-            param.set_value(solver_args, 'f')
+    def test_RunLemsOptions(self):
+        options = data_model.RunLemsOptions(num_processors=2, max_memory=1e6).to_kw_args(data_model.Simulator.netpyne)
+        self.assertGreaterEqual(options['max_memory'], '1M')
+        self.assertGreaterEqual(options['num_processors'], 2)
+        self.assertGreaterEqual(options['only_generate_scripts'], False)
+        self.assertNotIn('compile_mods', options)
+        self.assertNotIn('realtime_output', options)
 
-    def test_algorithm_parameter_integer(self):
-        param = data_model.AlgorithmParameter('name', 'integrator_options.atol', int, 10)
-        solver_args = {}
-        param.set_value(solver_args, '11')
-        self.assertEqual(solver_args['integrator_options']['atol'], 11)
-
-        with self.assertRaises(ValueError):
-            param.set_value(solver_args, '1.1')
-
-        with self.assertRaises(ValueError):
-            param.set_value(solver_args, '1.')
-
-        with self.assertRaises(ValueError):
-            param.set_value(solver_args, 'a')
-
-    def test_algorithm_parameter_float(self):
-        param = data_model.AlgorithmParameter("absolute tolerance", 'integrator_options.atol', float, 1e-12)
-        solver_args = {}
-        param.set_value(solver_args, '1e-14')
-        self.assertEqual(solver_args['integrator_options']['atol'], 1e-14)
-
-        with self.assertRaises(ValueError):
-            param.set_value(solver_args, 'a')
-
-    def test_algorithm_parameter_enum(self):
-        param = data_model.AlgorithmParameter('name', 'integrator_options.atol', data_model.VodeMethod, data_model.VodeMethod.bdf.value)
-        solver_args = {}
-        param.set_value(solver_args, data_model.VodeMethod.bdf.value)
-        self.assertEqual(solver_args['integrator_options']['atol'], data_model.VodeMethod.bdf.name)
-
-        with self.assertRaises(NotImplementedError):
-            param.set_value(solver_args, '--invalid--')
-
-    def test_algorithm_parameter_invalid_type(self):
-        param = data_model.AlgorithmParameter('name', 'integrator_options.atol', str, 'default')
-        solver_args = {}
-        with self.assertRaises(NotImplementedError):
-            param.set_value(solver_args, 'value')
-
-    def test_data_model_matches_specifications(self):
-        with open(os.path.join(os.path.dirname(__file__), '..', 'biosimulators.json'), 'r') as file:
-            specs = json.load(file)
-
-        self.assertEqual(
-            set(data_model.KISAO_ALGORITHM_MAP.keys()),
-            set(alg_specs['kisaoId']['id'] for alg_specs in specs['algorithms']))
-
-        for alg_specs in specs['algorithms']:
-            alg_props = data_model.KISAO_ALGORITHM_MAP[alg_specs['kisaoId']['id']]
-
-            self.assertEqual(set(alg_props.parameters.keys()), set(param_specs['kisaoId']['id'] for param_specs in alg_specs['parameters']))
-
-            for param_specs in alg_specs['parameters']:
-                param_props = alg_props.parameters[param_specs['kisaoId']['id']]
-
-                param_props_specs_match = (
-                    (param_props.data_type is bool and param_specs['type'] == 'boolean')
-                    or (param_props.data_type is int and param_specs['type'] == 'integer')
-                    or (param_props.data_type is float and param_specs['type'] == 'float')
-                    or (
-                        issubclass(param_props.data_type, enum.Enum) and param_specs['type'] == 'kisaoId'
-                        and set(param_props.data_type.__members__.values()) == set(param_specs['recommendedRange'])
-                    )
-                )
-                self.assertTrue(param_props_specs_match)
+        options = data_model.RunLemsOptions(num_processors=2, max_memory=1e6).to_kw_args(data_model.Simulator.neuron)
+        self.assertGreaterEqual(options['max_memory'], '1M')
+        self.assertNotIn('num_processors', options)
+        self.assertGreaterEqual(options['only_generate_scripts'], False)
+        self.assertGreaterEqual(options['compile_mods'], True)
+        self.assertGreaterEqual(options['realtime_output'], False)

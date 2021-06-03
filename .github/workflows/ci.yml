@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
     inputs:
+      simulator:
+        description: Simulator to update (e.g., 'pyneuroml')
+        required: true
       simulatorVersion:
         description: New version of the underlying simulation tool (e.g., '1.5.6')
         required: true
@@ -20,11 +23,11 @@ jobs:
       mainBranchRef: ${{ steps.get-main-branch.outputs.mainBranchRef }}
       mainBranchHeadRevision: ${{ steps.get-main-branch.outputs.mainBranchHeadRevision }}
       version: ${{ steps.get-version-number.outputs.version }}
-      simulatorId: ${{ steps.get-docker-image-tag.outputs.simulatorId }}
-      simulatorVersion: ${{ steps.get-docker-image-tag.outputs.simulatorVersion }}
-      simulatorName: ${{ steps.get-docker-image-tag.outputs.simulatorName }}
-      dockerImageBaseUrl: ${{ steps.get-docker-image-tag.outputs.dockerImageBaseUrl }}
-      dockerRegistry: ${{ steps.get-docker-image-tag.outputs.dockerRegistry }}
+      jneuromlVersion: ${{ steps.get-docker-image-tag.outputs.jneuromlVersion }}
+      pyneuromlVersion: ${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }}
+      neuronVersion: ${{ steps.get-docker-image-tag.outputs.neuronVersion }}
+      netpyneVersion: ${{ steps.get-docker-image-tag.outputs.netpyneVersion }}
+      brian2Version: ${{ steps.get-docker-image-tag.outputs.brian2Version }}
       release: ${{ steps.determine-if-release-needed.outputs.release }}
       docsChanged: ${{ steps.commit-docs.outputs.docsChanged }}
     steps:
@@ -54,18 +57,19 @@ jobs:
       ## Update the version of the simulator
       #############################################
       - name: Update the version of the simulator
-        if: github.event.inputs.simulatorVersion
+        if: github.event.inputs.simulator
         run: |
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends jq moreutils
 
-          IMAGE_BASE_URL=$(jq -r '.image.url' biosimulators.json | cut -d : -f 1)
-          jq ".version = \"${{ github.event.inputs.simulatorVersion }}\"" biosimulators.json | sponge biosimulators.json
-          jq ".image.url = \"${IMAGE_BASE_URL}:${{ github.event.inputs.simulatorVersion }}\"" biosimulators.json | sponge biosimulators.json
+          jq ".version = \"${{ github.event.inputs.simulatorVersion }}\"" biosimulators-${{ github.event.inputs.simulator }}.json | sponge biosimulators-${{ github.event.inputs.simulator }}.json
+          if [ "${{ github.event.inputs.simulator }}" -ne "jneuroml" ]; then
+            jq ".image.url = \"ghcr.io/biosimulators/biosimulators_pyneuroml/${{ github.event.inputs.simulator }}:${{ github.event.inputs.simulatorVersion }}\"" biosimulators-${{ github.event.inputs.simulator }}.json | sponge biosimulators-${{ github.event.inputs.simulator }}.json
+          fi
 
           sed -i -E \
             "s/SIMULATOR_VERSION=([^ \n]+|\".*?\")/SIMULATOR_VERSION=\"${{ github.event.inputs.simulatorVersion }}\"/" \
-            Dockerfile
+            Dockerfile-${{ github.event.inputs.simulator }}
 
       #############################################
       ## Install package and its dependencies
@@ -125,36 +129,79 @@ jobs:
           echo "::set-output name=version::$version"
 
       - id: get-docker-image-tag
-        name: Determine Docker image tag
+        name: Determine Docker image tags
         run: |
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends jq
 
-          SIMULATOR_ID=$(jq -r '.id' biosimulators.json)
-          SIMULATOR_VERSION=$(jq -r '.version' biosimulators.json)
-          SIMULATOR_NAME=$(jq -r '.name' biosimulators.json)
-          IMAGE_BASE_URL=$(jq -r '.image.url' biosimulators.json | cut -d : -f 1)
-          DOCKER_REGISTRY=$(echo $IMAGE_BASE_URL | cut -d / -f 1)
+          JNEUROML_VERSION=$(jq -r '.version' biosimulators-jneuroml.json)
+          PYNEUROML_VERSION=$(jq -r '.version' biosimulators-pyneuroml.json)
+          NEURON_VERSION=$(jq -r '.version' biosimulators-neuron.json)
+          NETPYNE_VERSION=$(jq -r '.version' biosimulators-netpyne.json)
+          BRIAN2_VERSION=$(jq -r '.version' biosimulators-brian2.json)
 
-          echo "::set-output name=simulatorId::${SIMULATOR_ID}"
-          echo "::set-output name=simulatorVersion::${SIMULATOR_VERSION}"
-          echo "::set-output name=simulatorName::${SIMULATOR_NAME}"
-          echo "::set-output name=dockerImageBaseUrl::${IMAGE_BASE_URL}"
-          echo "::set-output name=dockerRegistry::${DOCKER_REGISTRY}"
+          echo "::set-output name=jneuromlVersion::${JNEUROML_VERSION}"
+          echo "::set-output name=pyneuromlVersion::${PYNEUROML_VERSION}"
+          echo "::set-output name=neuronVersion::${NEURON_VERSION}"
+          echo "::set-output name=netpyneVersion::${NETPYNE_VERSION}"
+          echo "::set-output name=brian2Version::${BRIAN2_VERSION}"
 
-      - name: Build Docker image
+      - name: Build Docker images
         run: |
           REVISION=$(git rev-parse HEAD)
           CREATED=$(date --rfc-3339=seconds | sed 's/ /T/')
-          docker build \
-            --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
-            --label org.opencontainers.image.revision=${REVISION} \
-            --label org.opencontainers.image.created=${CREATED} \
-            --build-arg VERSION=${{ steps.get-version-number.outputs.version }} \
-            --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.simulatorVersion }} \
-            --tag ${{ steps.get-docker-image-tag.outputs.dockerImageBaseUrl }}:${{ steps.get-docker-image-tag.outputs.simulatorVersion }} \
-            --tag ${{ steps.get-docker-image-tag.outputs.dockerImageBaseUrl }}:latest \
-            .
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "pyneuroml" ]; then
+            docker build \
+              --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
+              --label org.opencontainers.image.revision=${REVISION} \
+              --label org.opencontainers.image.created=${CREATED} \
+              --build-arg VERSION=${{ steps.get-version-number.outputs.version }} \
+              --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }} \
+              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }} \
+              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:latest \
+              -f Dockerfile-pyneuroml \
+              .
+          fi
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "neuron" ]; then
+            docker build \
+              --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
+              --label org.opencontainers.image.revision=${REVISION} \
+              --label org.opencontainers.image.created=${CREATED} \
+              --build-arg VERSION=${{ steps.get-version-number.outputs.version }} \
+              --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.neuronVersion }} \
+              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ steps.get-docker-image-tag.outputs.neuronVersion }} \
+              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:latest \
+              -f Dockerfile-neuron \
+              .
+           fi
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "netpyne" ]; then
+            docker build \
+              --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
+              --label org.opencontainers.image.revision=${REVISION} \
+              --label org.opencontainers.image.created=${CREATED} \
+              --build-arg VERSION=${{ steps.get-version-number.outputs.version }} \
+              --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.netpyneVersion }} \
+              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ steps.get-docker-image-tag.outputs.netpyneVersion }} \
+              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:latest \
+              -f Dockerfile-netpyne \
+              .
+          fi
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "brian2" ]; then
+            docker build \
+              --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
+              --label org.opencontainers.image.revision=${REVISION} \
+              --label org.opencontainers.image.created=${CREATED} \
+              --build-arg VERSION=${{ steps.get-version-number.outputs.version }} \
+              --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.brian2Version }} \
+              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:${{ steps.get-docker-image-tag.outputs.brian2Version }} \
+              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:latest \
+              -f Dockerfile-brian2 \
+              .
+          fi
 
       #############################################
       ## Test and upload coverage report to Codecov
@@ -192,21 +239,21 @@ jobs:
       #############################################
       # If new version of simulator, commit and push the new version
       - name: Commit the revised version of the simulator
-        if: github.event.inputs.simulatorVersion && github.event.inputs.simulatorVersionLatest == 'true'
+        if: github.event.inputs.simulator && github.event.inputs.simulatorVersionLatest == 'true'
         run: |
           git config --local user.email "biosimulators.daemon@gmail.com"
           git config --local user.name "biosimulatorsdaemon"
           git config pull.rebase false
-          git stash -- biosimulators.json Dockerfile
+          git stash -- biosimulators-${{ github.event.inputs.simulator }}.json Dockerfile-${{ github.event.inputs.simulator }}
           git clean -f -d
           git checkout .
           git pull
           git stash pop
-          git add biosimulators.json Dockerfile
+          git add biosimulators-${{ github.event.inputs.simulator }}.json Dockerfile-${{ github.event.inputs.simulator }}
           git commit -m "Updating version of simulator"
 
       - name: Push the revised version of the simulator
-        if: github.event.inputs.simulatorVersion && github.event.inputs.simulatorVersionLatest == 'true'
+        if: github.event.inputs.simulator && github.event.inputs.simulatorVersionLatest == 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -221,7 +268,7 @@ jobs:
         run: |
           release="0"
 
-          if [ ! -z "${{ github.event.inputs.simulatorVersion }}" ]; then
+          if [ ! -z "${{ github.event.inputs.simulator }}" ]; then
             if [ "${{ github.ref }}" == "${{ steps.get-main-branch.outputs.mainBranchRef }}" ]; then
               release="1"
             fi
@@ -312,23 +359,90 @@ jobs:
       - name: Push Docker image
         if: steps.determine-if-release-needed.outputs.release == '1'
         run: |
-          docker login ${{ steps.get-docker-image-tag.outputs.dockerRegistry }} \
+          docker login ghcr.io \
             --username ${{ secrets.DOCKER_REGISTRY_USERNAME }} \
             --password ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-          docker push ${{ steps.get-docker-image-tag.outputs.dockerImageBaseUrl }}:${{ steps.get-docker-image-tag.outputs.simulatorVersion }}
 
-          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
-            docker push ${{ steps.get-docker-image-tag.outputs.dockerImageBaseUrl }}:latest
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "pyneuroml" ]; then
+            docker push ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }}
+            if [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
+              docker push ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:latest
+            fi
           fi
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "neuron" ]; then
+            docker push ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ steps.get-docker-image-tag.outputs.neuronVersion }}
+            if [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
+              docker push ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:latest
+            fi
+          fi
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "netpyne" ]; then
+            docker push ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ steps.get-docker-image-tag.outputs.netpyneVersion }}
+            if [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
+              docker push ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:latest
+            fi
+          fi
+
+          # if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "brian2" ]; then
+          #   docker push ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:${{ steps.get-docker-image-tag.outputs.brian2Version }}
+          #   if [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
+          #    docker push ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:latest
+          #   fi
+          # fi
 
       # Submit to BioSimulators registry
       - name: Submit to BioSimulators registry
         if: steps.determine-if-release-needed.outputs.release == '1'
         run: |
           REVISION=$(git rev-parse HEAD)
-          curl \
-            -X POST \
-            -u ${{ secrets.GH_ISSUE_USERNAME }}:${{ secrets.GH_ISSUE_TOKEN }} \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/biosimulators/Biosimulators/issues \
-            -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit ${{ steps.get-docker-image-tag.outputs.simulatorName }} ${{ steps.get-docker-image-tag.outputs.simulatorVersion }}\", \"body\": \"---\nid: ${{ steps.get-docker-image-tag.outputs.simulatorId }}\nversion: ${{ steps.get-docker-image-tag.outputs.simulatorVersion }}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators.json\nspecificationsPatch:\n  version: ${{ steps.get-docker-image-tag.outputs.simulatorVersion }}\n  image:\n    url: ${{ steps.get-docker-image-tag.outputs.dockerImageBaseUrl }}:${{ steps.get-docker-image-tag.outputs.simulatorVersion }}\nvalidateImage: true\ncommitSimulator: true\n\n---\"}"
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "jneuroml" ]; then
+            VERSION=${{ steps.get-docker-image-tag.outputs.jneuromlVersion }}
+            curl \
+              -X POST \
+              -u ${{ secrets.GH_ISSUE_USERNAME }}:${{ secrets.GH_ISSUE_TOKEN }} \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/biosimulators/Biosimulators/issues \
+              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit jNeuroML ${VERSION}\", \"body\": \"---\nid: jneuroml\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-jneuroml.json\nspecificationsPatch:\n  version: ${VERSION}\nvalidateImage: false\ncommitSimulator: true\n\n---\"}"
+          fi
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "pyneuroml" ]; then
+            VERSION=${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }}
+            curl \
+              -X POST \
+              -u ${{ secrets.GH_ISSUE_USERNAME }}:${{ secrets.GH_ISSUE_TOKEN }} \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/biosimulators/Biosimulators/issues \
+              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit pyNeuroML ${VERSION}\", \"body\": \"---\nid: pyneuroml\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-pyneuroml.json\nspecificationsPatch:\n  version: ${VERSION}\n  image:\n    url: ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${VERSION}\nvalidateImage: true\ncommitSimulator: true\n\n---\"}"
+          fi
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "neuron" ]; then
+            VERSION=${{ steps.get-docker-image-tag.outputs.neuronVersion }}
+            curl \
+              -X POST \
+              -u ${{ secrets.GH_ISSUE_USERNAME }}:${{ secrets.GH_ISSUE_TOKEN }} \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/biosimulators/Biosimulators/issues \
+              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit Neuron ${VERSION}\", \"body\": \"---\nid: neuron\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-neuron.json\nspecificationsPatch:\n  version: ${VERSION}\n  image:\n    url: ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${VERSION}\nvalidateImage: true\ncommitSimulator: true\n\n---\"}"
+          fi
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "netpyne" ]; then
+            VERSION=${{ steps.get-docker-image-tag.outputs.netpyneVersion }}
+            curl \
+              -X POST \
+              -u ${{ secrets.GH_ISSUE_USERNAME }}:${{ secrets.GH_ISSUE_TOKEN }} \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/biosimulators/Biosimulators/issues \
+              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit NetPyNE ${VERSION}\", \"body\": \"---\nid: netpyne\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-netpyne.json\nspecificationsPatch:\n  version: ${VERSION}\n  image:\n    url: ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${VERSION}\nvalidateImage: true\ncommitSimulator: true\n\n---\"}"
+          fi
+
+          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "brian2" ]; then
+            VERSION=${{ steps.get-docker-image-tag.outputs.brian2Version }}
+            curl \
+              -X POST \
+              -u ${{ secrets.GH_ISSUE_USERNAME }}:${{ secrets.GH_ISSUE_TOKEN }} \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/biosimulators/Biosimulators/issues \
+              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit Brian 2 ${VERSION}\", \"body\": \"---\nid: brian2\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-brian2.json\nspecificationsPatch:\n  version: ${VERSION}\nvalidateImage: false\ncommitSimulator: true\n\n---\"}"
+          fi

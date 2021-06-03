@@ -1,0 +1,9 @@
+[brian2]
+brian2
+
+[netpyne]
+netpyne
+neuron
+
+[neuron]
+neuron

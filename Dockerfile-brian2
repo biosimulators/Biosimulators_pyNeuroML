@@ -1,0 +1,39 @@
+# Base OS
+FROM ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:latest
+
+ARG VERSION=0.0.1
+ARG SIMULATOR_VERSION="2.4.2"
+
+# metadata
+LABEL \
+    org.opencontainers.image.title="Brian 2" \
+    org.opencontainers.image.version="${SIMULATOR_VERSION}" \
+    org.opencontainers.image.description="Clock-driven simulator for spiking neural networks" \
+    org.opencontainers.image.url="https://briansimulator.org" \
+    org.opencontainers.image.documentation="https://brian2.readthedocs.io/" \
+    org.opencontainers.image.source="https://github.com/biosimulators/Biosimulators_pyNeuroML" \
+    org.opencontainers.image.authors="BioSimulators Team <info@biosimulators.org>" \
+    org.opencontainers.image.vendor="BioSimulators Team" \
+    org.opencontainers.image.licenses="CECILL-2.1" \
+    \
+    base_image="python:3.9-slim-buster" \
+    version="${VERSION}" \
+    software="Brian 2" \
+    software.version="${SIMULATOR_VERSION}" \
+    about.summary="Clock-driven simulator for spiking neural networks" \
+    about.home="https://briansimulator.org" \
+    about.documentation="https://brian2.readthedocs.io/" \
+    about.license_file="https://raw.githubusercontent.com/brian-team/brian2/master/LICENSE" \
+    about.license="SPDX:CECILL-2.1" \
+    about.tags="computational neuroscience,biochemical networks,dynamical modeling,stochastic simulation,NeuroML,LEMS,SED-ML,COMBINE,OMEX,BioSimulators" \
+    maintainer="BioSimulators Team <info@biosimulators.org>"
+
+# Copy code for command-line interface into image and install it
+COPY . /root/Biosimulators_pyNeuroML
+RUN pip install /root/Biosimulators_pyNeuroML \
+    && rm -rf /root/Biosimulators_pyNeuroML
+RUN pip install "brian2==${SIMULATOR_VERSION}"
+
+# Entrypoint
+ENTRYPOINT ["biosimulators-brian2"]
+CMD []

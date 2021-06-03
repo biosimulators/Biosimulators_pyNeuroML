@@ -26,7 +26,7 @@ setuptools.setup(
     name=name,
     version=md.version,
     description=("BioSimulators-compliant command-line interface to "
-                 "the pyNeuroML simulation program."),
+                 "the Brian 2, jNeuroML/pyNeuroML, NEURON, and NetPyNe simulation programs."),
     long_description=md.long_description,
     url="https://github.com/biosimulators/Biosimulators_pyNeuroML",
     download_url="https://github.com/biosimulators/Biosimulators_pyNeuroML",
@@ -38,6 +38,7 @@ setuptools.setup(
         'dynamical modeling',
         'numerical simulation',
         'NeuroML',
+        'LEMS',
         'SED-ML',
         'COMBINE',
         'OMEX',
@@ -55,7 +56,10 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'pyneuroml = biosimulators_pyneuroml.__main__:main',
+            'biosimulators-pyneuroml = biosimulators_pyneuroml.cli.pyneuroml:main',
+            'biosimulators-neuron = biosimulators_pyneuroml.cli.neuron:main',
+            'biosimulators-netpyne = biosimulators_pyneuroml.cli.netpyne:main',
+            # 'biosimulators-brian2 = biosimulators_pyneuroml.cli.brian2:main',
         ],
     },
 )

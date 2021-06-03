@@ -1,0 +1,369 @@
+{
+  "id": "brian2",
+  "name": "Brian 2",
+  "version": "2.4.2",
+  "description": "Clock-driven simulator for spiking neural networks",
+  "urls": [
+    {
+      "type": "Home page",
+      "url": "https://briansimulator.org"
+    }
+  ],
+  "image": null,
+  "authors": [
+    {
+      "firstName": "Romain",
+      "lastName": "Brette",
+      "identifiers": []
+    },
+    {
+      "firstName": "Dan",
+      "lastName": "Goodman",
+      "identifiers": []
+    },
+    {
+      "firstName": "Marcel",
+      "lastName": "Stimberg",
+      "identifiers": []
+    }
+  ],
+  "references": {
+    "identifiers": [
+      {
+        "namespace": "pypi",
+        "id": "Brian2",
+        "url": "https://pypi.org/project/Brian2"
+      }
+    ],
+    "citations": [
+      {
+        "title": "Brian 2, an intuitive and efficient neural simulator",
+        "authors": "Marcel Stimberg, Romain Brette & Dan FM Goodman",
+        "journal": "eLife",
+        "volume": 8,
+        "pages": "e47314",
+        "year": 2019,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.7554/eLife.47314",
+            "url": "https://doi.org/10.7554/eLife.47314"
+          }
+        ]
+      },
+      {
+        "title": "The Brian simulator",
+        "authors": "Dan FM Goodman & Romain Brette",
+        "journal": "Frontiers in Neuroscience",
+        "volume": 3,
+        "pages": "26",
+        "year": 2009,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.3389/neuro.01.026.2009",
+            "url": "https://doi.org/10.3389/neuro.01.026.2009"
+          }
+        ]
+      },
+      {
+        "title": "Brian: a simulator for spiking neural networks in Python",
+        "authors": "Dan FM Goodman & Romain Brette",
+        "journal": "Frontiers in Neuroinformatics",
+        "volume": 2,
+        "pages": "5",
+        "year": 2008,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.3389/neuro.11.005.2008",
+            "url": "https://doi.org/10.3389/neuro.11.005.2008"
+          }
+        ]
+      }
+    ]
+  },
+  "license": {
+    "namespace": "SPDX",
+    "id": "CECILL-2.1"
+  },
+  "algorithms": [
+    {
+      "id": "EULER",
+      "name": "Euler forward method",
+      "kisaoId": {
+        "namespace": "KISAO",
+        "id": "KISAO_0000030"
+      },
+      "modelingFrameworks": [
+        {
+          "namespace": "SBO",
+          "id": "SBO_0000293"
+        }
+      ],
+      "modelFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "simulationFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3685",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "archiveFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3686",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "citations": [],
+      "parameters": [],
+      "dependentDimensions": [
+        {
+          "namespace": "SIO",
+          "id": "SIO_000418"
+        }
+      ],
+      "dependentVariableTargetPatterns": [],
+      "availableSoftwareInterfaceTypes": [
+        "library"
+      ],
+      "dependencies": [
+        {
+          "name": "libNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuralEnsemble/libNeuroML"
+        },
+        {
+          "name": "jNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/jNeuroML"
+        },
+        {
+          "name": "pyLEMS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/LEMS/pylems"
+        },
+        {
+          "name": "pyNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/pyNeuroML"
+        }
+      ]
+    },
+    {
+      "id": "RK2",
+      "name": "2nd order Runge-kutta method",
+      "kisaoId": {
+        "namespace": "KISAO",
+        "id": "KISAO_0000381"
+      },
+      "modelingFrameworks": [
+        {
+          "namespace": "SBO",
+          "id": "SBO_0000293"
+        }
+      ],
+      "modelFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "simulationFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3685",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "archiveFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3686",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "citations": [],
+      "parameters": [],
+      "dependentDimensions": [
+        {
+          "namespace": "SIO",
+          "id": "SIO_000418"
+        }
+      ],
+      "dependentVariableTargetPatterns": [],
+      "availableSoftwareInterfaceTypes": [
+        "library"
+      ],
+      "dependencies": [
+        {
+          "name": "libNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuralEnsemble/libNeuroML"
+        },
+        {
+          "name": "jNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/jNeuroML"
+        },
+        {
+          "name": "pyLEMS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/LEMS/pylems"
+        },
+        {
+          "name": "pyNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/pyNeuroML"
+        }
+      ]
+    },
+    {
+      "id": "RK4",
+      "name": "4th order Runge-kutta method",
+      "kisaoId": {
+        "namespace": "KISAO",
+        "id": "KISAO_0000032"
+      },
+      "modelingFrameworks": [
+        {
+          "namespace": "SBO",
+          "id": "SBO_0000293"
+        }
+      ],
+      "modelFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "simulationFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3685",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "archiveFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3686",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "citations": [],
+      "parameters": [],
+      "dependentDimensions": [
+        {
+          "namespace": "SIO",
+          "id": "SIO_000418"
+        }
+      ],
+      "dependentVariableTargetPatterns": [],
+      "availableSoftwareInterfaceTypes": [
+        "library"
+      ],
+      "dependencies": [
+        {
+          "name": "libNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuralEnsemble/libNeuroML"
+        },
+        {
+          "name": "jNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/jNeuroML"
+        },
+        {
+          "name": "pyLEMS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/LEMS/pylems"
+        },
+        {
+          "name": "pyNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/pyNeuroML"
+        }
+      ]
+    }
+  ],
+  "interfaceTypes": [
+    "library"
+  ],
+  "supportedOperatingSystemTypes": [
+    "platform-independent"
+  ],
+  "supportedProgrammingLanguages": [
+    {
+      "namespace": "Linguist",
+      "id": "Python"
+    }
+  ],
+  "funding": [],
+  "biosimulators": {
+    "specificationVersion": "1.0.0",
+    "imageVersion": "1.0.0",
+    "validated": false,
+    "validationTests": null
+  }
+}

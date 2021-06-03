@@ -1,0 +1,394 @@
+{
+  "id": "neuron",
+  "name": "NEURON",
+  "version": "8.0.0",
+  "description": "Empirically-based simulator for modeling neurons and networks of neurons.",
+  "urls": [
+    {
+      "type": "Home page",
+      "url": "https://neuron.yale.edu/neuron/"
+    }
+  ],
+  "image": {
+    "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:8.0.0",
+    "format": {
+      "namespace": "EDAM",
+      "id": "format_3973",
+      "version": null,
+      "supportedFeatures": []
+    },
+    "operatingSystemType": "Linux"
+  },
+  "authors": [
+    {
+      "firstName": "Michael",
+      "lastName": "Hines",
+      "identifiers": []
+    },
+    {
+      "firstName": "John",
+      "middleName": "W",
+      "lastName": "Moore",
+      "identifiers": []
+    },
+    {
+      "firstName": "Ted",
+      "lastName": "Carnevale",
+      "identifiers": []
+    },
+    {
+      "firstName": "Robert",
+      "lastName": "McDougal",
+      "identifiers": []
+    },
+    {
+      "firstName": "Tom",
+      "lastName": "Morse",
+      "identifiers": []
+    },
+    {
+      "firstName": "Gordon",
+      "lastName": "Shepherd",
+      "identifiers": []
+    },
+    {
+      "firstName": "Zach",
+      "lastName": "Mainen",
+      "identifiers": []
+    },
+    {
+      "firstName": "Gary",
+      "lastName": "Holt",
+      "identifiers": []
+    },
+    {
+      "firstName": "William",
+      "middleName": "W",
+      "lastName": "Lytton",
+      "identifiers": []
+    },
+    {
+      "firstName": "Hubert",
+      "lastName": "Eichner",
+      "identifiers": []
+    },
+    {
+      "firstName": "Andrew",
+      "lastName": "Davison",
+      "identifiers": []
+    },
+    {
+      "firstName": "Eilif",
+      "lastName": "Muller",
+      "identifiers": []
+    }
+  ],
+  "references": {
+    "identifiers": [
+      {
+        "namespace": "pypi",
+        "id": "NEURON",
+        "url": "https://pypi.org/project/NEURON"
+      }
+    ],
+    "citations": [
+      {
+        "title": "CoreNEURON : An Optimized Compute Engine for the NEURON Simulator",
+        "authors": "Pramod Kumbhar, Michael Hines, Jeremy Fouriaux, Aleksandr Ovcharenko, James King, Fabien Delalondre & Felix Schürmann",
+        "journal": "Frontiers in Neuroinformatics",
+        "volume": 13,
+        "pages": "63",
+        "year": 2019,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.3389/fninf.2019.00063",
+            "url": "https://doi.org/10.3389/fninf.2019.00063"
+          }
+        ]
+      },
+      {
+        "title": "Using NEURON for Reaction-Diffusion Modeling of Extracellular Dynamics",
+        "authors": "Adam J. H. Newton, Robert A. McDougal, Michael L. Hines & William W. Lytton",
+        "journal": "Frontiers in Neuroinformatics",
+        "volume": 12,
+        "pages": "41",
+        "year": 2018,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.3389/fninf.2018.00041",
+            "url": "https://doi.org/10.3389/fninf.2018.00041"
+          }
+        ]
+      },
+      {
+        "title": "Reaction-diffusion in the NEURON simulator",
+        "authors": "Robert A. McDougal, Michael L. Hines & William W. Lytton",
+        "journal": "Frontiers in Neuroinformatics",
+        "volume": 7,
+        "pages": "28",
+        "year": 2013,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.3389/fninf.2013.00028",
+            "url": "https://doi.org/10.3389/fninf.2013.00028"
+          }
+        ]
+      },
+      {
+        "title": "The NEURON Book",
+        "authors": "Nicholas T. Carnevale & Michael L. Hines",
+        "journal": "Journal of Computational Neuroscience",
+        "volume": 21,
+        "pages": "119",
+        "year": 2006,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.1017/CBO9780511541612",
+            "url": "https://doi.org/10.1017/CBO9780511541612"
+          }
+        ]
+      },
+      {
+        "title": "Parallel network simulations with NEURON",
+        "authors": "M. Migliore, C. Cannia, William W. Lytton, Henry Markram & Michael L. Hines",
+        "journal": "Journal of Computational Neuroscience",
+        "volume": 21,
+        "pages": "119",
+        "year": 2006,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.1007/s10827-006-7949-5",
+            "url": "https://doi.org/10.1007/s10827-006-7949-5"
+          }
+        ]
+      },
+      {
+        "title": "Simulation Neurotechnologies for Advancing Brain Research: Parallelizing Large Networks in NEURON",
+        "authors": "William W. Lytton, Alexandra H. Seidenstein, Salvador Dura-Bernal, Robert A. McDougal, Felix Schürmann & Michael L. Hines",
+        "journal": "Neural Computation",
+        "volume": "28",
+        "issue": "10",
+        "pages": "2063-2090",
+        "year": 2006,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.1162/NECO_a_00876",
+            "url": "https://doi.org/10.1162/NECO_a_00876"
+          }
+        ]
+      },
+      {
+        "title": "Discrete event simulation in the NEURON environment",
+        "authors": "Michael L. Hines & Nicholas T. Carnevale",
+        "journal": "Neurocomputing",
+        "volume": "58-60",
+        "pages": "1117-1122",
+        "year": 2004,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.1016/j.neucom.2004.01.175",
+            "url": "https://doi.org/10.1016/j.neucom.2004.01.175"
+          }
+        ]
+      },
+      {
+        "title": "NEURON: a tool for neuroscientists",
+        "authors": "Michael L. Hines & Nicholas T. Carnevale",
+        "journal": "The Neuroscientist",
+        "volume": 7,
+        "issue": 2,
+        "pages": "123-135",
+        "year": 2001,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.1177/107385840100700207",
+            "url": "https://doi.org/10.1177/107385840100700207"
+          }
+        ]
+      },
+      {
+        "title": "The NEURON simulation environment",
+        "authors": "Michael L. Hines & Nicholas T. Carnevale",
+        "journal": "Neural Computation",
+        "volume": 9,
+        "issue": 6,
+        "pages": "1179-1209",
+        "year": 1997,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.1162/neco.1997.9.6.1179",
+            "url": "https://doi.org/10.1162/neco.1997.9.6.1179"
+          }
+        ]
+      },
+      {
+        "title": "The NEURON simulation program",
+        "authors": "Michael L. Hines",
+        "journal": "Neural Network Simulation Environments",
+        "pages": "147-163",
+        "year": 1994,
+        "identifiers": [
+          {
+            "namespace": "doi",
+            "id": "10.1007/978-1-4615-2736-7_8",
+            "url": "https://doi.org/10.1007/978-1-4615-2736-7_8"
+          }
+        ]
+      }
+    ]
+  },
+  "license": {
+    "namespace": "SPDX",
+    "id": "BSD-3-Clause"
+  },
+  "algorithms": [
+    {
+      "id": "cvode",
+      "name": "C-language Variable-coefficient Ordinary Differential Equation solver",
+      "kisaoId": {
+        "namespace": "KISAO",
+        "id": "KISAO_0000019"
+      },
+      "modelingFrameworks": [
+        {
+          "namespace": "SBO",
+          "id": "SBO_0000293"
+        }
+      ],
+      "modelFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
+        },
+        {
+          "namespace": "EDAM",
+          "id": "format_9005",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "simulationFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3685",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "archiveFormats": [
+        {
+          "namespace": "EDAM",
+          "id": "format_3686",
+          "version": null,
+          "supportedFeatures": []
+        }
+      ],
+      "citations": [
+        {
+          "title": "CVODE, a stiff/nonstiff ODE solver in C",
+          "authors": "Scott D. Cohen, Alan C. Hindmarsh & Paul F. Dubois",
+          "journal": "Computers in Physics",
+          "volume": 10,
+          "issue": 2,
+          "pages": "138-143",
+          "year": 1996,
+          "identifiers": [
+            {
+              "namespace": "doi",
+              "id": "10.1063/1.4822377",
+              "url": "https://doi.org/10.1063/1.4822377"
+            }
+          ]
+        }
+      ],
+      "parameters": [],
+      "dependentDimensions": [
+        {
+          "namespace": "SIO",
+          "id": "SIO_000418"
+        }
+      ],
+      "dependentVariableTargetPatterns": [],
+      "availableSoftwareInterfaceTypes": [
+        "library",
+        "desktop application",
+        "BioSimulators Docker image"
+      ],
+      "dependencies": [
+        {
+          "name": "SUNDIALS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://computing.llnl.gov/projects/sundials"
+        },
+        {
+          "name": "libNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuralEnsemble/libNeuroML"
+        },
+        {
+          "name": "jNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/jNeuroML"
+        },
+        {
+          "name": "pyLEMS",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/LEMS/pylems"
+        },
+        {
+          "name": "pyNeuroML",
+          "version": null,
+          "required": true,
+          "freeNonCommercialLicense": true,
+          "url": "https://github.com/NeuroML/pyNeuroML"
+        }
+      ]
+    }
+  ],
+  "interfaceTypes": [
+    "library",
+    "desktop application",
+    "BioSimulators Docker image"
+  ],
+  "supportedOperatingSystemTypes": [
+    "platform-independent"
+  ],
+  "supportedProgrammingLanguages": [
+    {
+      "namespace": "Linguist",
+      "id": "Python"
+    }
+  ],
+  "funding": [],
+  "biosimulators": {
+    "specificationVersion": "1.0.0",
+    "imageVersion": "1.0.0",
+    "validated": false,
+    "validationTests": null
+  }
+}

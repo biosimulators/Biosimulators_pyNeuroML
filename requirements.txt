@@ -2,4 +2,5 @@ biosimulators_utils[neuroml,logging] >= 0.1.76
 kisao
 lxml
 numpy
+psutil
 pyneuroml

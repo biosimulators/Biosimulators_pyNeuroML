@@ -3,7 +3,7 @@ BioSimulators-pyNeuroML documentation
 
 BioSimulators-pyNeuroML provides a `BioSimulators <https://biosimulators.org>`_-compliant command-line interface to the `pyNeuroML <https://github.com/NeuroML/pyNeuroML>`_ biological simulation tool. A Docker image for this package is also available.
 
-This command-line interface and Docker image enable users to use pyNeuroML to execute `COMBINE/OMEX archives <https://combinearchive.org/>`_ that describe one or more simulation experiments (in `SED-ML format <https://sed-ml.org>`_) of one or more models (in `NeuroML format <https://neuroml.org/>`_).
+This command-line interface and Docker image enable users to use pyNeuroML to execute `COMBINE/OMEX archives <https://combinearchive.org/>`_ that describe one or more simulation experiments (in `SED-ML format <https://sed-ml.org>`_) of one or more models (in `NeuroML <https://neuroml.org/>`_ / `LEMS <https://lems.github.io/LEMS/>`_ format).
 
 A list of the algorithms and algorithm parameters supported by pyNeuroML is available at `BioSimulators <https://biosimulators.org/simulators/pyneuroml>`_.
 

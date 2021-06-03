@@ -1,0 +1,77 @@
+# Base OS
+FROM continuumio/miniconda3:4.9.2
+
+ARG VERSION=0.0.1
+ARG SIMULATOR_VERSION="8.0.0"
+
+# metadata
+LABEL \
+    org.opencontainers.image.title="NEURON" \
+    org.opencontainers.image.version="${SIMULATOR_VERSION}" \
+    org.opencontainers.image.description="Simulation environment for building and using computational models of neurons and networks of neurons" \
+    org.opencontainers.image.url="https://neuron.yale.edu/" \
+    org.opencontainers.image.documentation="https://neuron.yale.edu/neuron/docs" \
+    org.opencontainers.image.source="https://github.com/biosimulators/Biosimulators_pyNeuroML" \
+    org.opencontainers.image.authors="BioSimulators Team <info@biosimulators.org>" \
+    org.opencontainers.image.vendor="BioSimulators Team" \
+    org.opencontainers.image.licenses="BSD-3-Clause" \
+    \
+    base_image="continuumio/miniconda3:4.9.2" \
+    version="${VERSION}" \
+    software="NEURON" \
+    software.version="${SIMULATOR_VERSION}" \
+    about.summary="Simulation environment for building and using computational models of neurons and networks of neurons" \
+    about.home="https://neuron.yale.edu/" \
+    about.documentation="https://neuron.yale.edu/neuron/docs" \
+    about.license_file="https://raw.githubusercontent.com/neuronsimulator/nrn/master/Copyright" \
+    about.license="SPDX:BSD-3-Clause" \
+    about.tags="computational neuroscience,biochemical networks,dynamical modeling,stochastic simulation,NeuroML,LEMS,SED-ML,COMBINE,OMEX,BioSimulators" \
+    maintainer="BioSimulators Team <info@biosimulators.org>"
+
+# install dependencies: Java, NEURON
+RUN mkdir /usr/share/man/man1/ \
+    && apt-get update -y \
+    && apt-get install -y --no-install-recommends default-jre-headless \
+    && apt-get install -y --no-install-recommends make g++ \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/* \
+    \
+    && conda update -n base -c defaults conda \
+    && conda create python=3.9 --name py39 -y \
+    && conda install -n py39 -y -c conda-forge neuron==${SIMULATOR_VERSION} \
+    && conda install -n py39 -y -c anaconda gcc_linux-64 \
+    && chmod ugo+rw -R /opt/conda/envs/py39
+RUN conda install -n py39 -y -c conda-forge neuron==${SIMULATOR_VERSION}
+SHELL ["conda", "run", "-n", "py39", "/bin/bash", "-c"]
+
+# setup headless environment
+RUN apt-get -y update \
+    && apt-get install --no-install-recommends -y \
+        xvfb \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir /tmp/.X11-unix \
+    && chmod 1777 /tmp/.X11-unix
+COPY scripts/xvfb-startup.sh .
+ARG RESOLUTION="1920x1080x24"
+ARG XARGS=""
+ENV XVFB_RES="${RESOLUTION}" \
+    XVFB_ARGS="${XARGS}" \
+    DISPLAY=":1"
+
+# Copy code for command-line interface into image and install it
+COPY . /root/Biosimulators_pyNeuroML
+RUN pip install /root/Biosimulators_pyNeuroML[neuron] \
+    && rm -rf /root/Biosimulators_pyNeuroML \
+    && python -c "import matplotlib.font_manager"
+ENV VERBOSE=0 \
+    MPLBACKEND=PDF
+
+# configure matplotlib
+RUN mkdir -p /.cache/matplotlib \
+    && mkdir -p /.config/matplotlib \
+    && chmod ugo+rw /.config/matplotlib \
+    && chmod ugo+rw /.cache/matplotlib
+
+# Entrypoint
+ENTRYPOINT ["/bin/bash", "/xvfb-startup.sh", "conda", "run", "--no-capture-output", "-n", "py39", "biosimulators-neuron"]
+CMD []
