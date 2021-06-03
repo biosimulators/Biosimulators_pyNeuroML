@@ -151,7 +151,7 @@ jobs:
           REVISION=$(git rev-parse HEAD)
           CREATED=$(date --rfc-3339=seconds | sed 's/ /T/')
 
-          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "pyneuroml" ]; then
+          if [ -z "${{ github.event.inputs.simulator }}" ] || [ "${{ github.event.inputs.simulator }}" == "pyneuroml" ]; then
             docker build \
               --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
               --label org.opencontainers.image.revision=${REVISION} \
@@ -164,7 +164,7 @@ jobs:
               .
           fi
 
-          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "neuron" ]; then
+          if [ -z "${{ github.event.inputs.simulator }}" ] || [ "${{ github.event.inputs.simulator }}" == "neuron" ]; then
             docker build \
               --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
               --label org.opencontainers.image.revision=${REVISION} \
@@ -177,7 +177,7 @@ jobs:
               .
            fi
 
-          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "netpyne" ]; then
+          if [ -z "${{ github.event.inputs.simulator }}" ] || [ "${{ github.event.inputs.simulator }}" == "netpyne" ]; then
             docker build \
               --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
               --label org.opencontainers.image.revision=${REVISION} \
@@ -190,7 +190,7 @@ jobs:
               .
           fi
 
-          if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "brian2" ]; then
+          if [ -z "${{ github.event.inputs.simulator }}" ] || [ "${{ github.event.inputs.simulator }}" == "brian2" ]; then
             docker build \
               --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
               --label org.opencontainers.image.revision=${REVISION} \
@@ -239,7 +239,7 @@ jobs:
       #############################################
       # If new version of simulator, commit and push the new version
       - name: Commit the revised version of the simulator
-        if: github.event.inputs.simulator && github.event.inputs.simulatorVersionLatest == 'true'
+        if: github.event.inputs.simulatorVersionLatest == 'true'
         run: |
           git config --local user.email "biosimulators.daemon@gmail.com"
           git config --local user.name "biosimulatorsdaemon"
@@ -253,7 +253,7 @@ jobs:
           git commit -m "Updating version of simulator"
 
       - name: Push the revised version of the simulator
-        if: github.event.inputs.simulator && github.event.inputs.simulatorVersionLatest == 'true'
+        if: github.event.inputs.simulatorVersionLatest == 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
