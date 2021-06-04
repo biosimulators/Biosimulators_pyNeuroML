@@ -106,7 +106,7 @@ html_theme_options = {
     'github_repo': 'Biosimulators_pyNeuroML',
     'github_banner': True,
     'github_button': True,
-    'description': 'BioSimulators-compliant interface to pyNeuroML',
+    'description': 'BioSimulators-compliant interface to jNeuroML/pyNeuroML, NetPyNe, and NEURON',
     'fixed_sidebar': True,
     'show_powered_by': False,
     'show_relbars': False,

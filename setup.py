@@ -26,7 +26,7 @@ setuptools.setup(
     name=name,
     version=md.version,
     description=("BioSimulators-compliant command-line interface to "
-                 "the Brian 2, jNeuroML/pyNeuroML, NEURON, and NetPyNe simulation programs."),
+                 "the jNeuroML/pyNeuroML, NEURON, and NetPyNe simulation programs."),
     long_description=md.long_description,
     url="https://github.com/biosimulators/Biosimulators_pyNeuroML",
     download_url="https://github.com/biosimulators/Biosimulators_pyNeuroML",

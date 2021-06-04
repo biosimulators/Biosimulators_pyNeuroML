@@ -1,7 +1,7 @@
 Tutorial
 ========
 
-BioSimulators-pyNeuroML is available as a command-line program and as a command-line program encapsulated into a Docker image.
+BioSimulators-pyNeuroML is available as three command-line programs and as a command-line programs encapsulated into three Docker images.
 
 
 Creating COMBINE/OMEX archives and encoding simulation experiments into SED-ML
@@ -9,17 +9,17 @@ Creating COMBINE/OMEX archives and encoding simulation experiments into SED-ML
 
 Information about how to create COMBINE/OMEX archives which can be executed by BioSimulators-pyNeuroML is available at `BioSimulators <https://biosimulators.org/help>`_.
 
-A list of the algorithms and algorithm parameters supported by pyNeuroML is available at `BioSimulators <https://biosimulators.org/simulators/pyneuroml>`_.
+A list of the algorithms and algorithm parameters supported by jNeuroML/pyNeuroML, NetPyNe, and NEURON is available at `BioSimulators <https://biosimulators.org/simulators/>`_.
 
 
 Command-line program
 --------------------
 
-The command-line program can be used to execute COMBINE/OMEX archives that describe simulations as illustrated below.
+The command-line programs can be used to execute COMBINE/OMEX archives that describe simulations as illustrated below.
 
 .. code-block:: text
 
-    usage: pyneuroml [-h] [-d] [-q] -i ARCHIVE [-o OUT_DIR] [-v]
+    usage: biosimulators-pyneuroml [-h] [-d] [-q] -i ARCHIVE [-o OUT_DIR] [-v]
 
     BioSimulators-compliant command-line interface to the pyNeuroML <https://github.com/NeuroML/pyNeuroML> simulation program.
 
@@ -34,19 +34,21 @@ The command-line program can be used to execute COMBINE/OMEX archives that descr
                             Directory to save outputs
       -v, --version         show program's version number and exit
 
-For example, the following command could be used to execute the simulations described in ``./modeling-study.omex`` and save their results to ``./``:
+For example, the following commands could be used to execute the simulations described in ``./modeling-study.omex`` and save their results to ``./``:
 
 .. code-block:: text
 
-    pyneuroml -i ./modeling-study.omex -o ./
+    biosimulators-netpyne -i ./modeling-study.omex -o ./
+    biosimulators-neuron -i ./modeling-study.omex -o ./
+    biosimulators-pyneuroml -i ./modeling-study.omex -o ./
 
 
-Docker image with a command-line entrypoint
+Docker images with command-line entrypoints
 -------------------------------------------
 
-The entrypoint to the Docker image supports the same command-line interface described above.
+The entrypoints to the Docker images support the same command-line interface described above.
 
-For example, the following command could be used to use the Docker image to execute the same simulations described in ``./modeling-study.omex`` and save their results to ``./``:
+For example, the following command could be used to use the jNeuroML/pyNeuroML Docker image to execute the same simulations described in ``./modeling-study.omex`` and save their results to ``./``:
 
 .. code-block:: text
 

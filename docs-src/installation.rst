@@ -1,7 +1,7 @@
 Installation instructions
 =========================
 
-BioSimulators-pyNeuroML is available as a command-line program and as a command-line program encapsulated into a Docker image.
+BioSimulators-pyNeuroML is available as three command-line programs and three command-line programs encapsulated into three Docker images.
 
 Command-line program
 --------------------
@@ -12,12 +12,26 @@ After installing `Python <https://www.python.org/downloads/>`_ (>= 3.7), `pip <h
 
     pip install biosimulators-pyneuroml
 
-
-Docker image with a command-line entrypoint
--------------------------------------------
-
-After installing `Docker <https://docs.docker.com/get-docker/>`_, run the following command to install the Docker image for BioSimulators-pyNeuroML:
+Add the ``netpyne`` option to install support for NetPyNe.
 
 .. code-block:: text
 
+    pip install biosimulators-pyneuroml[netpyne]
+
+Add the ``neuron`` option to install support for NEURON.
+
+.. code-block:: text
+
+    pip install biosimulators-pyneuroml[neuron]
+
+
+Docker images with command-line entrypoints
+-------------------------------------------
+
+After installing `Docker <https://docs.docker.com/get-docker/>`_, run the following commands to install the Docker images for jNeuroML/pyNeuroML, NetPyNe, and NEURON:
+
+.. code-block:: text
+
+    docker pull ghcr.io/biosimulators/netpyne
+    docker pull ghcr.io/biosimulators/neuron
     docker pull ghcr.io/biosimulators/pyneuroml

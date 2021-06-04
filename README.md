@@ -4,13 +4,13 @@
 [![Test coverage](https://codecov.io/gh/biosimulators/Biosimulators_pyNeuroML/branch/dev/graph/badge.svg)](https://codecov.io/gh/biosimulators/Biosimulators_pyNeuroML)
 
 # BioSimulators-pyNeuroML
-BioSimulators-compliant command-line interface and Docker image for the [pyNeuroML](https://github.com/NeuroML/pyNeuroML) simulation program.
+BioSimulators-compliant command-line interfaces and Docker images for the [jNeuroML](https://github.com/NeuroML/jNeuroML)/[pyNeuroML](https://github.com/NeuroML/pyNeuroML), [NEURON](https://neuron.yale.edu/), [NetPyNe](http://netpyne.org/), and simulation programs.
 
-This command-line interface and Docker image enable users to use pyNeuroML to execute [COMBINE/OMEX archives](https://combinearchive.org/) that describe one or more simulation experiments (in [SED-ML format](https://sed-ml.org)) of one or more models (in [NeuroML](https://neuroml.org/)/[LEMS](https://lems.github.io/LEMS/) format).
+These command-line interfaces and Docker images enable users to use jNeuroML/pyNeuroML, NEURON, and NetPyNe to execute [COMBINE/OMEX archives](https://combinearchive.org/) that describe one or more simulation experiments (in [SED-ML format](https://sed-ml.org)) of one or more models (in [NeuroML](https://neuroml.org/)/[LEMS](https://lems.github.io/LEMS/) format).
 
-A list of the algorithms and algorithm parameters supported by pyNeuroML is available at [BioSimulators](https://biosimulators.org/simulators/pyneuroml).
+A list of the algorithms and algorithm parameters supported by jNeuroML/pyNeuroML, NEURON, and NetPyNe is available at [BioSimulators](https://biosimulators.org/simulators/pyneuroml).
 
-A simple web application and web service for using pyNeuroML to execute COMBINE/OMEX archives is also available at [runBioSimulations](https://run.biosimulations.org).
+A simple web application and web service for using jNeuroML/pyNeuroML, NEURON, and NetPyNe to execute COMBINE/OMEX archives is also available at [runBioSimulations](https://run.biosimulations.org).
 
 ## Installation
 
@@ -21,17 +21,33 @@ A simple web application and web service for using pyNeuroML to execute COMBINE/
    ```
    pip install biosimulators-pyneuroml
    ```
+3. To install support for NetPyNe, install NEURON and install this package with the `netpyne` option:
+   ```
+   pip install biosimulators-pyneuroml
+   ```
+4. To install support for NEURON, install NEURON and install this package with the `neuron` option:
+   ```
+   pip install biosimulators-pyneuroml
+   ```
 
 ### Install Docker image
+This package provides three Docker images:
 ```
+docker pull ghcr.io/biosimulators/netpyne
+docker pull ghcr.io/biosimulators/neuron
 docker pull ghcr.io/biosimulators/pyneuroml
 ```
 
 ## Usage
 
 ### Local usage
+This package provides three command-line applications, each with the interface illustrated below.
+- `biosimulators-neuron`
+- `biosimulators-netpyne`
+- `biosimulators-pyneuroml`
+
 ```
-usage: pyneuroml [-h] [-d] [-q] -i ARCHIVE [-o OUT_DIR] [-v]
+usage: biosimulators-pyneuroml [-h] [-d] [-q] -i ARCHIVE [-o OUT_DIR] [-v]
 
 BioSimulators-compliant command-line interface to the pyNeuroML <https://github.com/NeuroML/pyNeuroML> simulation program.
 
@@ -47,8 +63,8 @@ optional arguments:
   -v, --version         show program's version number and exit
 ```
 
-### Usage through Docker container
-The entrypoint to the Docker image supports the same command-line interface described above.
+### Usage through Docker containers
+The entrypoints to the Docker images support the same command-line interface described above.
 
 For example, the following command could be used to use the Docker image to execute the COMBINE/OMEX archive `./modeling-study.omex` and save its outputs to `./`.
 
