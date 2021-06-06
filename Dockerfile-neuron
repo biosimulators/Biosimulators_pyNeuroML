@@ -40,7 +40,7 @@ RUN mkdir /usr/share/man/man1/ \
     && conda create python=3.9 --name py39 -y \
     && conda install -n py39 -y -c conda-forge neuron==${SIMULATOR_VERSION} \
     && conda install -n py39 -y -c anaconda gcc_linux-64 \
-    && chmod ugo+rw -R /opt/conda/envs/py39
+    && conda config --system --set report_errors false
 RUN conda install -n py39 -y -c conda-forge neuron==${SIMULATOR_VERSION}
 SHELL ["conda", "run", "-n", "py39", "/bin/bash", "-c"]
 
@@ -73,5 +73,5 @@ RUN mkdir -p /.cache/matplotlib \
     && chmod ugo+rw /.cache/matplotlib
 
 # Entrypoint
-ENTRYPOINT ["/bin/bash", "/xvfb-startup.sh", "conda", "run", "--no-capture-output", "-n", "py39", "biosimulators-neuron"]
+ENTRYPOINT ["/bin/bash", "/xvfb-startup.sh", "/opt/conda/envs/py39/bin/biosimulators-neuron"]
 CMD []
