@@ -182,15 +182,13 @@ class CoreCliTestCase(unittest.TestCase):
         sim_filename = os.path.join(archive_dirname, 'simulation.sedml')
         SedmlSimulationWriter().run(doc, sim_filename)
 
-        updated = datetime.datetime(2020, 1, 2, 1, 2, 3, tzinfo=dateutil.tz.tzutc())
         archive = combine_data_model.CombineArchive(
             contents=[
                 combine_data_model.CombineArchiveContent(
-                    'model1.xml', combine_data_model.CombineArchiveContentFormat.LEMS.value, updated=updated),
+                    'model1.xml', combine_data_model.CombineArchiveContentFormat.LEMS.value),
                 combine_data_model.CombineArchiveContent(
-                    'simulation.sedml', combine_data_model.CombineArchiveContentFormat.SED_ML.value, updated=updated),
+                    'simulation.sedml', combine_data_model.CombineArchiveContentFormat.SED_ML.value),
             ],
-            updated=updated,
         )
 
         included_rel_model_files = ['NaConductance.channel.nml', 'KConductance.channel.nml',
@@ -200,7 +198,7 @@ class CoreCliTestCase(unittest.TestCase):
             shutil.copyfile(os.path.join(os.path.dirname(__file__), 'fixtures', included_rel_model_file), included_model_file)
             archive.contents.append(
                 combine_data_model.CombineArchiveContent(
-                    included_rel_model_file, combine_data_model.CombineArchiveContentFormat.NeuroML.value, updated=updated),
+                    included_rel_model_file, combine_data_model.CombineArchiveContentFormat.NeuroML.value),
             )
 
         archive_filename = os.path.join(self.dirname, 'archive.omex')
