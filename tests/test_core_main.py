@@ -36,6 +36,7 @@ class CoreCliTestCase(unittest.TestCase):
         Simulator.neuron: 'ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:latest',
         Simulator.pyneuroml: 'ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:latest',
     }
+    FIXTURES_DIRNAME = os.path.join(os.path.dirname(__file__), 'fixtures')
 
     def setUp(self):
         self.dirname = tempfile.mkdtemp()
@@ -88,7 +89,7 @@ class CoreCliTestCase(unittest.TestCase):
                 self._assert_combine_archive_outputs(doc, out_dir)
 
     def _get_simulation(self, algorithm=None):
-        model_source = os.path.join(os.path.dirname(__file__), 'fixtures', 'LEMS_NML2_Ex5_DetCell.xml')
+        model_source = os.path.join(self.FIXTURES_DIRNAME, 'LEMS_NML2_Ex5_DetCell.xml')
 
         if algorithm is None:
             algorithm = sedml_data_model.Algorithm(
@@ -179,9 +180,6 @@ class CoreCliTestCase(unittest.TestCase):
         shutil.copyfile(doc.models[0].source, model_filename)
         doc.models[0].source = 'model1.xml'
 
-        sim_filename = os.path.join(archive_dirname, 'simulation.sedml')
-        SedmlSimulationWriter().run(doc, sim_filename)
-
         archive = combine_data_model.CombineArchive(
             contents=[
                 combine_data_model.CombineArchiveContent(
@@ -191,15 +189,25 @@ class CoreCliTestCase(unittest.TestCase):
             ],
         )
 
-        included_rel_model_files = ['NaConductance.channel.nml', 'KConductance.channel.nml',
-                                    'LeakConductance.channel.nml', 'NML2_SingleCompHHCell.nml']
+        included_rel_model_files = [
+            'NaConductance.channel.nml',
+            'KConductance.channel.nml',
+            'LeakConductance.channel.nml',
+            'NML2_SingleCompHHCell.nml',
+        ]
         for included_rel_model_file in included_rel_model_files:
-            included_model_file = os.path.join(archive_dirname, included_rel_model_file)
-            shutil.copyfile(os.path.join(os.path.dirname(__file__), 'fixtures', included_rel_model_file), included_model_file)
+            shutil.copyfile(
+                os.path.join(self.FIXTURES_DIRNAME, included_rel_model_file),
+                os.path.join(archive_dirname, included_rel_model_file))
             archive.contents.append(
                 combine_data_model.CombineArchiveContent(
-                    included_rel_model_file, combine_data_model.CombineArchiveContentFormat.NeuroML.value),
+                    location=included_rel_model_file,
+                    format=combine_data_model.CombineArchiveContentFormat.NeuroML.value,
+                ),
             )
+
+        sim_filename = os.path.join(archive_dirname, 'simulation.sedml')
+        SedmlSimulationWriter().run(doc, sim_filename)
 
         archive_filename = os.path.join(self.dirname, 'archive.omex')
         CombineArchiveWriter().run(archive, archive_dirname, archive_filename)
