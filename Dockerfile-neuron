@@ -31,7 +31,7 @@ LABEL \
 # install dependencies: Java, NEURON
 RUN mkdir /usr/share/man/man1/ \
     && apt-get update -y \
-    && apt-get install -y --no-install-recommends default-jre-headless \
+    && apt-get install -y --no-install-recommends default-jre \
     && apt-get install -y --no-install-recommends make g++ \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/* \
