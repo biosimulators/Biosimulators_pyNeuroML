@@ -10,7 +10,7 @@ from .data_model import Simulator, KISAO_ALGORITHM_MAP, SEDML_TIME_OUTPUT_COLUMN
 from .utils import validate_task, read_xml_file, set_sim_in_lems_xml, run_lems_xml, get_simulator_run_lems_method
 from biosimulators_utils.combine.exec import exec_sedml_docs_in_archive
 from biosimulators_utils.log.data_model import CombineArchiveLog, TaskLog  # noqa: F401
-from biosimulators_utils.plot.data_model import PlotFormat  # noqa: F401
+from biosimulators_utils.viz.data_model import VizFormat  # noqa: F401
 from biosimulators_utils.report.data_model import ReportFormat, VariableResults  # noqa: F401
 from biosimulators_utils.sedml.data_model import (Task, UniformTimeCourseSimulation,  # noqa: F401
                                                   Variable, Symbol)
@@ -40,7 +40,7 @@ def exec_sedml_docs_in_combine_archive(archive_filename, out_dir,
               with reports at keys ``{ relative-path-to-SED-ML-file-within-archive }/{ report.id }`` within the HDF5 file
 
         report_formats (:obj:`list` of :obj:`ReportFormat`, optional): report format (e.g., csv or h5)
-        plot_formats (:obj:`list` of :obj:`PlotFormat`, optional): report format (e.g., pdf)
+        plot_formats (:obj:`list` of :obj:`VizFormat`, optional): report format (e.g., pdf)
         bundle_outputs (:obj:`bool`, optional): if :obj:`True`, bundle outputs into archives for reports and plots
         keep_individual_outputs (:obj:`bool`, optional): if :obj:`True`, keep individual output files
         simulator (:obj:`Simulator`, optional): simulator
