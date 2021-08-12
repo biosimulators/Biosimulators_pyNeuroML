@@ -1,7 +1,7 @@
 # Base OS
 FROM python:3.9-slim-buster
 
-ARG VERSION=0.0.4
+ARG VERSION=0.0.5
 ARG SIMULATOR_VERSION="0.5.11"
 
 # metadata
@@ -32,7 +32,7 @@ LABEL \
 RUN mkdir /usr/share/man/man1/ \
     && apt-get update -y \
     && apt-get install -y --no-install-recommends \
-        default-jre-headless \
+        default-jre \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
