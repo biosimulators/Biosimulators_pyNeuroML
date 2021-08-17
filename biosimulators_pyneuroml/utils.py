@@ -48,23 +48,26 @@ def validate_task(task, variables, simulator):
     Returns:
         :obj:`str`: KiSAO id for a possibly alternative simulation algorithm
     """
+    config = get_config()
+
     model = task.model
     sim = task.simulation
 
-    raise_errors_warnings(validation.validate_task(task),
-                          error_summary='Task `{}` is invalid.'.format(task.id))
-    raise_errors_warnings(validation.validate_model_language(task.model.language, ModelLanguage.LEMS),
-                          error_summary='Language for model `{}` is not supported.'.format(model.id))
-    raise_errors_warnings(validation.validate_model_change_types(task.model.changes, ()),
-                          error_summary='Changes for model `{}` are not supported.'.format(model.id))
-    raise_errors_warnings(*validation.validate_model_changes(task.model),
-                          error_summary='Changes for model `{}` are invalid.'.format(model.id))
-    raise_errors_warnings(validation.validate_simulation_type(sim, (UniformTimeCourseSimulation, )),
-                          error_summary='{} `{}` is not supported.'.format(sim.__class__.__name__, sim.id))
-    raise_errors_warnings(*validation.validate_simulation(sim),
-                          error_summary='Simulation `{}` is invalid.'.format(sim.id))
-    raise_errors_warnings(*validation.validate_data_generator_variables(variables),
-                          error_summary='Data generator variables for task `{}` are invalid.'.format(task.id))
+    if config.VALIDATE_SEDML:
+        raise_errors_warnings(validation.validate_task(task),
+                              error_summary='Task `{}` is invalid.'.format(task.id))
+        raise_errors_warnings(validation.validate_model_language(task.model.language, ModelLanguage.LEMS),
+                              error_summary='Language for model `{}` is not supported.'.format(model.id))
+        raise_errors_warnings(validation.validate_model_change_types(task.model.changes, ()),
+                              error_summary='Changes for model `{}` are not supported.'.format(model.id))
+        raise_errors_warnings(*validation.validate_model_changes(task.model),
+                              error_summary='Changes for model `{}` are invalid.'.format(model.id))
+        raise_errors_warnings(validation.validate_simulation_type(sim, (UniformTimeCourseSimulation, )),
+                              error_summary='{} `{}` is not supported.'.format(sim.__class__.__name__, sim.id))
+        raise_errors_warnings(*validation.validate_simulation(sim),
+                              error_summary='Simulation `{}` is invalid.'.format(sim.id))
+        raise_errors_warnings(*validation.validate_data_generator_variables(variables),
+                              error_summary='Data generator variables for task `{}` are invalid.'.format(task.id))
 
     if sim.initial_time != 0:
         raise NotImplementedError('Initial time must be 0, not {}'.format(sim.initial_time))

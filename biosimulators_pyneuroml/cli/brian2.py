@@ -6,12 +6,8 @@
 :License: MIT
 """
 
-from .._version import __version__
-from ..core import exec_sedml_docs_in_combine_archive
-from ..data_model import Simulator
+from ..api import brian2 as api
 from biosimulators_utils.simulator.cli import build_cli
-import functools
-import brian2
 
 
 def main(argv=None):
@@ -20,9 +16,9 @@ def main(argv=None):
     Args:
         argv (:obj:`list` of :obj:`str`, optional): command-line arguments
     """
-    App = build_cli('brian2', __version__,
-                    'Brian 2', brian2.__version__, 'https://briansimulator.org',
-                    functools.partial(exec_sedml_docs_in_combine_archive, simulator=Simulator.brian2))
+    App = build_cli('brian2', api.__version__,
+                    'Brian 2', api.get_simulator_version(), 'https://briansimulator.org',
+                    api.exec_sedml_docs_in_combine_archive)
 
     with App(argv=argv) as app:
         app.run()

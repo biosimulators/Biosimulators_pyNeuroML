@@ -6,12 +6,8 @@
 :License: MIT
 """
 
-from .._version import __version__
-from ..core import exec_sedml_docs_in_combine_archive
-from ..data_model import Simulator
+from ..api import neuron as api
 from biosimulators_utils.simulator.cli import build_cli
-import functools
-import netpyne
 
 
 def main(argv=None):
@@ -20,9 +16,9 @@ def main(argv=None):
     Args:
         argv (:obj:`list` of :obj:`str`, optional): command-line arguments
     """
-    App = build_cli('netpyne', __version__,
-                    'NetPyNe', netpyne.__version__, 'http://netpyne.org',
-                    functools.partial(exec_sedml_docs_in_combine_archive, simulator=Simulator.netpyne))
+    App = build_cli('netpyne', api.__version__,
+                    'NetPyNe', api.get_simulator_version(), 'http://netpyne.org',
+                    api.exec_sedml_docs_in_combine_archive)
 
     with App(argv=argv) as app:
         app.run()
