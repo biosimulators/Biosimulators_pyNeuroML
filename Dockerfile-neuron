@@ -1,7 +1,7 @@
 # Base OS
 FROM continuumio/miniconda3:4.9.2
 
-ARG VERSION=0.0.6
+ARG VERSION=0.0.7
 ARG SIMULATOR_VERSION="8.0.0"
 
 # metadata
