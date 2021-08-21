@@ -1,7 +1,7 @@
 # Base OS
 FROM ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:latest
 
-ARG VERSION=0.0.7
+ARG VERSION=0.0.8
 ARG SIMULATOR_VERSION="2.4.2"
 
 # metadata

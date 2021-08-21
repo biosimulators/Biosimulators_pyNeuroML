@@ -1,7 +1,7 @@
 # Base OS
-FROM continuumio/miniconda3:4.10.3
+FROM ghcr.io/biosimulators/biosimulators_pyneuroml:latest
 
-ARG VERSION=0.0.7
+ARG VERSION=0.0.8
 ARG SIMULATOR_VERSION="8.0.0"
 
 # metadata
@@ -16,7 +16,7 @@ LABEL \
     org.opencontainers.image.vendor="BioSimulators Team" \
     org.opencontainers.image.licenses="BSD-3-Clause" \
     \
-    base_image="continuumio/miniconda3:4.10.3" \
+    base_image="python:3.9-slim-buster" \
     version="${VERSION}" \
     software="NEURON" \
     software.version="${SIMULATOR_VERSION}" \
@@ -27,22 +27,6 @@ LABEL \
     about.license="SPDX:BSD-3-Clause" \
     about.tags="computational neuroscience,biochemical networks,dynamical modeling,stochastic simulation,NeuroML,LEMS,SED-ML,COMBINE,OMEX,BioSimulators" \
     maintainer="BioSimulators Team <info@biosimulators.org>"
-
-# install dependencies: Java, NEURON
-RUN mkdir -p /usr/share/man/man1/ \
-    && apt-get update -y \
-    && apt-get install -y --no-install-recommends default-jre \
-    && apt-get install -y --no-install-recommends make g++ \
-    && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/* \
-    \
-    && conda update -n base -c defaults conda \
-    && conda create python=3.9 --name py39 -y \
-    && conda install -n py39 -y -c conda-forge neuron==${SIMULATOR_VERSION} \
-    && conda install -n py39 -y -c anaconda gcc_linux-64 \
-    && conda config --system --set report_errors false
-RUN conda install -n py39 -y -c conda-forge neuron==${SIMULATOR_VERSION}
-SHELL ["conda", "run", "-n", "py39", "/bin/bash", "-c"]
 
 # setup headless environment
 RUN apt-get -y update \
@@ -60,16 +44,7 @@ ENV XVFB_RES="${RESOLUTION}" \
 # Copy code for command-line interface into image and install it
 COPY . /root/Biosimulators_pyNeuroML
 RUN pip install /root/Biosimulators_pyNeuroML[neuron] \
-    && rm -rf /root/Biosimulators_pyNeuroML \
-    && python -c "import matplotlib.font_manager"
-ENV VERBOSE=0 \
-    MPLBACKEND=PDF
-
-# configure matplotlib
-RUN mkdir -p /.cache/matplotlib \
-    && mkdir -p /.config/matplotlib \
-    && chmod ugo+rw /.config/matplotlib \
-    && chmod ugo+rw /.cache/matplotlib
+    && rm -rf /root/Biosimulators_pyNeuroML
 
 # Entrypoint
 ENTRYPOINT ["/bin/bash", "/xvfb-startup.sh", "/opt/conda/envs/py39/bin/biosimulators-neuron"]

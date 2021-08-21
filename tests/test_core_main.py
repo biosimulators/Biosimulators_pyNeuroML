@@ -50,6 +50,18 @@ class CoreCliTestCase(unittest.TestCase):
         results, log = core.exec_sed_task(task, variables, log)
         self._assert_variable_results(task, variables, results)
 
+    def test_exec_sed_task_neuron(self):
+        task, variables = self._get_simulation()
+        log = TaskLog()
+        results, log = core.exec_sed_task(task, variables, log, simulator=Simulator.neuron)
+        self._assert_variable_results(task, variables, results)
+
+    def test_exec_sed_task_netpyne(self):
+        task, variables = self._get_simulation()
+        log = TaskLog()
+        results, log = core.exec_sed_task(task, variables, log, simulator=Simulator.netpyne)
+        self._assert_variable_results(task, variables, results)
+
     def test_exec_sed_task_non_zero_output_start_time(self):
         task, variables = self._get_simulation()
         task.simulation.output_start_time = 100e-3
