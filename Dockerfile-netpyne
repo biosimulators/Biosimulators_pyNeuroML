@@ -35,5 +35,5 @@ RUN pip install /root/Biosimulators_pyNeuroML[netpyne] \
 RUN pip install "netpyne==${SIMULATOR_VERSION}"
 
 # Entrypoint
-ENTRYPOINT ["/bin/bash", "/xvfb-startup.sh", "/opt/conda/envs/py39/bin/biosimulators-netpyne"]
+ENTRYPOINT ["/bin/bash", "/xvfb-startup.sh", "biosimulators-netpyne"]
 CMD []

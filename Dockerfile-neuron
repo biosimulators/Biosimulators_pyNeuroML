@@ -47,5 +47,5 @@ RUN pip install /root/Biosimulators_pyNeuroML[neuron] \
     && rm -rf /root/Biosimulators_pyNeuroML
 
 # Entrypoint
-ENTRYPOINT ["/bin/bash", "/xvfb-startup.sh", "/opt/conda/envs/py39/bin/biosimulators-neuron"]
+ENTRYPOINT ["/bin/bash", "/xvfb-startup.sh", "biosimulators-neuron"]
 CMD []
