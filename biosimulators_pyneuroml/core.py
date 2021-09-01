@@ -9,6 +9,7 @@
 from .data_model import Simulator, KISAO_ALGORITHM_MAP, SEDML_TIME_OUTPUT_COLUMN_ID, SEDML_OUTPUT_FILE_ID
 from .utils import validate_task, read_xml_file, set_sim_in_lems_xml, run_lems_xml, get_simulator_run_lems_method
 from biosimulators_utils.combine.exec import exec_sedml_docs_in_archive
+from biosimulators_utils.config import get_config, Config  # noqa: F401
 from biosimulators_utils.log.data_model import CombineArchiveLog, TaskLog  # noqa: F401
 from biosimulators_utils.viz.data_model import VizFormat  # noqa: F401
 from biosimulators_utils.report.data_model import ReportFormat, VariableResults, SedDocumentResults  # noqa: F401
@@ -25,10 +26,7 @@ __all__ = [
 
 
 def exec_sedml_docs_in_combine_archive(archive_filename, out_dir,
-                                       return_results=False,
-                                       report_formats=None, plot_formats=None,
-                                       bundle_outputs=None, keep_individual_outputs=None,
-                                       raise_exceptions=True,
+                                       config=None,
                                        simulator=Simulator.pyneuroml):
     """ Execute the SED tasks defined in a COMBINE/OMEX archive and save the outputs
 
@@ -41,13 +39,8 @@ def exec_sedml_docs_in_combine_archive(archive_filename, out_dir,
             * HDF5: directory in which to save a single HDF5 file (``{ out_dir }/reports.h5``),
               with reports at keys ``{ relative-path-to-SED-ML-file-within-archive }/{ report.id }`` within the HDF5 file
 
-        return_results (:obj:`bool`, optional): whether to return the result of each output of each SED-ML file
-        report_formats (:obj:`list` of :obj:`ReportFormat`, optional): report format (e.g., csv or h5)
-        plot_formats (:obj:`list` of :obj:`VizFormat`, optional): report format (e.g., pdf)
-        bundle_outputs (:obj:`bool`, optional): if :obj:`True`, bundle outputs into archives for reports and plots
-        keep_individual_outputs (:obj:`bool`, optional): if :obj:`True`, keep individual output files
         simulator (:obj:`Simulator`, optional): simulator
-        raise_exceptions (:obj:`bool`, optional): whether to raise exceptions
+        config (:obj:`Config`, optional): BioSimulators common configuration
 
     Returns:
         :obj:`tuple`:
@@ -58,21 +51,17 @@ def exec_sedml_docs_in_combine_archive(archive_filename, out_dir,
     sed_doc_executer = functools.partial(exec_sed_doc, functools.partial(exec_sed_task, simulator=simulator))
     return exec_sedml_docs_in_archive(sed_doc_executer, archive_filename, out_dir,
                                       apply_xml_model_changes=True,
-                                      return_results=return_results,
-                                      report_formats=report_formats,
-                                      plot_formats=plot_formats,
-                                      bundle_outputs=bundle_outputs,
-                                      keep_individual_outputs=keep_individual_outputs,
-                                      raise_exceptions=raise_exceptions)
+                                      config=config)
 
 
-def exec_sed_task(task, variables, log=None, simulator=Simulator.pyneuroml):
+def exec_sed_task(task, variables, log=None, config=None, simulator=Simulator.pyneuroml):
     ''' Execute a task and save its results
 
     Args:
        task (:obj:`Task`): task
        variables (:obj:`list` of :obj:`Variable`): variables that should be recorded
        log (:obj:`TaskLog`, optional): log for the task
+       config (:obj:`Config`, optional): BioSimulators common configuration
        simulator (:obj:`Simulator`, optional): simulator
 
     Returns:
@@ -86,17 +75,20 @@ def exec_sed_task(task, variables, log=None, simulator=Simulator.pyneuroml):
             could not be recorded
         :obj:`NotImplementedError`: if the task is not of a supported type or involves an unsuported feature
     '''
-    log = log or TaskLog()
+    config = config or get_config()
+    if config.LOG and not log:
+        log = TaskLog()
 
     sim = task.simulation
     sim.algorithm = copy.deepcopy(sim.algorithm)
-    sim.algorithm.kisao_id = validate_task(task, variables, simulator)
+    sim.algorithm.kisao_id = validate_task(task, variables, simulator, config=config)
 
     lems_root = read_xml_file(task.model.source)
 
     set_sim_in_lems_xml(lems_root, task, variables)
     lems_results = run_lems_xml(lems_root, working_dirname=os.path.dirname(
-        task.model.source), lems_filename=task.model.source)[SEDML_OUTPUT_FILE_ID]
+        task.model.source), lems_filename=task.model.source,
+        verbose=config.VERBOSE, config=config)[SEDML_OUTPUT_FILE_ID]
 
     # transform the results to an instance of :obj:`VariableResults`
     variable_results = VariableResults()
@@ -110,15 +102,16 @@ def exec_sed_task(task, variables, log=None, simulator=Simulator.pyneuroml):
         variable_results[variable.id] = lems_result.to_numpy()[-(sim.number_of_points + 1):]
 
     # log action
-    log.algorithm = sim.algorithm.kisao_id
-    log.simulator_details = {
-        'method': 'pyneuroml.pynml.' + get_simulator_run_lems_method(simulator).__name__,
-        'lemsSimulation': {
-            'length': '{}s'.format(sim.output_end_time),
-            'step': '{}s'.format((sim.output_end_time - sim.output_start_time) / sim.number_of_steps),
-            'method': KISAO_ALGORITHM_MAP[sim.algorithm.kisao_id]['id'],
-        },
-    }
+    if config.LOG:
+        log.algorithm = sim.algorithm.kisao_id
+        log.simulator_details = {
+            'method': 'pyneuroml.pynml.' + get_simulator_run_lems_method(simulator).__name__,
+            'lemsSimulation': {
+                'length': '{}s'.format(sim.output_end_time),
+                'step': '{}s'.format((sim.output_end_time - sim.output_start_time) / sim.number_of_steps),
+                'method': KISAO_ALGORITHM_MAP[sim.algorithm.kisao_id]['id'],
+            },
+        }
 
     # return results and log
     return variable_results, log

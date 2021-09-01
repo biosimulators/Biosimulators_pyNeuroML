@@ -37,18 +37,19 @@ __all__ = [
 ]
 
 
-def validate_task(task, variables, simulator):
+def validate_task(task, variables, simulator, config=None):
     """ Validate a task
 
     Args:
         task (:obj:`Task`): task
         variables (:obj:`list` of :obj:`Variable`): variables
         simulator (:obj:`Simulator`): simulator
+        config (:obj:`Config`, optional): BioSimulators common configuration
 
     Returns:
         :obj:`str`: KiSAO id for a possibly alternative simulation algorithm
     """
-    config = get_config()
+    config = config or get_config()
 
     model = task.model
     sim = task.simulation
@@ -90,7 +91,7 @@ def validate_task(task, variables, simulator):
     simulator_kisao_alg_map = {kisao_id: alg_props for kisao_id,
                                alg_props in KISAO_ALGORITHM_MAP.items() if simulator in alg_props['simulators']}
 
-    algorithm_substitution_policy = get_algorithm_substitution_policy()
+    algorithm_substitution_policy = get_algorithm_substitution_policy(config=config)
     exec_kisao_id = get_preferred_substitute_algorithm_by_ids(
         sim.algorithm.kisao_id, simulator_kisao_alg_map.keys(),
         substitution_policy=algorithm_substitution_policy)
@@ -159,7 +160,8 @@ def set_sim_in_lems_xml(lems_xml_root, task, variables):
 
 
 def run_lems_xml(lems_xml_root, working_dirname='.', lems_filename=None,
-                 simulator=Simulator.pyneuroml, num_processors=None, max_memory=None, verbose=None):
+                 simulator=Simulator.pyneuroml, num_processors=None, max_memory=None, verbose=False,
+                 config=None):
     """Run a LEMS document with a simulator
 
     Args:
@@ -170,11 +172,13 @@ def run_lems_xml(lems_xml_root, working_dirname='.', lems_filename=None,
         num_processors (:obj:`int`, optional): number of processors to use (only used with NetPyNe)
         max_memory (:obj:`int`, optional): maximum memory to use in bytes
         verbose (:obj:`bool`, optional): whether to display extra information about simulation runs
+        config (:obj:`Config`, optional): BioSimulators common configuration
 
     Returns:
         :obj:`dict` of :obj:`str` => :obj:`pandas.DataFrame`: dictionary that maps the id of each output file
             to a Pandas data frame with its value
     """
+    config = config or get_config()
     run_lems_method = get_simulator_run_lems_method(simulator)
     options = get_run_lems_options(num_processors=num_processors, max_memory=max_memory, verbose=verbose)
 
@@ -194,16 +198,17 @@ def run_lems_xml(lems_xml_root, working_dirname='.', lems_filename=None,
 
     results_dirname = tempfile.mkdtemp()
     options.exec_in_dir = results_dirname
-    with StandardOutputErrorCapturer(relay=options.verbose) as captured:
+    with StandardOutputErrorCapturer(relay=options.verbose, disabled=not config.LOG) as captured:
         result = run_lems_method(temp_filename, **options.to_kw_args(simulator))
         if not result:
             os.remove(temp_filename)
             shutil.rmtree(results_dirname)
 
-            msg = '`{}` was not able to execute {}:\n\n  {}'.format(
+            msg = '`{}` was not able to execute {}'.format(
                 simulator.value,
-                '`{}`'.format(lems_filename) if lems_filename else 'the LEMS document',
-                captured.get_text().replace('\n', '\n  '))
+                '`{}`'.format(lems_filename) if lems_filename else 'the LEMS document')
+            if config.LOG:
+                msg += '\n\n  ' + captured.get_text().replace('\n', '\n  ')
             raise RuntimeError(msg)
 
     # read results
@@ -242,7 +247,7 @@ def get_simulator_run_lems_method(simulator):
         raise NotImplementedError('`{}` is not a supported simulator.'.format(simulator))
 
 
-def get_run_lems_options(num_processors=None, max_memory=None, verbose=None):
+def get_run_lems_options(num_processors=None, max_memory=None, verbose=False):
     """ Get options for running a LEMS document
 
     Args:
@@ -258,9 +263,6 @@ def get_run_lems_options(num_processors=None, max_memory=None, verbose=None):
 
     if max_memory is None:
         max_memory = get_available_memory() - 100 * 1000000
-
-    if verbose is None:
-        verbose = get_config().VERBOSE
 
     options = RunLemsOptions(num_processors=num_processors, max_memory=max_memory, verbose=verbose)
 

@@ -19,6 +19,10 @@
     },
     "operatingSystemType": "Linux"
   },
+  "pythonApi": {
+    "package": "biosimulators-pyneuroml",
+    "module": "biosimulators_pyneuroml.api.neuron"
+  },
   "authors": [
     {
       "firstName": "Michael",
@@ -89,7 +93,12 @@
         "namespace": "pypi",
         "id": "NEURON",
         "url": "https://pypi.org/project/NEURON"
-      }
+      },
+      {
+            "namespace": "pypi",
+            "id": "biosimulators-pyneuroml",
+            "url": "https://pypi.org/project/biosimulators-pyneuroml/"
+          }
     ],
     "citations": [
       {

@@ -19,6 +19,10 @@
     },
     "operatingSystemType": "Linux"
   },
+  "pythonApi": {
+    "package": "biosimulators-pyneuroml",
+    "module": "biosimulators_pyneuroml.api.netpyne"
+  },
   "authors": [
     {
       "firstName": "Salvador",
@@ -105,7 +109,12 @@
         "namespace": "pypi",
         "id": "netpyne",
         "url": "https://pypi.org/project/netpyne"
-      }
+      },
+      {
+            "namespace": "pypi",
+            "id": "biosimulators-pyneuroml",
+            "url": "https://pypi.org/project/biosimulators-pyneuroml/"
+          }
     ],
     "citations": [
       {
