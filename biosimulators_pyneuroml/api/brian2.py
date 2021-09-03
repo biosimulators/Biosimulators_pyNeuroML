@@ -8,6 +8,7 @@ __all__ = [
     '__version__',
     'get_simulator_version',
     'exec_sed_task',
+    'preprocess_sed_task',
     'exec_sedml_docs_in_combine_archive',
 ]
 
@@ -22,5 +23,5 @@ def get_simulator_version():
 
 
 exec_sed_task = functools.partial(core.exec_sed_task, simulator=Simulator.brian2)
-
+preprocess_sed_task = functools.partial(core.preprocess_sed_task, simulator=Simulator.brian2)
 exec_sedml_docs_in_combine_archive = functools.partial(core.exec_sedml_docs_in_combine_archive, simulator=Simulator.brian2)
