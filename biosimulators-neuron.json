@@ -21,7 +21,8 @@
   },
   "pythonApi": {
     "package": "biosimulators-pyneuroml",
-    "module": "biosimulators_pyneuroml.api.neuron"
+    "module": "biosimulators_pyneuroml.api.neuron",
+    "installationInstructions": "https://docs.biosimulators.org/Biosimulators_pyNeuroML/installation.html"
   },
   "authors": [
     {
