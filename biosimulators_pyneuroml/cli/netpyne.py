@@ -6,7 +6,7 @@
 :License: MIT
 """
 
-from ..api import neuron as api
+from ..api import netpyne as api
 from biosimulators_utils.simulator.cli import build_cli
 
 
