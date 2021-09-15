@@ -91,17 +91,19 @@
           "supportedFeatures": []
         }
       ],
+      "modelChangePatterns": [],
       "simulationFormats": [],
+      "simulationTypes": [],
       "archiveFormats": [],
       "citations": [],
       "parameters": [],
-      "dependentDimensions": [
+      "outputDimensions": [
         {
           "namespace": "SIO",
           "id": "SIO_000418"
         }
       ],
-      "dependentVariableTargetPatterns": [],
+      "outputVariablePatterns": [],
       "availableSoftwareInterfaceTypes": [
         "library",
         "command-line application",
@@ -144,17 +146,19 @@
           "supportedFeatures": []
         }
       ],
+      "modelChangePatterns": [],
       "simulationFormats": [],
+      "simulationTypes": [],
       "archiveFormats": [],
       "citations": [],
       "parameters": [],
-      "dependentDimensions": [
+      "outputDimensions": [
         {
           "namespace": "SIO",
           "id": "SIO_000418"
         }
       ],
-      "dependentVariableTargetPatterns": [],
+      "outputVariablePatterns": [],
       "availableSoftwareInterfaceTypes": [
         "library",
         "command-line application",

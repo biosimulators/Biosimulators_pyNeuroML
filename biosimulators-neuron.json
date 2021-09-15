@@ -294,6 +294,40 @@
           "supportedFeatures": []
         }
       ],
+      "modelChangePatterns": [
+        {
+          "name": "Change component attributes",
+          "types": ["SedAttributeModelChange", "SedComputeAttributeChangeModelChange", "SedSetValueAttributeModelChange"],
+          "target": {
+            "value": "//*/@*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Add components",
+          "types": ["SedAddXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Remove components",
+          "types": ["SedRemoveXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Change components",
+          "types": ["SedChangeXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        }        
+      ],
       "simulationFormats": [
         {
           "namespace": "EDAM",
@@ -302,6 +336,7 @@
           "supportedFeatures": []
         }
       ],
+      "simulationTypes": ["SedUniformTimeCourseSimulation"],
       "archiveFormats": [
         {
           "namespace": "EDAM",
@@ -329,13 +364,13 @@
         }
       ],
       "parameters": [],
-      "dependentDimensions": [
+      "outputDimensions": [
         {
           "namespace": "SIO",
           "id": "SIO_000418"
         }
       ],
-      "dependentVariableTargetPatterns": [],
+      "outputVariablePatterns": [],
       "availableSoftwareInterfaceTypes": [
         "library",
         "desktop application",

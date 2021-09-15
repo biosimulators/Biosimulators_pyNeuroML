@@ -102,45 +102,20 @@
           "id": "SBO_0000293"
         }
       ],
-      "modelFormats": [
-        {
-          "namespace": "EDAM",
-          "id": "format_9004",
-          "version": null,
-          "supportedFeatures": []
-        },
-        {
-          "namespace": "EDAM",
-          "id": "format_3971",
-          "version": null,
-          "supportedFeatures": []
-        }
-      ],
-      "simulationFormats": [
-        {
-          "namespace": "EDAM",
-          "id": "format_3685",
-          "version": null,
-          "supportedFeatures": []
-        }
-      ],
-      "archiveFormats": [
-        {
-          "namespace": "EDAM",
-          "id": "format_3686",
-          "version": null,
-          "supportedFeatures": []
-        }
-      ],
+      "modelFormats": [],
+      "modelChangePatterns": [],
+      "simulationFormats": [],
+      "simulationTypes": [],
+      "archiveFormats": [],
       "citations": [],
       "parameters": [],
-      "dependentDimensions": [
+      "outputDimensions": [
         {
           "namespace": "SIO",
           "id": "SIO_000418"
         }
       ],
-      "dependentVariableTargetPatterns": [],
+      "outputVariablePatterns": [],
       "availableSoftwareInterfaceTypes": [
         "library"
       ],
@@ -188,45 +163,20 @@
           "id": "SBO_0000293"
         }
       ],
-      "modelFormats": [
-        {
-          "namespace": "EDAM",
-          "id": "format_9004",
-          "version": null,
-          "supportedFeatures": []
-        },
-        {
-          "namespace": "EDAM",
-          "id": "format_3971",
-          "version": null,
-          "supportedFeatures": []
-        }
-      ],
-      "simulationFormats": [
-        {
-          "namespace": "EDAM",
-          "id": "format_3685",
-          "version": null,
-          "supportedFeatures": []
-        }
-      ],
-      "archiveFormats": [
-        {
-          "namespace": "EDAM",
-          "id": "format_3686",
-          "version": null,
-          "supportedFeatures": []
-        }
-      ],
+      "modelFormats": [],
+      "modelChangePatterns": [],
+      "simulationFormats": [],
+      "simulationTypes": [],
+      "archiveFormats": [],
       "citations": [],
       "parameters": [],
-      "dependentDimensions": [
+      "outputDimensions": [
         {
           "namespace": "SIO",
           "id": "SIO_000418"
         }
       ],
-      "dependentVariableTargetPatterns": [],
+      "outputVariablePatterns": [],
       "availableSoftwareInterfaceTypes": [
         "library"
       ],
@@ -274,45 +224,20 @@
           "id": "SBO_0000293"
         }
       ],
-      "modelFormats": [
-        {
-          "namespace": "EDAM",
-          "id": "format_9004",
-          "version": null,
-          "supportedFeatures": []
-        },
-        {
-          "namespace": "EDAM",
-          "id": "format_3971",
-          "version": null,
-          "supportedFeatures": []
-        }
-      ],
-      "simulationFormats": [
-        {
-          "namespace": "EDAM",
-          "id": "format_3685",
-          "version": null,
-          "supportedFeatures": []
-        }
-      ],
-      "archiveFormats": [
-        {
-          "namespace": "EDAM",
-          "id": "format_3686",
-          "version": null,
-          "supportedFeatures": []
-        }
-      ],
+      "modelFormats": [],
+      "modelChangePatterns": [],
+      "simulationFormats": [],
+      "simulationTypes": [],
+      "archiveFormats": [],
       "citations": [],
       "parameters": [],
-      "dependentDimensions": [
+      "outputDimensions": [
         {
           "namespace": "SIO",
           "id": "SIO_000418"
         }
       ],
-      "dependentVariableTargetPatterns": [],
+      "outputVariablePatterns": [],
       "availableSoftwareInterfaceTypes": [
         "library"
       ],
