@@ -48,19 +48,37 @@ class CoreCliTestCase(unittest.TestCase):
     def test_exec_sed_task(self):
         task, variables = self._get_simulation()
         log = TaskLog()
-        results, log = core.exec_sed_task(task, variables, log)
+        results, log = core.exec_sed_task(task, variables, log=log)
         self._assert_variable_results(task, variables, results)
+
+    def test_exec_sed_task_with_changes(self):
+        # TODO: add test for continuation of time course
+        # - Simulation 1: 0-10 ms
+        # - Simulation 2: 0-5 ms
+        # - Simulation 3: 5-10 ms starting from simulation #2
+
+        task, variables = self._get_simulation()
+        preprocessed_task = core.preprocess_sed_task(task, variables)
+
+        core.exec_sed_task(task, variables, preprocessed_task=preprocessed_task)
+
+        task.model.changes.append(sedml_data_model.ModelAttributeChange(
+            target="/Lems/Include[@file='Cells.xml']/@file",
+            new_value='Undefined.xml',
+        ))
+        with self.assertRaises(RuntimeError):
+            core.exec_sed_task(task, variables, preprocessed_task=preprocessed_task)
 
     def test_exec_sed_task_neuron(self):
         task, variables = self._get_simulation()
         log = TaskLog()
-        results, log = core.exec_sed_task(task, variables, log, simulator=Simulator.neuron)
+        results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator.neuron)
         self._assert_variable_results(task, variables, results)
 
     def test_exec_sed_task_netpyne(self):
         task, variables = self._get_simulation()
         log = TaskLog()
-        results, log = core.exec_sed_task(task, variables, log, simulator=Simulator.netpyne)
+        results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator.netpyne)
         self._assert_variable_results(task, variables, results)
 
     def test_exec_sed_task_non_zero_output_start_time(self):
@@ -68,7 +86,7 @@ class CoreCliTestCase(unittest.TestCase):
         task.simulation.output_start_time = 100e-3
         task.simulation.number_of_steps = int(200 / 0.01)
         log = TaskLog()
-        results, log = core.exec_sed_task(task, variables, log)
+        results, log = core.exec_sed_task(task, variables, log=log)
         self._assert_variable_results(task, variables, results)
 
     def test_exec_sedml_docs_in_combine_archive(self):

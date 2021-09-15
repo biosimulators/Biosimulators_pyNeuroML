@@ -101,25 +101,25 @@ class UtilsTestCase(unittest.TestCase):
             Variable(id='v', target='hhpop[0]/v'),
         ]
         lems_xml_root = utils.read_xml_file(filename)
-        utils.set_sim_in_lems_xml(lems_xml_root, task, variables)
         sim_xml = lems_xml_root.xpath('/Lems/Simulation')[0]
+        utils.set_sim_in_lems_xml(sim_xml, task, variables)
         self.assertEqual(sim_xml.attrib['length'], '10.0s')
         self.assertEqual(sim_xml.attrib['step'], '1.0s')
         self.assertEqual(sim_xml.attrib['method'], 'eulerTree')
 
         lems_xml_root = lxml.etree.Element('Undefined')
         with self.assertRaisesRegex(ValueError, 'must contain a single `Lems`'):
-            utils.set_sim_in_lems_xml(lems_xml_root, task, variables)
+            utils.validate_lems_document(lems_xml_root)
 
         lems_xml_root = lxml.etree.Element('Lems')
         with self.assertRaisesRegex(ValueError, 'must have a `Simulation`'):
-            utils.set_sim_in_lems_xml(lems_xml_root, task, variables)
+            utils.validate_lems_document(lems_xml_root)
 
         lems_xml_root = lxml.etree.Element('Lems')
         lems_xml_root.append(lxml.etree.Element('Simulation'))
         lems_xml_root.append(lxml.etree.Element('Simulation'))
         with self.assertRaisesRegex(ValueError, 'must have a single `Simulation`'):
-            utils.set_sim_in_lems_xml(lems_xml_root, task, variables)
+            utils.validate_lems_document(lems_xml_root)
 
     def test_get_available_processors(self):
         processors = utils.get_available_processors()

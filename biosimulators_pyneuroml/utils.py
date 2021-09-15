@@ -9,7 +9,8 @@
 from .data_model import Simulator, KISAO_ALGORITHM_MAP, RunLemsOptions, SEDML_TIME_OUTPUT_COLUMN_ID, SEDML_OUTPUT_FILE_ID
 from biosimulators_utils.config import get_config
 from biosimulators_utils.log.utils import StandardOutputErrorCapturer
-from biosimulators_utils.sedml.data_model import ModelLanguage, UniformTimeCourseSimulation, Task, Variable, Symbol  # noqa: F401
+from biosimulators_utils.sedml.data_model import (ModelLanguage, ModelAttributeChange, UniformTimeCourseSimulation,   # noqa: F401
+                                                  Task, Variable, Symbol)
 from biosimulators_utils.sedml import validation
 from biosimulators_utils.simulator.utils import get_algorithm_substitution_policy
 from biosimulators_utils.utils.core import raise_errors_warnings
@@ -24,6 +25,7 @@ import tempfile
 
 __all__ = [
     'validate_task',
+    'validate_lems_document',
     'set_sim_in_lems_xml',
     'run_lems_xml',
     'get_simulator_run_lems_method',
@@ -59,7 +61,7 @@ def validate_task(task, variables, simulator, config=None):
                               error_summary='Task `{}` is invalid.'.format(task.id))
         raise_errors_warnings(validation.validate_model_language(task.model.language, ModelLanguage.LEMS),
                               error_summary='Language for model `{}` is not supported.'.format(model.id))
-        raise_errors_warnings(validation.validate_model_change_types(task.model.changes, ()),
+        raise_errors_warnings(validation.validate_model_change_types(task.model.changes, (ModelAttributeChange,)),
                               error_summary='Changes for model `{}` are not supported.'.format(model.id))
         raise_errors_warnings(*validation.validate_model_changes(task.model),
                               error_summary='Changes for model `{}` are invalid.'.format(model.id))
@@ -108,13 +110,11 @@ def validate_task(task, variables, simulator, config=None):
     return exec_kisao_id
 
 
-def set_sim_in_lems_xml(lems_xml_root, task, variables):
-    """ Set the simulation in a LEMS document
+def validate_lems_document(lems_xml_root):
+    """ Validate LEMS document
 
     Args:
         lems_xml_root (:obj:`lxml.etree._Element`): LEMS document
-        task (:obj:`Task`): task
-        variables (:obj:`list` of :obj:`Variable`): variables to record
     """
     lems_xml = lems_xml_root.xpath('/Lems')
     if len(lems_xml) != 1:
@@ -127,12 +127,20 @@ def set_sim_in_lems_xml(lems_xml_root, task, variables):
         raise ValueError('LEMS document must have a `Simulation` element.')
     elif len(simulation_xml) > 1:
         raise ValueError('LEMS document must have a single `Simulation` element, not {}.'.format(len(simulation_xml)))
-    simulation_xml = simulation_xml[0]
 
-    # add simulation
+
+def set_sim_in_lems_xml(simulation_xml, task, variables):
+    """ Set the simulation in a LEMS document
+
+    Args:
+        simulation_xml (:obj:`lxml.etree._Element`): LEMS simulation
+        task (:obj:`Task`): task
+        variables (:obj:`list` of :obj:`Variable`): variables to record
+    """
     model = task.model
     simulation = task.simulation
 
+    # modify simulation
     simulation_xml.attrib['target'] = model.id
     simulation_xml.attrib['length'] = '{}s'.format(simulation.output_end_time)
     simulation_xml.attrib['step'] = '{}s'.format((simulation.output_end_time - simulation.output_start_time) / simulation.number_of_steps)
