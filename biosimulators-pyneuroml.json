@@ -19,6 +19,12 @@
     },
     "operatingSystemType": "Linux"
   },
+  "cli": {
+    "packageRepository": "PyPI",
+    "package": "biosimulators-pyneuroml",
+    "command": "biosimulators-pyneuroml",
+    "installationInstructions": "https://docs.biosimulators.org/Biosimulators_pyNeuroML/installation.html"
+  },
   "pythonApi": {
     "package": "biosimulators-pyneuroml",
     "module": "biosimulators_pyneuroml.api.pyneuroml",
