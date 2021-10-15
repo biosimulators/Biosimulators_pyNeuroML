@@ -2,6 +2,7 @@
 [![PyPI](https://img.shields.io/pypi/v/biosimulators_pyneuroml)](https://pypi.org/project/biosimulators_pyneuroml/)
 [![CI status](https://github.com/biosimulators/Biosimulators_pyNeuroML/workflows/Continuous%20integration/badge.svg)](https://github.com/biosimulators/Biosimulators_pyNeuroML/actions?query=workflow%3A%22Continuous+integration%22)
 [![Test coverage](https://codecov.io/gh/biosimulators/Biosimulators_pyNeuroML/branch/dev/graph/badge.svg)](https://codecov.io/gh/biosimulators/Biosimulators_pyNeuroML)
+[![All Contributors](https://img.shields.io/github/all-contributors/biosimulators/Biosimulators_pyNeuroML/HEAD)](#contributors-)
 
 # BioSimulators-pyNeuroML
 BioSimulators-compliant command-line interfaces and Docker images for the [jNeuroML](https://github.com/NeuroML/jNeuroML)/[pyNeuroML](https://github.com/NeuroML/pyNeuroML), [NEURON](https://neuron.yale.edu/), [NetPyNe](http://netpyne.org/), and simulation programs.
@@ -86,7 +87,7 @@ Documentation is available at https://docs.biosimulators.org/Biosimulators_pyNeu
 This package is released under the [MIT](LICENSE).
 
 ## Development team
-This package was developed by the [Karr Lab](https://www.karrlab.org) at the Icahn School of Medicine at Mount Sinai and the [Center for Reproducible Biomedical Modeling](https://reproduciblebiomodels.org/).
+This package was developed by the [Karr Lab](https://www.karrlab.org) at the Icahn School of Medicine at Mount Sinai and the [Center for Reproducible Biomedical Modeling](https://reproduciblebiomodels.org/) with assistance from the contributors listed [here](CONTRIBUTORS.md).
 
 ## Questions and comments
 Please contact the [BioSimulators Team](mailto:info@biosimulators.org) with any questions or comments.
