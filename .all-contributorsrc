@@ -13,12 +13,40 @@
       "contributions": [
         "code"
       ]
-    }    
+    },
+    {
+      "login": "pgleeson",
+      "name": "Padraig Gleeson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1556687?v=4",
+      "profile": "http://www.opensourcebrain.org/",
+      "contributions": [
+        "tool"
+      ]
+    },
+    {
+      "login": "rgerkin",
+      "name": "Richard C Gerkin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/549787?v=4",
+      "profile": "http://rick.gerk.in/",
+      "contributions": [
+        "tool"
+      ]
+    },
+    {
+      "login": "sanjayankur31",
+      "name": "Ankur Sinha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/102575?v=4",
+      "profile": "https://ankursinha.in/",
+      "contributions": [
+        "tool"
+      ]
+    }
   ],
   "contributorsPerLine": 7,
   "projectName": "Biosimulators_pyNeuroML",
   "projectOwner": "biosimulators",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "none"
 }
