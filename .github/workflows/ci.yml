@@ -408,32 +408,35 @@ jobs:
 
           if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "pyneuroml" ]; then
             VERSION=${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }}
+            IMAGE_DIGEST=$(docker image inspect ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${VERSION} | jq -r '.[0].RepoDigests[0]' | cut -d "@" -f 2-)
             curl \
               -X POST \
               -u ${{ secrets.GH_ISSUE_USERNAME }}:${{ secrets.GH_ISSUE_TOKEN }} \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/biosimulators/Biosimulators/issues \
-              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit pyNeuroML ${VERSION}\", \"body\": \"---\nid: pyneuroml\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-pyneuroml.json\nspecificationsPatch:\n  version: ${VERSION}\n  image:\n    url: ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${VERSION}\nvalidateImage: true\ncommitSimulator: true\n\n---\"}"
+              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit pyNeuroML ${VERSION}\", \"body\": \"---\nid: pyneuroml\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-pyneuroml.json\nspecificationsPatch:\n  version: ${VERSION}\n  image:\n    url: ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${VERSION}\n    digest: ${IMAGE_DIGEST}\nvalidateImage: true\ncommitSimulator: true\n\n---\"}"
           fi
 
           if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "neuron" ]; then
             VERSION=${{ steps.get-docker-image-tag.outputs.neuronVersion }}
+            IMAGE_DIGEST=$(docker image inspect ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${VERSION} | jq -r '.[0].RepoDigests[0]' | cut -d "@" -f 2-)
             curl \
               -X POST \
               -u ${{ secrets.GH_ISSUE_USERNAME }}:${{ secrets.GH_ISSUE_TOKEN }} \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/biosimulators/Biosimulators/issues \
-              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit Neuron ${VERSION}\", \"body\": \"---\nid: neuron\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-neuron.json\nspecificationsPatch:\n  version: ${VERSION}\n  image:\n    url: ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${VERSION}\nvalidateImage: true\ncommitSimulator: true\n\n---\"}"
+              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit Neuron ${VERSION}\", \"body\": \"---\nid: neuron\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-neuron.json\nspecificationsPatch:\n  version: ${VERSION}\n  image:\n    url: ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${VERSION}\n    digest: ${IMAGE_DIGEST}\nvalidateImage: true\ncommitSimulator: true\n\n---\"}"
           fi
 
           if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "netpyne" ]; then
             VERSION=${{ steps.get-docker-image-tag.outputs.netpyneVersion }}
+            IMAGE_DIGEST=$(docker image inspect ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${VERSION} | jq -r '.[0].RepoDigests[0]' | cut -d "@" -f 2-)
             curl \
               -X POST \
               -u ${{ secrets.GH_ISSUE_USERNAME }}:${{ secrets.GH_ISSUE_TOKEN }} \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/biosimulators/Biosimulators/issues \
-              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit NetPyNE ${VERSION}\", \"body\": \"---\nid: netpyne\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-netpyne.json\nspecificationsPatch:\n  version: ${VERSION}\n  image:\n    url: ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${VERSION}\nvalidateImage: true\ncommitSimulator: true\n\n---\"}"
+              -d "{\"labels\": [\"Validate/submit simulator\"], \"title\": \"Submit NetPyNE ${VERSION}\", \"body\": \"---\nid: netpyne\nversion: ${VERSION}\nspecificationsUrl: https://raw.githubusercontent.com/${{ github.repository }}/${REVISION}/biosimulators-netpyne.json\nspecificationsPatch:\n  version: ${VERSION}\n  image:\n    url: ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${VERSION}\n    digest: ${IMAGE_DIGEST}\nvalidateImage: true\ncommitSimulator: true\n\n---\"}"
           fi
 
           if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "brian2" ]; then
