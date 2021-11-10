@@ -42,7 +42,7 @@
         "title": "Brian 2, an intuitive and efficient neural simulator",
         "authors": "Marcel Stimberg, Romain Brette & Dan FM Goodman",
         "journal": "eLife",
-        "volume": 8,
+        "volume": "8",
         "pages": "e47314",
         "year": 2019,
         "identifiers": [
@@ -57,7 +57,7 @@
         "title": "The Brian simulator",
         "authors": "Dan FM Goodman & Romain Brette",
         "journal": "Frontiers in Neuroscience",
-        "volume": 3,
+        "volume": "3",
         "pages": "26",
         "year": 2009,
         "identifiers": [
@@ -72,7 +72,7 @@
         "title": "Brian: a simulator for spiking neural networks in Python",
         "authors": "Dan FM Goodman & Romain Brette",
         "journal": "Frontiers in Neuroinformatics",
-        "volume": 2,
+        "volume": "2",
         "pages": "5",
         "year": 2008,
         "identifiers": [

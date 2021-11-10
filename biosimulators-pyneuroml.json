@@ -85,7 +85,7 @@
         "title": "LEMS: a language for expressing complex biological models in concise and hierarchical form and its use in underpinning NeuroML 2",
         "authors": "Robert C. Cannon, Padraig Gleeson, Sharon Crook, Gautham Ganapathy, Boris Marin, Eugenio Piasini & R. Angus Silver",
         "journal": "Frontiers in Neuroinformatics",
-        "volume": 8,
+        "volume": "8",
         "pages": "79",
         "year": 2014,
         "identifiers": [
@@ -100,7 +100,7 @@
         "title": "NeuroML: a language for describing data driven models of neurons and networks with a high degree of biological detail",
         "authors": "Padraig Gleeson, Sharon Crook, Robert C. Cannon, Michael L. Hines, Guy O. Billings, Matteo Farinella, Thomas M. Morse, Andrew P. Davison, Subhasis Ray, Upinder S. Bhalla, Simon R. Barnes, Yoana D. Dimitrova & R. Angus Silver",
         "journal": "PLoS Computational Biology",
-        "volume": 6,
+        "volume": "6",
         "pages": "e1000815",
         "year": 2010,
         "identifiers": [

@@ -112,7 +112,7 @@
         "title": "CoreNEURON : An Optimized Compute Engine for the NEURON Simulator",
         "authors": "Pramod Kumbhar, Michael Hines, Jeremy Fouriaux, Aleksandr Ovcharenko, James King, Fabien Delalondre & Felix Schürmann",
         "journal": "Frontiers in Neuroinformatics",
-        "volume": 13,
+        "volume": "13",
         "pages": "63",
         "year": 2019,
         "identifiers": [
@@ -127,7 +127,7 @@
         "title": "Using NEURON for Reaction-Diffusion Modeling of Extracellular Dynamics",
         "authors": "Adam J. H. Newton, Robert A. McDougal, Michael L. Hines & William W. Lytton",
         "journal": "Frontiers in Neuroinformatics",
-        "volume": 12,
+        "volume": "12",
         "pages": "41",
         "year": 2018,
         "identifiers": [
@@ -142,7 +142,7 @@
         "title": "Reaction-diffusion in the NEURON simulator",
         "authors": "Robert A. McDougal, Michael L. Hines & William W. Lytton",
         "journal": "Frontiers in Neuroinformatics",
-        "volume": 7,
+        "volume": "7",
         "pages": "28",
         "year": 2013,
         "identifiers": [
@@ -157,7 +157,7 @@
         "title": "The NEURON Book",
         "authors": "Nicholas T. Carnevale & Michael L. Hines",
         "journal": "Journal of Computational Neuroscience",
-        "volume": 21,
+        "volume": "21",
         "pages": "119",
         "year": 2006,
         "identifiers": [
@@ -172,7 +172,7 @@
         "title": "Parallel network simulations with NEURON",
         "authors": "M. Migliore, C. Cannia, William W. Lytton, Henry Markram & Michael L. Hines",
         "journal": "Journal of Computational Neuroscience",
-        "volume": 21,
+        "volume": "21",
         "pages": "119",
         "year": 2006,
         "identifiers": [
@@ -218,8 +218,8 @@
         "title": "NEURON: a tool for neuroscientists",
         "authors": "Michael L. Hines & Nicholas T. Carnevale",
         "journal": "The Neuroscientist",
-        "volume": 7,
-        "issue": 2,
+        "volume": "7",
+        "issue": "2",
         "pages": "123-135",
         "year": 2001,
         "identifiers": [
@@ -234,8 +234,8 @@
         "title": "The NEURON simulation environment",
         "authors": "Michael L. Hines & Nicholas T. Carnevale",
         "journal": "Neural Computation",
-        "volume": 9,
-        "issue": 6,
+        "volume": "9",
+        "issue": "6",
         "pages": "1179-1209",
         "year": 1997,
         "identifiers": [
@@ -356,8 +356,8 @@
           "title": "CVODE, a stiff/nonstiff ODE solver in C",
           "authors": "Scott D. Cohen, Alan C. Hindmarsh & Paul F. Dubois",
           "journal": "Computers in Physics",
-          "volume": 10,
-          "issue": 2,
+          "volume": "10",
+          "issue": "2",
           "pages": "138-143",
           "year": 1996,
           "identifiers": [
