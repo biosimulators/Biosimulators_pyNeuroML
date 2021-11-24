@@ -156,6 +156,9 @@ jobs:
           echo "::set-output name=netpyneVersion::${NETPYNE_VERSION}"
           echo "::set-output name=brian2Version::${BRIAN2_VERSION}"
 
+          REVISION=$(git rev-parse HEAD)
+          CREATED=$(date --rfc-3339=seconds | sed 's/ /T/')
+
           echo "::set-output name=revision::${REVISION}"
           echo "::set-output name=created::${CREATED}"
 
@@ -171,6 +174,11 @@ jobs:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: "${{ secrets.DOCKER_REGISTRY_TOKEN }}"
 
+      - name: Label pyNeuroML Docker image
+        run: |
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }}
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:latest
+
       - name: Build NEURON Docker image
         uses: whoan/docker-build-with-cache-action@v5
         with:
@@ -182,6 +190,11 @@ jobs:
           push_image_and_stages: true
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: "${{ secrets.DOCKER_REGISTRY_TOKEN }}"
+
+      - name: Label NEURON Docker image
+        run: |
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ steps.get-docker-image-tag.outputs.neuronVersion }}
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:latest
 
       - name: Build NetPyNe Docker image
         uses: whoan/docker-build-with-cache-action@v5
@@ -195,6 +208,11 @@ jobs:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: "${{ secrets.DOCKER_REGISTRY_TOKEN }}"
 
+      - name: Label NetPyne Docker image
+        run: |
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ steps.get-docker-image-tag.outputs.netpyneVersion }}
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:latest
+
       - name: Build Brian 2 Docker image
         uses: whoan/docker-build-with-cache-action@v5
         with:
@@ -207,18 +225,11 @@ jobs:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: "${{ secrets.DOCKER_REGISTRY_TOKEN }}"
 
-      - name: Label Docker images
+      - name: Label Brian 2 Docker image
         run: |
-          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }}
-          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ steps.get-docker-image-tag.outputs.neuronVersion }}
-          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ steps.get-docker-image-tag.outputs.netpyneVersion }}
           docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:${{ steps.get-docker-image-tag.outputs.brian2Version }}
-
-          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:latest
-          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:latest
-          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:latest
           docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:latest
-
+          
       #############################################
       ## Test and upload coverage report to Codecov
       #############################################
