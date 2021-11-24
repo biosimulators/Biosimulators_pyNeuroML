@@ -161,7 +161,6 @@ jobs:
 
       - name: Build pyNeuroML Docker image
         uses: whoan/docker-build-with-cache-action@v5
-        if: github.event.inputs.simulator || github.event.inputs.simulator == 'pyneuroml'
         with:
           dockerfile: Dockerfile-pyneuroml
           build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
@@ -174,7 +173,6 @@ jobs:
 
       - name: Build NEURON Docker image
         uses: whoan/docker-build-with-cache-action@v5
-        if: github.event.inputs.simulator || github.event.inputs.simulator == 'neuron'
         with:
           dockerfile: Dockerfile-neuron
           build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
@@ -187,7 +185,6 @@ jobs:
 
       - name: Build NetPyNe Docker image
         uses: whoan/docker-build-with-cache-action@v5
-        if: github.event.inputs.simulator || github.event.inputs.simulator == 'netpyne'
         with:
           dockerfile: Dockerfile-netpyne
           build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
@@ -200,7 +197,6 @@ jobs:
 
       - name: Build Brian 2 Docker image
         uses: whoan/docker-build-with-cache-action@v5
-        if: github.event.inputs.simulator || github.event.inputs.simulator == 'brian2'
         with:
           dockerfile: Dockerfile-brian2
           build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
