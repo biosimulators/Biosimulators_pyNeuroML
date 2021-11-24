@@ -105,6 +105,7 @@ jobs:
             gcc \
             g++ \
             make \
+            build-essential \
             mpi \
             libmpich-dev
           sudo python -m pip install neuron
