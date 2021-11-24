@@ -1,4 +1,4 @@
-biosimulators_utils[neuroml,lems,logging] >= 0.1.116
+biosimulators_utils[neuroml,lems,logging] >= 0.1.142
 kisao
 lxml
 numpy
