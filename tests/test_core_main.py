@@ -69,16 +69,32 @@ class CoreCliTestCase(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             core.exec_sed_task(task, variables, preprocessed_task=preprocessed_task)
 
+    @unittest.skipIf(not SIMULATOR_ENABLED[Simulator.pyneuroml], 'pyNeuroML is disabled')
+    def test_exec_sed_task_pyneuroml(self):
+        task, variables = self._get_simulation()
+        log = TaskLog()
+        results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator.pyneuroml)
+        self._assert_variable_results(task, variables, results)
+
+    @unittest.skipIf(not SIMULATOR_ENABLED[Simulator.neuron], 'NEURON is disabled')
     def test_exec_sed_task_neuron(self):
         task, variables = self._get_simulation()
         log = TaskLog()
         results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator.neuron)
         self._assert_variable_results(task, variables, results)
 
+    @unittest.skipIf(not SIMULATOR_ENABLED[Simulator.netpyne], 'NetPyNe is disabled')
     def test_exec_sed_task_netpyne(self):
         task, variables = self._get_simulation()
         log = TaskLog()
         results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator.netpyne)
+        self._assert_variable_results(task, variables, results)
+
+    @unittest.skipIf(not SIMULATOR_ENABLED[Simulator.brian2], 'Brian 2 is disabled')
+    def test_exec_sed_task_brian2(self):
+        task, variables = self._get_simulation()
+        log = TaskLog()
+        results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator.brian2)
         self._assert_variable_results(task, variables, results)
 
     def test_exec_sed_task_non_zero_output_start_time(self):
@@ -119,14 +135,18 @@ class CoreCliTestCase(unittest.TestCase):
                 config.BUNDLE_OUTPUTS = True
                 config.KEEP_INDIVIDUAL_OUTPUTS = True
 
-                _, log = core.exec_sedml_docs_in_combine_archive(archive_filename, out_dir, config=config)
+                _, log = core.exec_sedml_docs_in_combine_archive(archive_filename, out_dir, config=config, simulator=simulator)
                 if log.exception:
                     raise log.exception
 
                 self._assert_combine_archive_outputs(doc, out_dir)
 
     def _get_simulation(self, algorithm=None):
-        model_source = os.path.join(self.FIXTURES_DIRNAME, 'LEMS_NML2_Ex5_DetCell.xml')
+        if os.path.isdir(os.path.join(self.dirname, 'fixtures')):
+            shutil.rmtree(os.path.join(self.dirname, 'fixtures'))
+        shutil.copytree(self.FIXTURES_DIRNAME, os.path.join(self.dirname, 'fixtures'))
+
+        model_source = os.path.join(self.dirname, 'fixtures', 'LEMS_NML2_Ex5_DetCell.xml')
 
         if algorithm is None:
             algorithm = sedml_data_model.Algorithm(

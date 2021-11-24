@@ -28,7 +28,7 @@ class Simulator(str, enum.Enum):
 
 
 SIMULATOR_ENABLED = {
-    Simulator.brian2: False,
+    Simulator.brian2: True,
     Simulator.neuron: True,
     Simulator.netpyne: True,
     Simulator.pyneuroml: True,

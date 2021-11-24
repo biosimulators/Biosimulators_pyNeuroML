@@ -3,4 +3,4 @@ kisao
 lxml
 numpy
 psutil
-pyneuroml
+pyneuroml >= 0.5.18

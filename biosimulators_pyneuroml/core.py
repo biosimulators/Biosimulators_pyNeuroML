@@ -92,7 +92,7 @@ def exec_sed_doc(doc, working_dir, base_out_path, rel_out_path=None,
             * :obj:`ReportResults`: results of each report
             * :obj:`SedDocumentLog`: log of the document
     """
-    return base_exec_sed_doc(exec_sed_task, doc, working_dir, base_out_path,
+    return base_exec_sed_doc(functools.partial(exec_sed_task, simulator=simulator), doc, working_dir, base_out_path,
                              rel_out_path=rel_out_path,
                              apply_xml_model_changes=apply_xml_model_changes,
                              log=log,
@@ -151,11 +151,12 @@ def exec_sed_task(task, variables, preprocessed_task=None, log=None, config=None
     sim.algorithm = copy.deepcopy(sim.algorithm)
     sim.algorithm.kisao_id = preprocessed_task['algorithm_kisao_id']
 
-    set_sim_in_lems_xml(lems_simulation, task, variables)
+    set_sim_in_lems_xml(lems_simulation, task, variables, simulator=simulator)
     lems_results = run_lems_xml(
         lems_root,
         working_dirname=os.path.dirname(task.model.source),
         lems_filename=task.model.source,
+        simulator=simulator,
         verbose=config.VERBOSE,
         config=config,
     )[SEDML_OUTPUT_FILE_ID]

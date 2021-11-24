@@ -59,7 +59,7 @@ setuptools.setup(
             'biosimulators-pyneuroml = biosimulators_pyneuroml.cli.pyneuroml:main',
             'biosimulators-neuron = biosimulators_pyneuroml.cli.neuron:main',
             'biosimulators-netpyne = biosimulators_pyneuroml.cli.netpyne:main',
-            # 'biosimulators-brian2 = biosimulators_pyneuroml.cli.brian2:main',
+            'biosimulators-brian2 = biosimulators_pyneuroml.cli.brian2:main',
         ],
     },
 )

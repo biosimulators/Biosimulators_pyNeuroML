@@ -24,3 +24,4 @@ docs/_sources/
 tests/fixtures/*.mod
 tests/fixtures/*.hoc
 tests/fixtures/tmp*
+tests/fixtures/x86_64/

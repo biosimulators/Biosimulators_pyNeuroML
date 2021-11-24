@@ -21,6 +21,7 @@ import os
 import pandas
 import psutil
 import shutil
+import sys
 import tempfile
 
 __all__ = [
@@ -129,21 +130,29 @@ def validate_lems_document(lems_xml_root):
         raise ValueError('LEMS document must have a single `Simulation` element, not {}.'.format(len(simulation_xml)))
 
 
-def set_sim_in_lems_xml(simulation_xml, task, variables):
+def set_sim_in_lems_xml(simulation_xml, task, variables, simulator=Simulator.pyneuroml):
     """ Set the simulation in a LEMS document
 
     Args:
         simulation_xml (:obj:`lxml.etree._Element`): LEMS simulation
         task (:obj:`Task`): task
         variables (:obj:`list` of :obj:`Variable`): variables to record
+        simulator (:obj:`Simulator`, optional): simulator to run the LEMS document
     """
     model = task.model
     simulation = task.simulation
 
     # modify simulation
+    if simulator in [Simulator.brian2, Simulator.netpyne]:
+        length = simulation.output_end_time + (simulation.output_end_time - simulation.output_start_time) * 1 / simulation.number_of_steps
+        steps = (simulation.output_end_time - simulation.output_start_time) / simulation.number_of_steps
+    else:
+        length = simulation.output_end_time
+        steps = (simulation.output_end_time - simulation.output_start_time) / simulation.number_of_steps
+
     simulation_xml.attrib['target'] = model.id
-    simulation_xml.attrib['length'] = '{}s'.format(simulation.output_end_time)
-    simulation_xml.attrib['step'] = '{}s'.format((simulation.output_end_time - simulation.output_start_time) / simulation.number_of_steps)
+    simulation_xml.attrib['length'] = '{}s'.format(length)
+    simulation_xml.attrib['step'] = '{}s'.format(steps)
 
     # set simulation algorithm; Note: pyNeuroML seems to ignore this
     simulation_xml.attrib['method'] = KISAO_ALGORITHM_MAP[simulation.algorithm.kisao_id]['id']
@@ -200,17 +209,31 @@ def run_lems_xml(lems_xml_root, working_dirname='.', lems_filename=None,
     # create a new LEMS document with outputs directed to temporary files
     write_lems_output_files_configuration(lems_xml_root, output_file_configs)
 
-    fid, temp_filename = tempfile.mkstemp(dir=working_dirname, suffix='.xml')
+    fid, temp_lems_filename = tempfile.mkstemp(dir=working_dirname, suffix='.xml')
     os.close(fid)
-    write_xml_file(lems_xml_root, temp_filename)
+    write_xml_file(lems_xml_root, temp_lems_filename)
 
-    results_dirname = tempfile.mkdtemp()
-    options.exec_in_dir = results_dirname
+    if simulator == Simulator.pyneuroml:
+        temp_lems_filename_for_simulation = os.path.relpath(temp_lems_filename, working_dirname)
+        results_dirname = working_dirname
+        options.exec_in_dir = working_dirname
+    elif simulator in [Simulator.neuron, Simulator.netpyne]:
+        temp_lems_filename_for_simulation = os.path.relpath(temp_lems_filename, os.getcwd())
+        results_dirname = working_dirname
+    elif simulator == Simulator.brian2:
+        results_dirname = working_dirname
+        cwd = os.getcwd()
+        os.chdir(working_dirname)
+        sys.path.insert(0, working_dirname)
+        temp_lems_filename_for_simulation = os.path.relpath(temp_lems_filename, os.getcwd())
+
     with StandardOutputErrorCapturer(relay=options.verbose, disabled=not config.LOG) as captured:
-        result = run_lems_method(temp_filename, **options.to_kw_args(simulator))
+        result = run_lems_method(temp_lems_filename_for_simulation, **options.to_kw_args(simulator))
         if not result:
-            os.remove(temp_filename)
-            shutil.rmtree(results_dirname)
+            if simulator == Simulator.brian2:
+                os.chdir(cwd)
+
+            os.remove(temp_lems_filename)
 
             msg = '`{}` was not able to execute {}'.format(
                 simulator.value,
@@ -219,12 +242,16 @@ def run_lems_xml(lems_xml_root, working_dirname='.', lems_filename=None,
                 msg += '\n\n  ' + captured.get_text().replace('\n', '\n  ')
             raise RuntimeError(msg)
 
+    # restore working directory
+    if simulator == Simulator.brian2:
+        os.chdir(cwd)
+        sys.path.pop(0)
+
     # read results
-    results = read_lems_output_files(output_file_configs, results_dirname)
+    results = read_lems_output_files(output_file_configs, results_dirname, simulator=simulator)
 
     # cleanup temporary files
-    os.remove(temp_filename)
-    shutil.rmtree(results_dirname)
+    os.remove(temp_lems_filename)
 
     # return results
     return results
@@ -377,21 +404,31 @@ def write_lems_output_files_configuration(xml_root, output_file_configs):
                     output_file_xml.append(column_xml)
 
 
-def read_lems_output_files(output_file_configs, output_files_dirname='.'):
+def read_lems_output_files(output_file_configs, output_files_dirname='.', simulator=Simulator.pyneuroml):
     """ Read the output files of the execution of a LEMS document
 
     Args:
         output_file_configs (:obj:`list` of :obj:`dict`): configuration of the output files of a LEMS document
         output_files_dirname (:obj:`str`, optional): base directory for output files
+        simulator (:obj:`Simulator`, optional): simulator to run the LEMS document
 
     Returns:
         :obj:`dict` of :obj:`str` => :obj:`pandas.DataFrame`: dictionary that maps the id of each output file
             to a Pandas data frame with its value
     """
+    if simulator == Simulator.brian2:
+        sep = ' '
+    else:
+        sep = '\t'
+
     results = {}
     for output_file_config in output_file_configs:
+        output_filename = os.path.join(output_files_dirname, output_file_config['file_name'])
+        if not os.path.isfile(output_filename):
+            raise FileExistsError('Output file {} does not exist'.format(output_filename))
+
         column_ids = [SEDML_TIME_OUTPUT_COLUMN_ID] + [column['id'] for column in output_file_config['columns']] + ['__extra__']
         results[output_file_config['id']] = pandas.read_csv(
-            os.path.join(output_files_dirname, output_file_config['file_name']),
-            sep='\t', names=column_ids).drop(columns=['__extra__'])
+            output_filename,
+            sep=sep, names=column_ids).drop(columns=['__extra__'])
     return results
