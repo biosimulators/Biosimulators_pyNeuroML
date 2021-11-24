@@ -163,7 +163,7 @@ jobs:
         uses: whoan/docker-build-with-cache-action@v5
         with:
           dockerfile: Dockerfile-pyneuroml
-          build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
+          build_extra_args: "--compress=true --build-arg VERSION=${{ steps.get-version-number.outputs.version }} --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }} --label org.opencontainers.image.source=https://github.com/${{ github.repository }} --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
           registry: ghcr.io
           image_name: biosimulators/biosimulators_pyneuroml/pyneuroml
           image_tag: ${{ github.sha }}
@@ -175,7 +175,7 @@ jobs:
         uses: whoan/docker-build-with-cache-action@v5
         with:
           dockerfile: Dockerfile-neuron
-          build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
+          build_extra_args: "--compress=true --build-arg VERSION=${{ steps.get-version-number.outputs.version }} --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.neuronVersion }} --label org.opencontainers.image.source=https://github.com/${{ github.repository }} --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
           registry: ghcr.io
           image_name: biosimulators/biosimulators_pyneuroml/neuron
           image_tag: ${{ github.sha }}
@@ -187,7 +187,7 @@ jobs:
         uses: whoan/docker-build-with-cache-action@v5
         with:
           dockerfile: Dockerfile-netpyne
-          build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
+          build_extra_args: "--compress=true --build-arg VERSION=${{ steps.get-version-number.outputs.version }} --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.netpyneVersion }} --label org.opencontainers.image.source=https://github.com/${{ github.repository }} --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
           registry: ghcr.io
           image_name: biosimulators/biosimulators_pyneuroml/netpyne
           image_tag: ${{ github.sha }}
@@ -199,7 +199,7 @@ jobs:
         uses: whoan/docker-build-with-cache-action@v5
         with:
           dockerfile: Dockerfile-brian2
-          build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
+          build_extra_args: "--compress=true --build-arg VERSION=${{ steps.get-version-number.outputs.version }} --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.brian2Version }} --label org.opencontainers.image.source=https://github.com/${{ github.repository }} --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
           registry: ghcr.io
           image_name: biosimulators/biosimulators_pyneuroml/brian2
           image_tag: ${{ github.sha }}
