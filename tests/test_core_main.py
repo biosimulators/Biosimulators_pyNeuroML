@@ -25,6 +25,7 @@ import importlib
 import numpy
 import numpy.testing
 import os
+import parameterized
 import shutil
 import tempfile
 import unittest
@@ -69,32 +70,15 @@ class CoreCliTestCase(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             core.exec_sed_task(task, variables, preprocessed_task=preprocessed_task)
 
-    @unittest.skipIf(not SIMULATOR_ENABLED[Simulator.pyneuroml], 'pyNeuroML is disabled')
-    def test_exec_sed_task_pyneuroml(self):
+    @parameterized.parameterized.expand([
+        (name,) 
+        for name, simulator in Simulator.__members__.items()
+        if SIMULATOR_ENABLED[simulator]
+    ])
+    def test_exec_sed_task_with_simulator(self, simulator_name):
         task, variables = self._get_simulation()
         log = TaskLog()
-        results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator.pyneuroml)
-        self._assert_variable_results(task, variables, results)
-
-    @unittest.skipIf(not SIMULATOR_ENABLED[Simulator.neuron], 'NEURON is disabled')
-    def test_exec_sed_task_neuron(self):
-        task, variables = self._get_simulation()
-        log = TaskLog()
-        results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator.neuron)
-        self._assert_variable_results(task, variables, results)
-
-    @unittest.skipIf(not SIMULATOR_ENABLED[Simulator.netpyne], 'NetPyNe is disabled')
-    def test_exec_sed_task_netpyne(self):
-        task, variables = self._get_simulation()
-        log = TaskLog()
-        results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator.netpyne)
-        self._assert_variable_results(task, variables, results)
-
-    @unittest.skipIf(not SIMULATOR_ENABLED[Simulator.brian2], 'Brian 2 is disabled')
-    def test_exec_sed_task_brian2(self):
-        task, variables = self._get_simulation()
-        log = TaskLog()
-        results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator.brian2)
+        results, log = core.exec_sed_task(task, variables, log=log, simulator=Simulator[simulator_name])
         self._assert_variable_results(task, variables, results)
 
     def test_exec_sed_task_non_zero_output_start_time(self):
@@ -314,18 +298,22 @@ class CoreCliTestCase(unittest.TestCase):
 
             self._assert_combine_archive_outputs(doc, out_dir)
 
-    def test_exec_sedml_docs_in_combine_archive_with_docker_image(self):
+    @parameterized.parameterized.expand([
+        (name,) 
+        for name, simulator in Simulator.__members__.items()
+        if SIMULATOR_ENABLED[simulator]
+    ])
+    def test_exec_sedml_docs_in_combine_archive_with_docker_image(self, simulator_name):
         doc, archive_filename = self._build_combine_archive()
         env = self._get_combine_archive_exec_env()
 
-        for simulator in Simulator.__members__.values():
-            if SIMULATOR_ENABLED[simulator]:
-                out_dir = os.path.join(self.dirname, 'out-' + simulator.name)
-                exec_sedml_docs_in_archive_with_containerized_simulator(
-                    archive_filename, out_dir,
-                    self.DOCKER_IMAGES[simulator])
+        simulator = Simulator[simulator_name]
+        out_dir = os.path.join(self.dirname, 'out-' + simulator.name)
+        exec_sedml_docs_in_archive_with_containerized_simulator(
+            archive_filename, out_dir,
+            self.DOCKER_IMAGES[simulator])
 
-                self._assert_combine_archive_outputs(doc, out_dir)
+        self._assert_combine_archive_outputs(doc, out_dir)
 
     def _get_combine_archive_exec_env(self):
         return {
