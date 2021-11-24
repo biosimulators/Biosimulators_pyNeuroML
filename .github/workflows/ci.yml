@@ -106,7 +106,8 @@ jobs:
             g++ \
             make \
             mpi \
-            libmpich-dev 
+            libmpich-dev
+          sudo python -m pip install neuron
 
       # install package
       - name: Install the package
