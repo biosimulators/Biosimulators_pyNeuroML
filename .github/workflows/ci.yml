@@ -156,62 +156,72 @@ jobs:
           echo "::set-output name=netpyneVersion::${NETPYNE_VERSION}"
           echo "::set-output name=brian2Version::${BRIAN2_VERSION}"
 
-      - name: Build Docker images
+          echo "::set-output name=revision::${REVISION}"
+          echo "::set-output name=created::${CREATED}"
+
+      - name: Build pyNeuroML Docker image
+        uses: whoan/docker-build-with-cache-action@v5
+        if: github.event.inputs.simulator || github.event.inputs.simulator == 'pyneuroml'
+        with:
+          dockerfile: Dockerfile-pyneuroml
+          build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
+          registry: ghcr.io
+          image_name: biosimulators/biosimulators_pyneuroml/pyneuroml
+          image_tag: ${{ github.sha }}
+          push_image_and_stages: true
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: "${{ secrets.DOCKER_REGISTRY_TOKEN }}"
+
+      - name: Build NEURON Docker image
+        uses: whoan/docker-build-with-cache-action@v5
+        if: github.event.inputs.simulator || github.event.inputs.simulator == 'neuron'
+        with:
+          dockerfile: Dockerfile-neuron
+          build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
+          registry: ghcr.io
+          image_name: biosimulators/biosimulators_pyneuroml/neuron
+          image_tag: ${{ github.sha }}
+          push_image_and_stages: true
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: "${{ secrets.DOCKER_REGISTRY_TOKEN }}"
+
+      - name: Build NetPyNe Docker image
+        uses: whoan/docker-build-with-cache-action@v5
+        if: github.event.inputs.simulator || github.event.inputs.simulator == 'netpyne'
+        with:
+          dockerfile: Dockerfile-netpyne
+          build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
+          registry: ghcr.io
+          image_name: biosimulators/biosimulators_pyneuroml/netpyne
+          image_tag: ${{ github.sha }}
+          push_image_and_stages: true
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: "${{ secrets.DOCKER_REGISTRY_TOKEN }}"
+
+      - name: Build Brian 2 Docker image
+        uses: whoan/docker-build-with-cache-action@v5
+        if: github.event.inputs.simulator || github.event.inputs.simulator == 'brian2'
+        with:
+          dockerfile: Dockerfile-brian2
+          build_extra_args: "--compress=true --label org.opencontainers.image.revision=${{steps.get-docker-image-tag.outputs.revision}} --label org.opencontainers.image.created=${{steps.get-docker-image-tag.outputs.created}}"
+          registry: ghcr.io
+          image_name: biosimulators/biosimulators_pyneuroml/brian2
+          image_tag: ${{ github.sha }}
+          push_image_and_stages: true
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: "${{ secrets.DOCKER_REGISTRY_TOKEN }}"
+
+      - name: Label Docker images
         run: |
-          REVISION=$(git rev-parse HEAD)
-          CREATED=$(date --rfc-3339=seconds | sed 's/ /T/')
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }}
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ steps.get-docker-image-tag.outputs.neuronVersion }}
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ steps.get-docker-image-tag.outputs.netpyneVersion }}
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:${{ steps.get-docker-image-tag.outputs.brian2Version }}
 
-          if [ -z "${{ github.event.inputs.simulator }}" ] || [ "${{ github.event.inputs.simulator }}" == "pyneuroml" ]; then
-            docker build \
-              --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
-              --label org.opencontainers.image.revision=${REVISION} \
-              --label org.opencontainers.image.created=${CREATED} \
-              --build-arg VERSION=${{ steps.get-version-number.outputs.version }} \
-              --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }} \
-              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }} \
-              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:latest \
-              -f Dockerfile-pyneuroml \
-              .
-          fi
-
-          if [ -z "${{ github.event.inputs.simulator }}" ] || [ "${{ github.event.inputs.simulator }}" == "neuron" ]; then
-            docker build \
-              --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
-              --label org.opencontainers.image.revision=${REVISION} \
-              --label org.opencontainers.image.created=${CREATED} \
-              --build-arg VERSION=${{ steps.get-version-number.outputs.version }} \
-              --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.neuronVersion }} \
-              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ steps.get-docker-image-tag.outputs.neuronVersion }} \
-              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:latest \
-              -f Dockerfile-neuron \
-              .
-           fi
-
-          if [ -z "${{ github.event.inputs.simulator }}" ] || [ "${{ github.event.inputs.simulator }}" == "netpyne" ]; then
-            docker build \
-              --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
-              --label org.opencontainers.image.revision=${REVISION} \
-              --label org.opencontainers.image.created=${CREATED} \
-              --build-arg VERSION=${{ steps.get-version-number.outputs.version }} \
-              --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.netpyneVersion }} \
-              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ steps.get-docker-image-tag.outputs.netpyneVersion }} \
-              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:latest \
-              -f Dockerfile-netpyne \
-              .
-          fi
-
-          if [ -z "${{ github.event.inputs.simulator }}" ] || [ "${{ github.event.inputs.simulator }}" == "brian2" ]; then
-            docker build \
-              --label org.opencontainers.image.source=https://github.com/${{ github.repository }} \
-              --label org.opencontainers.image.revision=${REVISION} \
-              --label org.opencontainers.image.created=${CREATED} \
-              --build-arg VERSION=${{ steps.get-version-number.outputs.version }} \
-              --build-arg SIMULATOR_VERSION=${{ steps.get-docker-image-tag.outputs.brian2Version }} \
-              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:${{ steps.get-docker-image-tag.outputs.brian2Version }} \
-              --tag ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:latest \
-              -f Dockerfile-brian2 \
-              .
-          fi
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:latest
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:latest
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:latest
+          docker image label ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:${{ github.sha }} ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:latest
 
       #############################################
       ## Test and upload coverage report to Codecov
