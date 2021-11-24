@@ -20,7 +20,6 @@ import lxml.etree
 import os
 import pandas
 import psutil
-import shutil
 import sys
 import tempfile
 
