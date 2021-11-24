@@ -108,6 +108,8 @@ jobs:
             mpi \
             libmpich-dev
           python -m pip install neuron
+          ls /opt/hostedtoolcache/Python/3.9.8/x64/
+          ls /opt/hostedtoolcache/Python/3.9.8/x64/bin
 
       # install package
       - name: Install the package
