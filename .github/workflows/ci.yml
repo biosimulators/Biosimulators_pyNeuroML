@@ -108,9 +108,6 @@ jobs:
             mpi \
             libmpich-dev
           python -m pip install neuron
-          ls /opt/hostedtoolcache/Python/3.9.8/x64/
-          ls /opt/hostedtoolcache/Python/3.9.8/x64/bin
-          which nrniv
 
       # install package
       - name: Install the package
@@ -228,7 +225,7 @@ jobs:
       - name: Run the tests
         run: python -m pytest tests/ --cov=./biosimulators_pyneuroml/ --cov-report=xml
         env:
-          NEURON_HOME: /opt/hostedtoolcache/Python/3.9.8/x64/bin
+          NEURON_HOME: /opt/hostedtoolcache/Python/3.9.8/x64
 
       - name: Upload the coverage report to Codecov
         uses: codecov/codecov-action@v2
