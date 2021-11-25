@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Installation instructions &#8212; BioSimulators-pyNeuroML 0.0.11 documentation</title>
+    <title>Installation instructions &#8212; BioSimulators-pyNeuroML 0.0.12 documentation</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -182,11 +182,37 @@
                 
   <section id="installation-instructions">
 <h1>Installation instructions<a class="headerlink" href="#installation-instructions" title="Permalink to this headline">¶</a></h1>
-<p>BioSimulators-pyNeuroML is available as three command-line programs and three command-line programs encapsulated into three Docker images.</p>
+<p>BioSimulators-pyNeuroML is available as four command-line programs and four command-line programs encapsulated into four Docker images.</p>
 <section id="command-line-program">
 <h2>Command-line program<a class="headerlink" href="#command-line-program" title="Permalink to this headline">¶</a></h2>
-<p>After installing <a class="reference external" href="https://www.python.org/downloads/">Python</a> (&gt;= 3.7), <a class="reference external" href="https://pip.pypa.io/">pip</a>, and <a class="reference external" href="https://java.com/">Java</a> run the following command to install BioSimulators-pyNeuroML:</p>
+<p>First, install <a class="reference external" href="https://www.python.org/downloads/">Python</a> (&gt;= 3.7), <a class="reference external" href="https://pip.pypa.io/">pip</a>, and <a class="reference external" href="https://java.com/">Java</a>.</p>
+<p>Second, install the following additional programs to use NetPyNe and NEURON:</p>
+<ul>
+<li><p>NEURON</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>gcc</p></li>
+<li><p>g++</p></li>
+<li><p>make</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>NetPyNe</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>All of the above</p></li>
+<li><p>mpi</p></li>
+<li><p>libmpich-dev</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>Third, run the following command to install BioSimulators-pyNeuroML:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>pip install biosimulators-pyneuroml
+</pre></div>
+</div>
+<p>Add the <code class="docutils literal notranslate"><span class="pre">brian2</span></code> option to install support for Brian 2.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>pip install biosimulators-pyneuroml[brian2]
 </pre></div>
 </div>
 <p>Add the <code class="docutils literal notranslate"><span class="pre">netpyne</span></code> option to install support for NetPyNe.</p>
@@ -201,7 +227,8 @@
 <section id="docker-images-with-command-line-entrypoints">
 <h2>Docker images with command-line entrypoints<a class="headerlink" href="#docker-images-with-command-line-entrypoints" title="Permalink to this headline">¶</a></h2>
 <p>After installing <a class="reference external" href="https://docs.docker.com/get-docker/">Docker</a>, run the following commands to install the Docker images for jNeuroML/pyNeuroML, NetPyNe, and NEURON:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/biosimulators/netpyne
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>docker pull ghcr.io/biosimulators/brian2
+docker pull ghcr.io/biosimulators/netpyne
 docker pull ghcr.io/biosimulators/neuron
 docker pull ghcr.io/biosimulators/pyneuroml
 </pre></div>
