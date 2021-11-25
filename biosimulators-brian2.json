@@ -9,9 +9,27 @@
       "url": "https://briansimulator.org"
     }
   ],
-  "image": null,
-  "cli": null,
-  "pythonApi": null,
+  "image": {
+    "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:2.4.2",
+    "format": {
+      "namespace": "EDAM",
+      "id": "format_3973",
+      "version": null,
+      "supportedFeatures": []
+    },
+    "operatingSystemType": "Linux"
+  },
+  "cli": {
+    "packageRepository": "PyPI",
+    "package": "biosimulators-pyneuroml",
+    "command": "biosimulators-brian2",
+    "installationInstructions": "https://docs.biosimulators.org/Biosimulators_pyNeuroML/installation.html"
+  },
+  "pythonApi": {
+    "package": "biosimulators-brian2",
+    "module": "biosimulators_pyneuroml.api.brian2",
+    "installationInstructions": "https://docs.biosimulators.org/Biosimulators_pyNeuroML/installation.html"
+  },
   "authors": [
     {
       "firstName": "Romain",
