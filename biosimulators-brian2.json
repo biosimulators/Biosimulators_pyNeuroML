@@ -3,12 +3,10 @@
   "name": "Brian 2",
   "version": "2.4.2",
   "description": "Clock-driven simulator for spiking neural networks",
-  "urls": [
-    {
-      "type": "Home page",
-      "url": "https://briansimulator.org"
-    }
-  ],
+  "urls": [{
+    "type": "Home page",
+    "url": "https://briansimulator.org"
+  }],
   "image": {
     "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:2.4.2",
     "format": {
@@ -30,8 +28,7 @@
     "module": "biosimulators_pyneuroml.api.brian2",
     "installationInstructions": "https://docs.biosimulators.org/Biosimulators_pyNeuroML/installation.html"
   },
-  "authors": [
-    {
+  "authors": [{
       "firstName": "Romain",
       "lastName": "Brette",
       "identifiers": []
@@ -48,28 +45,23 @@
     }
   ],
   "references": {
-    "identifiers": [
-      {
-        "namespace": "pypi",
-        "id": "Brian2",
-        "url": "https://pypi.org/project/Brian2"
-      }
-    ],
-    "citations": [
-      {
+    "identifiers": [{
+      "namespace": "pypi",
+      "id": "Brian2",
+      "url": "https://pypi.org/project/Brian2"
+    }],
+    "citations": [{
         "title": "Brian 2, an intuitive and efficient neural simulator",
         "authors": "Marcel Stimberg, Romain Brette & Dan FM Goodman",
         "journal": "eLife",
         "volume": "8",
         "pages": "e47314",
         "year": 2019,
-        "identifiers": [
-          {
-            "namespace": "doi",
-            "id": "10.7554/eLife.47314",
-            "url": "https://doi.org/10.7554/eLife.47314"
-          }
-        ]
+        "identifiers": [{
+          "namespace": "doi",
+          "id": "10.7554/eLife.47314",
+          "url": "https://doi.org/10.7554/eLife.47314"
+        }]
       },
       {
         "title": "The Brian simulator",
@@ -78,13 +70,11 @@
         "volume": "3",
         "pages": "26",
         "year": 2009,
-        "identifiers": [
-          {
-            "namespace": "doi",
-            "id": "10.3389/neuro.01.026.2009",
-            "url": "https://doi.org/10.3389/neuro.01.026.2009"
-          }
-        ]
+        "identifiers": [{
+          "namespace": "doi",
+          "id": "10.3389/neuro.01.026.2009",
+          "url": "https://doi.org/10.3389/neuro.01.026.2009"
+        }]
       },
       {
         "title": "Brian: a simulator for spiking neural networks in Python",
@@ -93,13 +83,11 @@
         "volume": "2",
         "pages": "5",
         "year": 2008,
-        "identifiers": [
-          {
-            "namespace": "doi",
-            "id": "10.3389/neuro.11.005.2008",
-            "url": "https://doi.org/10.3389/neuro.11.005.2008"
-          }
-        ]
+        "identifiers": [{
+          "namespace": "doi",
+          "id": "10.3389/neuro.11.005.2008",
+          "url": "https://doi.org/10.3389/neuro.11.005.2008"
+        }]
       }
     ]
   },
@@ -107,39 +95,87 @@
     "namespace": "SPDX",
     "id": "CECILL-2.1"
   },
-  "algorithms": [
-    {
+  "algorithms": [{
       "id": "EULER",
       "name": "Euler forward method",
       "kisaoId": {
         "namespace": "KISAO",
         "id": "KISAO_0000030"
       },
-      "modelingFrameworks": [
+      "modelingFrameworks": [{
+        "namespace": "SBO",
+        "id": "SBO_0000293"
+      }],
+      "modelFormats": [{
+          "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
         {
-          "namespace": "SBO",
-          "id": "SBO_0000293"
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
         }
       ],
-      "modelFormats": [],
-      "modelChangePatterns": [],
-      "simulationFormats": [],
-      "simulationTypes": [],
-      "archiveFormats": [],
+      "modelChangePatterns": [{
+          "name": "Change component attributes",
+          "types": ["SedAttributeModelChange", "SedComputeAttributeChangeModelChange", "SedSetValueAttributeModelChange"],
+          "target": {
+            "value": "//*/@*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Add components",
+          "types": ["SedAddXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Remove components",
+          "types": ["SedRemoveXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Change components",
+          "types": ["SedChangeXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        }
+      ],
+      "simulationFormats": [{
+        "namespace": "EDAM",
+        "id": "format_3685",
+        "version": null,
+        "supportedFeatures": []
+      }],
+      "simulationTypes": ["SedUniformTimeCourseSimulation"],
+      "archiveFormats": [{
+        "namespace": "EDAM",
+        "id": "format_3686",
+        "version": null,
+        "supportedFeatures": []
+      }],
       "citations": [],
       "parameters": [],
-      "outputDimensions": [
-        {
-          "namespace": "SIO",
-          "id": "SIO_000418"
-        }
-      ],
+      "outputDimensions": [{
+        "namespace": "SIO",
+        "id": "SIO_000418"
+      }],
       "outputVariablePatterns": [],
       "availableSoftwareInterfaceTypes": [
         "library"
       ],
-      "dependencies": [
-        {
+      "dependencies": [{
           "name": "libNeuroML",
           "version": null,
           "required": true,
@@ -176,31 +212,80 @@
         "namespace": "KISAO",
         "id": "KISAO_0000381"
       },
-      "modelingFrameworks": [
+      "modelingFrameworks": [{
+        "namespace": "SBO",
+        "id": "SBO_0000293"
+      }],
+      "modelFormats": [{
+          "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
         {
-          "namespace": "SBO",
-          "id": "SBO_0000293"
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
         }
       ],
-      "modelFormats": [],
-      "modelChangePatterns": [],
-      "simulationFormats": [],
-      "simulationTypes": [],
-      "archiveFormats": [],
+      "modelChangePatterns": [{
+          "name": "Change component attributes",
+          "types": ["SedAttributeModelChange", "SedComputeAttributeChangeModelChange", "SedSetValueAttributeModelChange"],
+          "target": {
+            "value": "//*/@*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Add components",
+          "types": ["SedAddXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Remove components",
+          "types": ["SedRemoveXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Change components",
+          "types": ["SedChangeXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        }
+      ],
+      "simulationFormats": [{
+        "namespace": "EDAM",
+        "id": "format_3685",
+        "version": null,
+        "supportedFeatures": []
+      }],
+      "simulationTypes": ["SedUniformTimeCourseSimulation"],
+      "archiveFormats": [{
+        "namespace": "EDAM",
+        "id": "format_3686",
+        "version": null,
+        "supportedFeatures": []
+      }],
       "citations": [],
       "parameters": [],
-      "outputDimensions": [
-        {
-          "namespace": "SIO",
-          "id": "SIO_000418"
-        }
-      ],
+      "outputDimensions": [{
+        "namespace": "SIO",
+        "id": "SIO_000418"
+      }],
       "outputVariablePatterns": [],
       "availableSoftwareInterfaceTypes": [
         "library"
       ],
-      "dependencies": [
-        {
+      "dependencies": [{
           "name": "libNeuroML",
           "version": null,
           "required": true,
@@ -237,31 +322,80 @@
         "namespace": "KISAO",
         "id": "KISAO_0000032"
       },
-      "modelingFrameworks": [
+      "modelingFrameworks": [{
+        "namespace": "SBO",
+        "id": "SBO_0000293"
+      }],
+      "modelFormats": [{
+          "namespace": "EDAM",
+          "id": "format_9004",
+          "version": null,
+          "supportedFeatures": []
+        },
         {
-          "namespace": "SBO",
-          "id": "SBO_0000293"
+          "namespace": "EDAM",
+          "id": "format_3971",
+          "version": null,
+          "supportedFeatures": []
         }
       ],
-      "modelFormats": [],
-      "modelChangePatterns": [],
-      "simulationFormats": [],
-      "simulationTypes": [],
-      "archiveFormats": [],
+      "modelChangePatterns": [{
+          "name": "Change component attributes",
+          "types": ["SedAttributeModelChange", "SedComputeAttributeChangeModelChange", "SedSetValueAttributeModelChange"],
+          "target": {
+            "value": "//*/@*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Add components",
+          "types": ["SedAddXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Remove components",
+          "types": ["SedRemoveXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        },
+        {
+          "name": "Change components",
+          "types": ["SedChangeXmlModelChange"],
+          "target": {
+            "value": "//*",
+            "grammar": "XPath"
+          }
+        }
+      ],
+      "simulationFormats": [{
+        "namespace": "EDAM",
+        "id": "format_3685",
+        "version": null,
+        "supportedFeatures": []
+      }],
+      "simulationTypes": ["SedUniformTimeCourseSimulation"],
+      "archiveFormats": [{
+        "namespace": "EDAM",
+        "id": "format_3686",
+        "version": null,
+        "supportedFeatures": []
+      }],
       "citations": [],
       "parameters": [],
-      "outputDimensions": [
-        {
-          "namespace": "SIO",
-          "id": "SIO_000418"
-        }
-      ],
+      "outputDimensions": [{
+        "namespace": "SIO",
+        "id": "SIO_000418"
+      }],
       "outputVariablePatterns": [],
       "availableSoftwareInterfaceTypes": [
         "library"
       ],
-      "dependencies": [
-        {
+      "dependencies": [{
           "name": "libNeuroML",
           "version": null,
           "required": true,
@@ -298,12 +432,10 @@
   "supportedOperatingSystemTypes": [
     "platform-independent"
   ],
-  "supportedProgrammingLanguages": [
-    {
-      "namespace": "Linguist",
-      "id": "Python"
-    }
-  ],
+  "supportedProgrammingLanguages": [{
+    "namespace": "Linguist",
+    "id": "Python"
+  }],
   "funding": [],
   "biosimulators": {
     "specificationVersion": "1.0.0",
