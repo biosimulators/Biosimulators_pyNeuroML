@@ -237,7 +237,7 @@ def run_lems_xml(lems_xml_root, working_dirname='.', lems_filename=None,
             msg = '`{}` was not able to execute {}'.format(
                 simulator.value,
                 '`{}`'.format(lems_filename) if lems_filename else 'the LEMS document')
-            
+
             if config.LOG:
                 std_out_err = captured.get_text()
                 if std_out_err:
