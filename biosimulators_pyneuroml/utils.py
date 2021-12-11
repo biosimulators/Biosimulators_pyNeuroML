@@ -312,7 +312,10 @@ def get_available_processors():
     Returns:
         :obj:`int`: amount of processors available
     """
-    return os.cpu_count()
+    if os.getenv('CPUS', None):
+        return int(float(os.getenv('CPUS', None)))
+    else:
+        return os.cpu_count()
 
 
 def get_available_memory():
