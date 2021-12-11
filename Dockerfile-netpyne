@@ -31,6 +31,8 @@ LABEL \
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends \
         mpi \
+        mpich \
+        mpi-default-bin \
         libmpich-dev \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
