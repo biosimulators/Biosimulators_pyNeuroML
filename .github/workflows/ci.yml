@@ -394,28 +394,28 @@ jobs:
 
           if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "pyneuroml" ]; then
             docker push ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:${{ steps.get-docker-image-tag.outputs.pyneuromlVersion }}
-            if [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
+            if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
               docker push ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:latest
             fi
           fi
 
           if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "neuron" ]; then
             docker push ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:${{ steps.get-docker-image-tag.outputs.neuronVersion }}
-            if [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
+            if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
               docker push ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:latest
             fi
           fi
 
           if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "netpyne" ]; then
             docker push ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:${{ steps.get-docker-image-tag.outputs.netpyneVersion }}
-            if [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
+            if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
               docker push ghcr.io/biosimulators/biosimulators_pyneuroml/netpyne:latest
             fi
           fi
 
           if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulator }}" == "brian2" ]; then
             docker push ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:${{ steps.get-docker-image-tag.outputs.brian2Version }}
-            if [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
+            if [[ "${{ github.ref }}" =~ ^refs/tags/ ]] || [ "${{ github.event.inputs.simulatorVersionLatest }}" == "true" ]; then
               docker push ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:latest
             fi
           fi
