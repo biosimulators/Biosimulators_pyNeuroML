@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Installation instructions &#8212; BioSimulators-pyNeuroML 0.0.12 documentation</title>
+    <title>Installation instructions &#8212; BioSimulators-pyNeuroML 0.0.13 documentation</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -191,9 +191,9 @@
 <li><p>NEURON</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>gcc</p></li>
-<li><p>g++</p></li>
-<li><p>make</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gcc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">g++</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span></code></p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -201,12 +201,15 @@
 <blockquote>
 <div><ul class="simple">
 <li><p>All of the above</p></li>
-<li><p>mpi</p></li>
-<li><p>libmpich-dev</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">libmpich-dev</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mpi</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mpi-default-bin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mpich</span></code></p></li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
+<p>Third, set <code class="docutils literal notranslate"><span class="pre">NEURON_HOME</span></code> to the parent directory of the <code class="docutils literal notranslate"><span class="pre">nrniv</span></code> executable, up to but not including <code class="docutils literal notranslate"><span class="pre">bin</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">NEURON_HOME=$(which</span> <span class="pre">nrniv</span> <span class="pre">|</span> <span class="pre">rev</span> <span class="pre">|</span> <span class="pre">cut</span> <span class="pre">-d</span> <span class="pre">'/'</span> <span class="pre">-f</span> <span class="pre">3-</span> <span class="pre">|</span> <span class="pre">rev)</span></code>).</p>
 <p>Third, run the following command to install BioSimulators-pyNeuroML:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>pip install biosimulators-pyneuroml
 </pre></div>
