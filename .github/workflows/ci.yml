@@ -106,8 +106,11 @@ jobs:
             g++ \
             make \
             mpi \
+            mpich \
+            mpi-default-bin \
             libmpich-dev
           python -m pip install neuron
+          which nrniv
 
       # install package
       - name: Install the package

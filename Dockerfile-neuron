@@ -34,6 +34,9 @@ RUN apt-get update -y \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
+# set NEURON_HOME
+ENV NEURON_HOME=/usr/local
+
 # Copy code for command-line interface into image and install it
 COPY . /root/Biosimulators_pyNeuroML
 RUN pip install /root/Biosimulators_pyNeuroML[neuron] \

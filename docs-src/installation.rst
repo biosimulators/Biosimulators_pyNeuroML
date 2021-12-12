@@ -12,15 +12,19 @@ Second, install the following additional programs to use NetPyNe and NEURON:
 
 * NEURON
 
-    * gcc
-    * g++
-    * make
+    * ``gcc``
+    * ``g++``
+    * ``make``
 
 * NetPyNe
     
     * All of the above
-    * mpi
-    * libmpich-dev
+    * ``libmpich-dev``
+    * ``mpi``
+    * ``mpi-default-bin``
+    * ``mpich``
+
+Third, set ``NEURON_HOME`` to the parent directory of the ``nrniv`` executable, up to but not including ``bin`` (e.g., ``NEURON_HOME=$(which nrniv | rev | cut -d '/' -f 3- | rev)``).
 
 Third, run the following command to install BioSimulators-pyNeuroML:
 
