@@ -1,14 +1,14 @@
 {
   "id": "brian2",
   "name": "Brian 2",
-  "version": "2.4.2",
+  "version": "2.5.0.1",
   "description": "Clock-driven simulator for spiking neural networks",
   "urls": [{
     "type": "Home page",
     "url": "https://briansimulator.org"
   }],
   "image": {
-    "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:2.4.2",
+    "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/brian2:2.5.0.1",
     "format": {
       "namespace": "EDAM",
       "id": "format_3973",
