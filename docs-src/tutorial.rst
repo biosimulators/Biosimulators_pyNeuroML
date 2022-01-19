@@ -7,7 +7,7 @@ BioSimulators-pyNeuroML is available as three command-line programs and as a com
 Creating COMBINE/OMEX archives and encoding simulation experiments into SED-ML
 ------------------------------------------------------------------------------
 
-Information about how to create COMBINE/OMEX archives which can be executed by BioSimulators-pyNeuroML is available `here <`https://docs.biosimulations.org/users/creating-projects/>`_.
+Information about how to create COMBINE/OMEX archives which can be executed by BioSimulators-pyNeuroML is available `here <https://docs.biosimulations.org/users/creating-projects/>`_.
 
 A list of the algorithms and algorithm parameters supported by jNeuroML/pyNeuroML, NetPyNe, and NEURON is available at `BioSimulators <https://biosimulators.org/simulators/>`_.
 
