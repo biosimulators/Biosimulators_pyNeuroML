@@ -1,7 +1,7 @@
 {
   "id": "pyneuroml",
   "name": "pyNeuroML",
-  "version": "0.5.18",
+  "version": "0.5.20",
   "description": "Python package for reading, writing, simulating and analysing NeuroML2/LEMS models.",
   "urls": [
     {
@@ -10,7 +10,7 @@
     }
   ],
   "image": {
-    "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:0.5.18",
+    "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/pyneuroml:0.5.20",
     "format": {
       "namespace": "EDAM",
       "id": "format_3973",

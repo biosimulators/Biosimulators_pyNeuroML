@@ -142,7 +142,7 @@ def set_sim_in_lems_xml(simulation_xml, task, variables, simulator=Simulator.pyn
     simulation = task.simulation
 
     # modify simulation
-    if simulator in [Simulator.brian2, Simulator.netpyne]:
+    if simulator in [Simulator.netpyne]:
         length = simulation.output_end_time + (simulation.output_end_time - simulation.output_start_time) * 1 / simulation.number_of_steps
         steps = (simulation.output_end_time - simulation.output_start_time) / simulation.number_of_steps
     else:
@@ -421,10 +421,7 @@ def read_lems_output_files(output_file_configs, output_files_dirname='.', simula
         :obj:`dict` of :obj:`str` => :obj:`pandas.DataFrame`: dictionary that maps the id of each output file
             to a Pandas data frame with its value
     """
-    if simulator == Simulator.brian2:
-        sep = ' '
-    else:
-        sep = '\t'
+    sep = '\t'
 
     results = {}
     for output_file_config in output_file_configs:

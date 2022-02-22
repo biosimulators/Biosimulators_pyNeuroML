@@ -1,6 +1,7 @@
 biosimulators_utils[neuroml,lems,logging] >= 0.1.147
 kisao
 lxml
+netpyne <= 1.0.0.2
 numpy
 psutil
-pyneuroml >= 0.5.18, < 0.5.19
+pyneuroml >= 0.5.20

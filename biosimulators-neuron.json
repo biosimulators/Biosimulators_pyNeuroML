@@ -1,7 +1,7 @@
 {
   "id": "neuron",
   "name": "NEURON",
-  "version": "8.0.0",
+  "version": "8.0.2",
   "description": "Empirically-based simulator for modeling neurons and networks of neurons.",
   "urls": [
     {
@@ -10,7 +10,7 @@
     }
   ],
   "image": {
-    "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:8.0.0",
+    "url": "ghcr.io/biosimulators/biosimulators_pyneuroml/neuron:8.0.2",
     "format": {
       "namespace": "EDAM",
       "id": "format_3973",

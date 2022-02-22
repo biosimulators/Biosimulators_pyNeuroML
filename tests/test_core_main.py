@@ -258,7 +258,10 @@ class CoreCliTestCase(unittest.TestCase):
     def _assert_variable_results(self, task, variables, results):
         sim = task.simulation
         self.assertTrue(set(results.keys()), set([var.id for var in variables]))
-        numpy.testing.assert_allclose(results['time'], numpy.linspace(sim.output_start_time, sim.output_end_time, sim.number_of_points + 1))
+        numpy.testing.assert_allclose(
+            results['time'],
+            numpy.linspace(sim.output_start_time, sim.output_end_time, sim.number_of_points + 1)
+        )
         for result in results.values():
             self.assertEqual(result.shape, (sim.number_of_points + 1,))
             self.assertFalse(numpy.any(numpy.isnan(result)))
